@@ -41,34 +41,38 @@ in bst or, failing that, next_smallest, assuming next_smallest <=
 min(bst).  (Note:  We let None be the smallest possible value.)
 
 Proof:  We proceed by induction on the height of the tree.  Assume we
-know that find_min(bst, val, next_smallest) is correct for height(bst)
-= N && next_smallest < val && next_smallest <= min(bst).
+know that find_min(bst, val, next_smallest) is correct for
+height(bst) == N && next_smallest < val && next_smallest <= min(bst).
 
-Base case:  height(bst) = 0.  Trivially correct:  next_smallest.
+Base case:  height(bst) == 0.  Trivially correct:  next_smallest.
 
-Now we try height(bst) = N + 1.  There are three cases:
+Now we try height(bst) == N + 1.  There are three cases:
 
 Case 1:  val == bst.val.  Here we return val, which is obviously correct.
 
-Case 2:  val < bst.val.  Here we know that bst.val > val and cannot be
-a match or even the next-smallest match.  Therefore, find_min of the left
-subtree must be the same as of the whole tree bst:
+Case 2: val < bst.val.  Here we know that bst.val > val and cannot be
+a match or even the next-smallest match.  Therefore, this node and its
+right subtree cannot contribute to the result, and find_min of the
+the whole tree bst must be the same as of its subtree bst.left:
 
    find_min(bst, val, next_smallest) = find_min(bst.left, val, next_smallest).
 
-Since next_smallest <= min(bst) <= min(bst.left), our induction hypothesis
-still holds.
+Since the left subtree has height N, next_smallest <= min(bst) <=
+min(bst.left), and next_smallest is unchanged and therefore still <=
+val, our induction hypothesis holds, and this case is correct.
 
 Case 3: val > bst.val.  Here we know that bst.val < val and cannot be
-a match, but it must be an improved next-smallest match, since it's
-smaller than val and yet it is at least as large as min(bst), which is
-at least as large as our current best next_smallest.  Therefore,
-find_min of the right subtree with the improved next_smallest must be
-the same as the original call:
+a match, but it must at least as good as the current best
+next-smallest match, since it's smaller than val and yet it is at
+least as large as min(bst), which is at least as large as our current
+next_smallest.  Therefore, the original call must equal find_min of
+the right subtree with the improved next_smallest:
 
    find_min(bst, val, next_smallest) = find_min(bst.right, val, bst.val).
 
-Again, since bst.val <= bst.right, our induction hypothesis still holds.
+Again, since the right subtree is of height N and bst.val (our new
+next_smallest) is < val and also <= min(bst.right), our induction
+hypothesis holds, and this final case is correct, too.
 
 Q.E.D.
 
