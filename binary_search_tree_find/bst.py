@@ -117,12 +117,8 @@ class BSTNode(object):
         return '(%s, %r, %r)' % (self.val, self.left, self.right)
 
     def is_bst(self):
-        """Test whether the tree represents a binary search tree."""
-        return ((self.left is None or
-                 (self.left.val <= self.val and self.left.is_bst()))
-                and
-                (self.right is None or
-                 (self.right.val >= self.val and self.right.is_bst())))
+        """Test whether the node represents a binary search tree."""
+        return _is_bst(self)
 
     @classmethod
     def from_str(cls, s):
@@ -143,6 +139,16 @@ class BSTNode(object):
             if s[:1] == ")":
                 return BSTNode(val, left, right), s[1:]
         return None, s
+
+
+def _is_bst(tree, min_val=None, max_val=None):
+    """Test whether a tree represents a binary search tree."""
+    if tree is None:
+        return True
+    return ((min_val is None or tree.val >= min_val) and
+            (max_val is None or tree.val <= max_val) and
+            _is_bst(tree.left, min_val=min_val, max_val=tree.val) and
+            _is_bst(tree.right, min_val=tree.val, max_val=max_val))
 
 
 TEST_CASES = [
@@ -170,6 +176,7 @@ TEST_CASES = [
     (None, 'a', '(c,(b,,),(d,,))'),
 
     (None, 'c', '(a,(d,,),)'),  # not a valid BST
+    (None, 'c', '(c,(a,,(d,,)),)'),  # not a valid BST
 
     ]
 
