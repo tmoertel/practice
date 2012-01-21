@@ -2,6 +2,7 @@
 # Tom Moertel <tom@moertel.org>
 # 2011-12-12
 
+
 """Solve a simple binary-search-tree exercise.
 
 Problem:
@@ -16,7 +17,24 @@ Problem:
 """
 
 
-"""
+import unittest
+
+
+
+def find_min(bst, val, next_smallest=None):
+    """Get closest match <= val in bst or, failing that, next_smallest."""
+    if bst is None:
+        return next_smallest
+    elif val == bst.val:
+        return val
+    elif val < bst.val:
+        return find_min(bst.left, val, next_smallest)
+    else:
+        return find_min(bst.right, val, bst.val)
+
+
+"""Correctness proof.
+
 Claim: find_min(bst, val, next_smallest) returns val if it exists in
 the binary search tree bst or, failing that, the next smallest value
 in bst or, failing that, next_smallest, assuming next_smallest <=
@@ -56,16 +74,8 @@ Q.E.D.
 
 """
 
-def find_min(bst, val, next_smallest=None):
-    if bst is None:
-        return next_smallest
-    elif val == bst.val:
-        return val
-    elif val < bst.val:
-        return find_min(bst.left, val, next_smallest=next_smallest)
-    else:
-        return find_min(bst.right, val, next_smallest=bst.val)
 
+# Non-recursive translations of the find_min
 
 def find_min_iterative(bst, val, next_smallest=None):
     while True:
@@ -76,8 +86,7 @@ def find_min_iterative(bst, val, next_smallest=None):
         elif val < bst.val:
             bst = bst.left
         else:
-            bst = bst.right
-            next_smallest = bst.val
+            bst, next_smallest = bst.right, bst.val
 
 def find_min_iterative2(bst, val, next_smallest=None):
     while bst is not None:
@@ -86,6 +95,92 @@ def find_min_iterative2(bst, val, next_smallest=None):
         elif val < bst.val:
             bst = bst.left
         else:
-            bst = bst.right
-            next_smallest = bst.val
+            bst, next_smallest = bst.right, bst.val
     return next_smallest
+
+
+# BST implementation and tests
+
+class BSTNode(object):
+    """Binary search tree node."""
+
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return '(%s, %r, %r)' % (self.val, self.left, self.right)
+
+    def is_bst(self):
+        """Test whether the tree represents a binary search tree."""
+        return ((self.left is None or
+                 (self.left.val <= self.val and self.left.is_bst()))
+                and
+                (self.right is None or
+                 (self.right.val >= self.val and self.right.is_bst())))
+
+    @classmethod
+    def from_str(cls, s):
+        tree = cls._parse(s)[0]
+        if tree is None or tree.is_bst():
+            return tree
+        return None  # reject trees that aren't BSTs
+
+    @staticmethod
+    def _parse(s):
+        s = s.lstrip()
+        if s[:1] == "(":
+            val, s = s[1:].split(',', 1)
+            left, s = BSTNode._parse(s)
+            _, s = s.split(',', 1)
+            right, s = BSTNode._parse(s)
+            s = s.lstrip()
+            if s[:1] == ")":
+                return BSTNode(val, left, right), s[1:]
+        return None, s
+
+
+TEST_CASES = [
+    # (expected_result, val, bst_tree_spec)
+
+    (None, 'c', ''),
+
+    ('c',  'c', '(c,,)'),
+    ('a',  'c', '(a,,)'),
+    (None, 'c', '(d,,)'),
+
+    ('a',  'c', '(d,(a,,),)'),
+    ('c',  'c', '(d,(c,,),)'),
+    (None, 'b', '(d,(c,,),)'),
+    ('a',  'c', '(a,,(d,,))'),
+    ('c',  'c', '(c,,(d,,))'),
+    (None, 'c', '(d,,(d,,))'),
+    ('a',  'c', '(a,,(d,,))'),
+
+    (None, 'a', '(c,(b,,),(d,,))'),
+    ('a',  'b', '(c,(a,,),(d,,))'),
+    ('c',  'c', '(c,(a,,),(d,,))'),
+    ('d',  'd', '(c,(a,,),(d,,))'),
+    ('d',  'e', '(c,(a,,),(d,,))'),
+    (None, 'a', '(c,(b,,),(d,,))'),
+
+    (None, 'c', '(a,(d,,),)'),  # not a valid BST
+
+    ]
+
+
+class Tests(unittest.TestCase):
+    def test_cases(self):
+        for f in find_min, find_min_iterative, find_min_iterative2:
+            for case in TEST_CASES:
+                expected_result, val, bst_tree_spec = case
+                bst = BSTNode.from_str(bst_tree_spec)
+                result = f(bst, val)
+                self.assertEqual(
+                    result, expected_result,
+                    msg=('%s: %r -> %r' % (f.__name__, case, result)))
+
+
+if __name__ == '__main__':
+    unittest.main()
