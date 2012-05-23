@@ -97,16 +97,14 @@ def main():
         balances.append(Balance(*(lspec + rspec)))
     adjustments = compute_adjustments(balances)
     for (i, adjustment) in enumerate(adjustments):
-        l_adjust = max(0, -adjustment)
-        r_adjust = max(0,  adjustment)
-        print "%r: %r %r" % (i, l_adjust, r_adjust)
+        print "%r: %r %r" % (i, max(0, -adjustment), max(0, adjustment))
 
 def parse_arm_spec(s):
     nums = map(int, s.split())
     return nums[0], nums[1:]
 
 def compute_adjustments(balances):
-    """Compute the adjustment need to bring each balance into perfect balance.
+    """Compute the adjustment to bring each balance into perfect balance.
 
     Note that no adjustment to a lower balance can balance the
     balances stacked upon it, so those upper balances must be adjusted
@@ -115,28 +113,20 @@ def compute_adjustments(balances):
 
     """
     N = len(balances)
-    adjustments = [0] * N
-    seen = set()
+    cache = {}  # stores (adjustment, weight) pair for each balance i
     def adjust(i):
-        if i not in seen:
-            seen.add(i)
+        if i not in cache:
             b = balances[i]
-            inbalance = b.r_weight - b.l_weight
-            for j in b.l_balances:
-                adjust(j)
-                inbalance -= weight(j)
-            for j in b.r_balances:
-                adjust(j)
-                inbalance += weight(j)
-            adjustments[i] = -inbalance
-    def weight(i):
-        b = balances[i]
-        return sum([10, b.l_weight, b.r_weight, abs(adjustments[i])] +
-                   map(weight, b.l_balances + b.r_balances))
-    for i in xrange(N):
+            l = b.l_weight + sum(adjusted_weight(j) for j in b.l_balances)
+            r = b.r_weight + sum(adjusted_weight(j) for j in b.r_balances)
+            adjustment = l - r
+            weight = 10 + l + r + abs(adjustment)
+            cache[i] = (adjustment, weight)
+        return cache[i][0]
+    def adjusted_weight(i):
         adjust(i)
-    return adjustments
-
+        return cache[i][1]
+    return map(adjust, xrange(N))
 
 if __name__ == '__main__':
     main()
