@@ -9,16 +9,19 @@ Tom Moertel <tom@moertel.com>
 
 -}
 
+
 import Data.Array
 
-main = interact $ readSolveAndShow
+
+type Weight      = Int
+type BalanceId   = Int
+data Arm         = Arm !Weight [BalanceId]
+data Balance     = Balance !Arm !Arm
+data BalanceInfo = BalanceInfo { weight :: !Weight, adjustment :: !Weight }
+
+main = interact readSolveAndShow
 
 readSolveAndShow = showSoln . solve . readProblem
-
-type Weight = Int
-type BalanceId = Int
-data Arm = Arm Weight [BalanceId]
-data Balance = Balance Arm Arm
 
 readProblem = readNBalances . map (map read . words) . lines
 
@@ -26,31 +29,34 @@ readNBalances ([n]:armspecs) =
   listArray (0, n - 1) . map readBalance . groupsOf 2 $ armspecs
 
 readBalance :: [[Int]] -> Balance
-readBalance [al, ar] = Balance (readArm al) (readArm ar)
+readBalance [la, ra] = Balance (readArm la) (readArm ra)
 
 readArm :: [Int] -> Arm
-readArm (w:bs) = Arm w bs
+readArm (w:bis) = Arm w bis
 
 groupsOf :: Int -> [a] -> [[a]]
 groupsOf n [] = []
 groupsOf n xs = take n xs : groupsOf n (drop n xs)
 
+
+-- |Compute adjustments to bring an array of balances into perfect balance
 solve :: Array Int Balance -> Array Int Weight
-solve bs = fmap snd cache
+solve balances = fmap adjustment cache
   where
-    (lo, hi) = bounds bs
-    cache = listArray (lo, hi) [ (weight, adjustment)
-                               | (i, Balance larm rarm) <- assocs bs,
-                                 let l = weigh larm
-                                     r = weigh rarm
-                                     adjustment = r - l
-                                     weight = 10 + l + r + abs adjustment
-                               ]
-    weigh (Arm w bs) = w + sum (map (\i -> fst (cache!i)) bs)
+    (lo, hi) = bounds balances
+    weigh (Arm w bis) = w + sum (map (weight . (cache!)) bis)
+    -- memo table: (weight, adjustment) pair for each balance i
+    cache = (`fmap` balances) $ \(Balance larm rarm) ->
+      let lw = weigh larm
+          rw = weigh rarm
+          adjustment = rw - lw
+          weight = 10 + lw + rw + abs adjustment
+      in BalanceInfo weight adjustment
 
 showSoln = unlines . map (uncurry showAdjustment) . assocs
 
-showAdjustment i adjustment = unwords [ show i ++ ":",
-                                        show (max 0 adjustment),
-                                        show (max 0 (-adjustment))
-                                      ]
+showAdjustment i adjustment =
+  unwords [ show i ++ ":",
+            show (max 0 adjustment),
+            show (max 0 (-adjustment))
+          ]
