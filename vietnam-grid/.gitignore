@@ -1,3 +1,5 @@
 Grid
 *.o
 *.hi
+cabal-dev/
+dist/
