@@ -1,5 +1,3 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
-
 {-
 
 Solution to maze problem presented in http://neil.fraser.name/news/2013/03/16/.
@@ -19,12 +17,6 @@ import Data.List (group, sort)
 import qualified Data.Map as M
 import qualified Data.Set as S
 
-
-
-main = interact $ \input ->
-  let maze = readMaze input
-      soln = solve maze
-  in showSoln maze soln
 
 
 type CellLoc  = (Int, Int)       -- ^ (row, col)
@@ -51,6 +43,14 @@ newtype MazeGraph = MazeGraph (M.Map GraphLoc Neighbors) deriving Show
 
 type GraphSets = M.Map GraphLoc AreaSet
 
+
+main :: IO ()
+main = interact $ \input ->
+  let maze = readMaze input
+      soln = solve maze
+  in showSoln maze soln
+
+
 readMaze :: String -> Maze
 readMaze s = Maze . listArray ((0, 0), (nrows - 1, ncols - 1)) $ cells
   where
@@ -59,11 +59,14 @@ readMaze s = Maze . listArray ((0, 0), (nrows - 1, ncols - 1)) $ cells
     ncols = case rows of [] -> 0; l:ls -> length l
     cells = map parseCell (concat rows)
 
+
+parseCell :: Char -> Cell
 parseCell '0'  = TRBL
 parseCell '1'  = TLBR
 parseCell '\\' = TRBL
 parseCell '/'  = TLBR
 parseCell c    = error $ "bad cell spec " ++ [c]
+
 
 solve :: Maze -> Solution
 solve maze = extractSolution (unionConnectedSets graph sets)
@@ -95,11 +98,14 @@ cellGraph (Maze maze) = MazeGraph . M.fromListWith (++) $ elists
       in [toplink, botlink, leftlink, rightlink]
     (_, (rmax, cmax)) = bounds maze
 
+
 graphSets :: MazeGraph -> GraphSets
 graphSets (MazeGraph gr) = M.mapWithKey mkSet gr
   where
     mkSet v es = if any (`M.notMember` gr) es then OpenSet else ClosedSet v
 
+
+unionConnectedSets :: MazeGraph -> GraphSets -> GraphSets
 unionConnectedSets (MazeGraph gr) sets = M.foldlWithKey unionNeighbors sets gr
   where
     unionNeighbors sets v es = foldl (union v) sets es
@@ -112,6 +118,7 @@ unionConnectedSets (MazeGraph gr) sets = M.foldlWithKey unionNeighbors sets gr
                       (ClosedSet v', _)       -> modify $ M.insert v' urep
                       _                       -> return ()
 
+-- | Given an element, find the representative element of the set containing it
 rep :: GraphLoc -> State GraphSets AreaSet
 rep v = do
   sets <- get
@@ -122,6 +129,7 @@ rep v = do
                                            put $ M.insert v r sets
                                            return r
     _                                -> return OpenSet
+
 
 extractSolution :: GraphSets -> Solution
 extractSolution sets = Solution closedCount maxClosedArea areaReps
@@ -153,11 +161,14 @@ viz Solution{solnAreas = areaReps} (Maze maze) =
     areaNames = M.fromList $
                 zip (S.toList . S.fromList $ M.elems areaReps) [0..]
 
+sym :: Int -> [Char]
 sym n = if inRange (bounds lut) n then lut ! n else "*"
   where
     syms = [[c] | i <- [32..126], let c = chr i, c `notElem` "*/\\"]
     lut  = listArray (0, length syms - 1) syms
 
+
+showSoln :: Maze -> Solution -> String
 showSoln maze soln = unlines ls
   where
     ls = [ "count of closed areas        = " ++ show (solnClosedCount soln)
@@ -166,8 +177,12 @@ showSoln maze soln = unlines ls
          , viz soln maze
          ]
 
+
+testMaze :: Maze
 testMaze = readMaze testMazeSpec
 
+
+testMazeSpec :: String
 testMazeSpec = unlines $
        [ "\\//\\\\/"
        , "\\///\\\\"
