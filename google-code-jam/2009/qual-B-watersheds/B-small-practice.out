@@ -1,0 +1,515 @@
+Case #1:
+a a b b
+a b b b
+b b b b
+b b b b
+Case #2:
+a a a a
+a a a a
+a a b b
+b b b b
+Case #3:
+a a
+b a
+Case #4:
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+Case #5:
+a a a a a a a a a b
+Case #6:
+a a a a a
+b b b a a
+Case #7:
+a a
+a b
+Case #8:
+a a a a a
+a a a a a
+a a a a a
+b b a a a
+b b b a a
+b b b b a
+b b b b a
+b b b b a
+b b b b a
+Case #9:
+a a a a
+a a a a
+a a a a
+a a a a
+Case #10:
+a a b b
+a a a b
+a a a a
+a a a a
+Case #11:
+a b b b b b
+a b b b b b
+Case #12:
+a b b b
+a b b b
+Case #13:
+a a a a
+a a a a
+a a b b
+b b b b
+Case #14:
+a a a a
+a a a a
+a a a a
+b b b b
+Case #15:
+a a a
+b b b
+Case #16:
+a a a b
+a a a b
+a a b b
+a a b b
+Case #17:
+a a a
+a a a
+Case #18:
+a b b b
+a b b b
+a a b b
+a a a a
+Case #19:
+a
+Case #20:
+a b b
+a a b
+a a a
+Case #21:
+a a
+b b
+Case #22:
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+Case #23:
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+Case #24:
+a a
+a a
+Case #25:
+a a a a a a a
+a a a a a a a
+a a a a a a b
+a a a a a b b
+b b b b b b b
+b b b b b b b
+b b b b b b b
+b b b b b b b
+Case #26:
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+Case #27:
+a a a
+a a b
+a b b
+Case #28:
+a a a a a a a
+a b b b b b b
+b b b b b b b
+Case #29:
+a b b b
+b b b b
+b b b b
+b b b b
+Case #30:
+a a b b
+a a a b
+a a a b
+a a a b
+Case #31:
+a a a a
+b b b a
+b b b b
+b b b b
+Case #32:
+a a a a
+a a a a
+b a a a
+b a a a
+Case #33:
+a a a a
+a a a a
+a a a a
+a a a a
+b b a a
+Case #34:
+a a a b b b b
+a a a b b b b
+a a a a b b b
+a a a a a b b
+a a a a a a b
+a a a a a a b
+a a a a a a b
+Case #35:
+a a a
+a a a
+a a a
+a a a
+a b b
+b b b
+b b b
+b b b
+b b b
+Case #36:
+a a a a
+a a a a
+a a b b
+b b b b
+Case #37:
+a a
+a b
+Case #38:
+a a a a
+b b b a
+b b b b
+b b b b
+Case #39:
+a a a a
+a a a a
+b b b b
+b b b b
+Case #40:
+a a
+a a
+Case #41:
+a a b b
+a a b b
+a b b b
+a b b b
+Case #42:
+a a a
+a a b
+a b b
+Case #43:
+a a a a a a b b b b
+a a a a a a b b b b
+Case #44:
+a a b b
+a a b b
+a a b b
+a a b b
+Case #45:
+a a
+a a
+Case #46:
+a a a
+a a a
+a a a
+b b b
+b b b
+Case #47:
+a a a b b
+a a a b b
+a a a b b
+a a a b b
+Case #48:
+a a a b
+a a a b
+a a b b
+a b b b
+Case #49:
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+Case #50:
+a a a a
+a a a a
+b a a a
+b b a a
+Case #51:
+a b b
+a a b
+a a b
+Case #52:
+a a a a a a b b b b
+a a a a a a b b b b
+Case #53:
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+Case #54:
+a a a
+a a a
+a a b
+Case #55:
+a a
+b b
+Case #56:
+a a a
+a a a
+a a a
+b b b
+b b b
+b b b
+b b b
+b b b
+Case #57:
+a a b
+b b b
+b b b
+Case #58:
+a b b b
+a b b b
+b b b b
+b b b b
+Case #59:
+a a a a a a b
+a a a a a a b
+Case #60:
+a a
+b a
+Case #61:
+a a b b b b b b b b
+a b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+Case #62:
+a a b b
+a a b b
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+a a a a
+Case #63:
+a a
+a b
+Case #64:
+a a a
+a a a
+a a a
+b b a
+b b b
+b b b
+Case #65:
+a a a b
+a a a b
+a a a b
+a a a b
+Case #66:
+a a a a a a a a
+a a a a a a a a
+a a a a a a a a
+a a a a a a a a
+b b b b b b b b
+b b b b b b b b
+Case #67:
+a a b b
+a a b b
+a a b b
+a a b b
+a a b b
+Case #68:
+a a
+a b
+Case #69:
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+Case #70:
+a a a
+a a a
+b b b
+Case #71:
+a a a a
+a a a a
+a a a a
+a a a a
+b b a a
+b b b b
+b b b b
+b b b b
+b b b b
+Case #72:
+a a a b
+a a b b
+b b b b
+b b b b
+Case #73:
+a a a
+a a a
+Case #74:
+a a
+a b
+Case #75:
+a a a
+a a a
+a a a
+Case #76:
+a a a
+a a a
+a a a
+a a a
+a a a
+Case #77:
+a a a a
+a a b b
+b b b b
+b b b b
+Case #78:
+a a a
+a a a
+b b b
+b b b
+b b b
+Case #79:
+a a a
+b a a
+b b a
+Case #80:
+a a
+a a
+Case #81:
+a a a a
+b a a a
+b b a a
+b b a a
+Case #82:
+a a a a a a a
+a a a a a a a
+a a a a a a a
+a a a a a a a
+a a a a a a a
+a a a a a a a
+Case #83:
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+Case #84:
+a a a
+b a a
+b b a
+Case #85:
+a b b b b
+a b b b b
+a b b b b
+b b b b b
+Case #86:
+a a a a a b
+a a a a a b
+a a a a b b
+b b b b b b
+b b b b b b
+b b b b b b
+Case #87:
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+Case #88:
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+b a a a a
+b a a a a
+b a a a a
+b a a a a
+b a a a a
+Case #89:
+a a a
+a b b
+b b b
+Case #90:
+a a a a
+a a a a
+a a a a
+a a a b
+Case #91:
+a a
+b b
+Case #92:
+a a a a a
+a a a a a
+a a a a a
+Case #93:
+a a a a
+a a a a
+Case #94:
+a a
+a a
+Case #95:
+a a a a a
+a a a a a
+a a a a a
+Case #96:
+a a a a
+a a a a
+a a a b
+a a b b
+a b b b
+b b b b
+b b b b
+b b b b
+b b b b
+Case #97:
+a a b
+a a b
+a b b
+Case #98:
+a a b b b b b b
+a b b b b b b b
+a b b b b b b b
+Case #99:
+a a a a a
+a a b b a
+a b b b a
+a b b b a
+a a a a a
+Case #100:
+a b b b b b b
+a b b b b b b

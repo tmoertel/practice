@@ -1,0 +1,1460 @@
+Case #1:
+a a a a b b b b b b b b
+a a a c b b b b b b d d
+a a a a b b b b b b d d
+e a a a b b b b b b d f
+e g h h i i b i j j j f
+e e h h i i i i j j j f
+e e h h h i i i j j j f
+Case #2:
+a b c c c c c c d d d e e f g g
+a a c c c c h d d d d e f f f g
+Case #3:
+a
+Case #4:
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+Case #5:
+a b b b b c c
+a a b d d d d
+a a a d d d d
+Case #6:
+a a a a b b b b b b c c c c d d d d d e e e f f g g g h i i i
+a a a a b b b b b b c c c c d d d j e e e e g g g g g i i i i
+Case #7:
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c b b b b b c b b b b b b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c b b b c b
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c b c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c c
+d a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a c c c c c c c c c c c c c c c c c c c c c c c c c
+d d a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e c c c c c c c c c c c c c c c c c c c c c c c c
+d d a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e c c c c c c c c c c c c c c c c c c c c c c c
+d d d d d d a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e c c c c e c c c c c e c c c c c c c c c c c
+d d d d d d d d a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e c c e e e e e e e e e c c c c c c c c c c c
+d d d d d d d d d f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c
+d d d d d d d d f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c
+d d d d d d d d f f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e a e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c
+d d d d d d d d d f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c
+d d d d d d d f f f f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e c c c e e e e
+d d d d d d d f f f f f f f f f f f f f a a f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e c e e e e e
+d d d d d d d f f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d f f f f f f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d f f f f f f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d f f f f f f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d f f f f f f f f f f f f f f f f f f f f f f a a a a a a a f a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f a a f a a a a a a a a g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f a a a a a a a g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f a a a a a g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f a a a g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f a g g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e
+d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e h e e e e h h h h e e e e e e
+d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g e e e e e e e e e e e e e e e e e e e h h h h h e h h h h h h e e e e h h
+d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g e e e e e e e e e h h h h e h h e h h h h h h h h h h h h h h h e h h h
+d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g g e e e e e h h h h h h h h h h h h h h h h h h h h h h h h h h h h
+d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g g g e e h h h h h h h h h h h h h h h h h h h h h h h h h h h h h h
+d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h h h h h h h h
+d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h h h h h i i i i
+d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h h h h h h i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g j j j j j j h h h h h h h k k k h h h h h h h h i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f j j j j j j j j g g g g g j j j j j j j j j j h h h k k k k k k k k k h h i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k k k k k k i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k k k k k i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k k i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k k i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k i i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k i i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k k i i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k k k i i i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k k i i i i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k i i i i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k i i i i i i i i i i i i i i i i i i
+d d d d d d d d d d d d d d d d d d d d d d d d d d d d d f f f f f f f f f f f f f f f f j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j j k k k k i i i i i i i i i i i i i i i i i i
+Case #8:
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+c
+c
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+f
+Case #9:
+a a a a a
+a a b b a
+a b b b a
+a b b b a
+a a a a a
+Case #10:
+a
+a
+Case #11:
+a a
+a a
+a a
+b b
+b b
+c b
+c c
+c c
+c c
+c c
+c c
+d d
+d d
+Case #12:
+a b b b c c
+a a b b b c
+Case #13:
+a a a a b b b c c c c c c d d d d d d d d d e e e f f f f f f f g g g g
+a a a h b b i i i d d c d d d d d d d d d d e e e f f f f f f f j g g g
+a a k k i i i i i d d d d d d d d d d d d e e e e e f f f f f f j j j g
+k k k k k i i i i d d d d d d d d d d d d e e e e e f f f f f f f j j j
+k k k k l i i i i d d d d d d d d d d d d e e e e e e f f f f f f j j j
+Case #14:
+a
+a
+a
+a
+a
+a
+b
+b
+c
+c
+c
+c
+c
+d
+e
+e
+Case #15:
+a
+b
+b
+b
+b
+b
+c
+c
+c
+d
+d
+d
+d
+d
+e
+e
+e
+e
+f
+f
+f
+g
+g
+Case #16:
+a b b b b b c c
+b b b b b b b c
+d b b b b b b c
+d d b b b b b b
+d d b b b b b b
+d d d b b b b b
+d d d b b b b e
+d d e e e e e e
+e e e e e e e e
+e e e e e e e e
+Case #17:
+a a a a a b b b b b c c c d
+Case #18:
+a
+a
+b
+b
+b
+b
+c
+c
+c
+d
+d
+d
+d
+d
+d
+e
+e
+e
+e
+e
+Case #19:
+a a a a a a a b b b c c c d d d d d d e e e f f f
+Case #20:
+a a a b b b
+a a a b b b
+Case #21:
+a a b b b b b c c c d d e e e e f g g h h h h i i i i j j
+a a b b b b c c c c d e e e e e k k g h h h h i i i i j j
+a b b b b b c c c c d e e e e e k k k h h h h i i i i l j
+Case #22:
+a a a a a a b b c c c c c c c d d d d d d d e f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g h h h h i i i j j j j j
+Case #23:
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c d d d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c d d d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c d d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c d d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e b b b b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e b b b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e b b b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e b b e b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e b b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c d d d d d d d d d d d d
+a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e b b b b b b b b b b b b b b c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+f a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e b b b b b b b b b b b b c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+f f a a f f a a a f f f a a a a a a a a a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e b b b b b b b b b b b c c c c c c c c c c c c c c c c d d d d d d d d d d d d d d
+f f f f f f f f f f f f a a a a a a a a a a a a a a a a a a a a a a a e a a a e e e e e e e e e e e e e e e e e e e e e b b b b b b b e b c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e b b b b b e e c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e b b e e e c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f a a a a a a a a a a a a a e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f a a a a a a a a a a g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f a a a a g g g g g g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g e e e e e e e e e e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g h h h h h e h h e e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g h h h h h h h h h h e e e e e e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g h h h h h h h h h h e e h h e e e e e e e e e e e e c c c c c c c c c c c c c c c c c c d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g h h h h h h h h h h h h h h e e e e e e e e e e e e c c c c c c i c c c c c c c c c c c d d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h e e e e e e e e e c i i i i i i i c c i i c c i i i i i d d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h e e e e e e e j i i i i i i i i i i i i i i i i i i i i i d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h h e e e e j j j i i i i i i i i i i i i i i i i i i i i i d d d d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h e e e j j j j j i i i i i i i i i i i i i i i i i i i i i i i d d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h h h h h h h h h h h h h h e e j j j j j i i i i i i i i i i i i i i i i i i i i i i i i i d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g h h h h h h h h h h h h k k k k k k j j j j j j i i i i i i i i i i i i i i i i i i i i i i i i i d d d d d d d
+f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g h h h h h h h h h h h k k k k k k k j j j j j j i i i i i i i i i i i i i i i i i i i i i i i l l l d d d l l l
+f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g h h h h h h h h h k k k k k k k k j j j j j j j i i i i i i i i i i i i i i i i i i i i i l l l l l l l l l l
+f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g g h h h h h h h h k k k k k k k k k j j j j j j j i i i i i i i i i i i i i i i i i i i i i l l l l l l l l l l
+f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g g h h h h h h h h k k k k k k k k k j j j j j j j j i i i i i i i i i i i i i i i i i i i i l l l l l l l l l l
+f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g h h h h h h h h k k k k k k k k k k k j j j j j j j j i i i i i i i i i i i i i i i i i i i l l l l l l l l l l
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g g h h h h h h k k k k k k k k k k k k k j j j j j j j j i i i i i i i i i i i i i i i i i i l l l l l l l l l l
+m m f f f f f f f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h h k k k k k k k k k k k k k k j j j j j j j j i i i i i i i i i i i i i i i i i n l l l l l l l l l l
+m m m m m m m m f f f f f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h h k k k k k k k k k k k k k j j j j j j j j j j j i i i i i i i i i i i i n n n n l l l l l l l l l l
+m m m m m m m m m f m m f f f f f f f f f f f f f f f f f g g g g g g g g g g g g g g g g h h h h k k k k k k k k k k k k k k j j j j j j j j j j j i i i i i i i i i i n n n n n n l l l l l l l l l l
+m m m m m m m m m m m m m f f f f f f f f f f f f f f f f g g g g g o o o o o o g g g g g g g g h k k k k k k k k k k k k k j j j j j j j j j j j j i i i i i i i i i i n n n n n n l l l l l l l l l l
+m m m m m m m m m m m m m m m f f f f f f f f f f f f f f g g g o o o o o o o o o o o o o o o g g g k k k k k k k k k k k k k j j j j j j j j j j j i i i i i i i n n n n n n n n n l l l l l l l l l l
+m m m m m m m m m m m m m m m m f f f f f f f f f f f f f g g o o o o o o o o o o o o o o o o o g k k k k k k k k k k k k k k j j j j j j j j j j j i i i n n n n n n n n n n n n n l l l l l l l l l l
+m m m m m m m m m m m m m m m m f f f f f f f f f f f f g g g o o o o o o o o o o o o o o o o o o k k k k k k k k k k k k k k j j j j j j j j j j j n n n n n n n n n n n n n n n n l l l l l l l l l l
+m m m m m m m m m m m m m m m m m f f f f f f f f f f f f g o o o o o o o o o o o o o o o o o o o o o o k k k k k k k k k k k j j j j j j j j j j n n n n n n n n n n n n n n n n n l l l l l l l l l l
+m m m m m m m m m m m m m m m m m m m f f f f f f f f f f g o o o o o o o o o o o o o o o o o o o o o o o k k k k k k k k k k k j j j j j j j n n n n n n n n n n n n n n n n n p p l l l l l l l l l l
+m m m m m m m m m m m m m m m m m q q q q q q f f f f f o o o o o o o o o o o o o o o o o o o o o o o o o o o k k k k k k k k k j j j j j n n n n n n n n n n n n n n n n n n p p l l l l l l l l l l l
+m m m m m m m m m q q q q q q q q q q q q q q q f f f o o o o o o o o o o o o o o o o o o o o o o o o o o o o o k k k k k k k j j j j j j n n n n n n n n n n n n n n n p p p p p l l l l l l l l l l l
+m m m m m m m m q q q q q q q q q q q q q q q q f f o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o k k k k k j j j j j n n n n n n n n n n n n n n n n n p p p p p l l l l l l l l l l l
+m m m m m m m q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o k k k j j j j j n n n n n n n n n n n n n n n n p p p p p l l l l l l l l l l l l
+m m m m m m q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o k k k k j j j n n n n n n n n n n n n n n n n n p p p p p l l l l l l l l l l l l
+m m m q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o k n n n n n n n n n n n n n n n n n n n n n p p p p l l l l l l l l l l l l l
+m m m q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o n n n n n n n n n n n n n n n n n n n n n p p p l l l l l l l l l l l l l l
+m m m q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o n n n n n n n n n n n n n n n n n n n n p p p p l l l l l l l l l l l l l l
+q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o n n n n n n n n n n n n n n n n n n p p p p p p r r l l l l l l l l l l l l
+q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o n n n n n n n n n n n n n n n n n n p p p p p r r r r r r r l l l l l l l l
+q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o n n n n n n n n n n n n n n n n n p p p p p r r r r r r r r r r r r r l l l
+q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o n n n n n n n n n n n n n n n r r r r r r r r r r r r r r r r r r r r l l l
+q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o n n n n n n n n n n n n r r r r r r r r r r r r r r r r r r r r r r r r r l
+q q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o s s s n n n n n n n r r r r r r r r r r r r r r r r r r r r r r r r r r r r
+q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o s s s s s s n n n r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
+q q q q q q q q q q q q q q q q q q q q q q q q q o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o s s s s s s s s r r r r r r s s s s s s s s s r r r r r r r r r r r r r r r r
+q q q q q q q q q q q q q q q q q q q q q q q t t o o o o o o o o o o o o o o o o o o o o o o o u o o u u u u u o v v s s s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r r r r r r r
+q q q q q q q q q q q q q q t t t q q q q t t t t o o o o o o o o o o u u u u o o o o o o o o u u u u u u u u u u v v s s s s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r r r r r r
+q q q q q q q q q q q q t t t t t t t q t t t t t t o o o o o o o o u u u u u o o o o o u u u u u u u u u u u u u v v v s s s s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r r r r r
+t t t t t t q q q q q t t t t t t t t t t t t t t t t o o o o o o u u u u u u u o u u u u u u u u u u u u u u u u v v v s s s s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r r r r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t o u o o u u u u u u u u u u u u u u u u u u u u u u u u v v v v s s s s s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r r r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t u u u u u u u u u u u u u u u u u u u u u u u u u u v v v v v v v v s s s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t u u u u u u u u u u u u u u u u u u u u u u u u u u u u v v v v v v v s s s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t u u u u u u u u u u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t w u u u u u u u u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v s s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t t t w w u u u u u u u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v s s s s s s s s s s s s s s s s s s s s s s s r r r r r r r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t t t w w w w u u u u u u u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v s s x x x x s s s s s s s s s s s s s s s s s s s s s s r r
+t t t t t t t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w u u u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v x x x x x x x x x s x x x x s s s s x x x x x x x s s r r
+t t t t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w u u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w w w w u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w w w w w u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w w w w u u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w w w w w u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w w w w w w u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w w w w w w u u u u u u u u u u u u u u u u u u v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t t w w w w w w w w w w w w w w w w w w w w w w u u u u u u u u u u u u y y y y y y v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t z w w w w w w w w w w w w w w w w w w w w w w w u u u u u u u y u y y y y y y y y v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t t z z w w w w w w w w w w w w w w w w w w w w w w w u u y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t t t z z z z z z z z w w w w w w w w w w w w w w w w w w w y y y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t t z z z z z z z z z z z w z z w w w w w w w w w w w w w w w y y y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t z z z z z z z z z z z z z z z w w w w w w w w w w w w w w w w y y y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t t z z z z z z z z z z z z z z z w w w w w w w w w w w w w w w w w y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t t z z z z z z z z z z z z z z z z w w w w w w w w w w w w w w w w w w y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w w w w w w y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t t z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w w w w w y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w w w y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w w y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x x x x
+t t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x x
+t t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x
+t t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x
+t t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w w w y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x
+t t t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w y y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x x
+t t t t t t t t z z z z z z z z z z z z z z z z z z z z z z z z z z z z z w w w w w w w w w w y y y y y y y y y y y y y y y v v v v v v v v v v v v v v v v v v v v v v v v x x x x x x x x x x x x x x
+Case #24:
+a a a a
+Case #25:
+a a a a a
+a a a a a
+a a a a a
+b b a a a
+b b b b c
+b b b b b
+b b b b b
+d d b b b
+d d b b d
+d d d d d
+d d d d d
+d d d d e
+f d d d e
+f d d d d
+g h d d i
+h h i i i
+h h i i i
+h h h i i
+h h h i i
+h h j i i
+j j j j k
+j j j l k
+j j l l l
+j j l l l
+j l l l l
+l l l l l
+l l l l l
+l l l l l
+m l l l l
+m m l l l
+m m l l l
+m m l l n
+m m m n n
+m m n n n
+n n n n n
+n n n n n
+n n n n n
+n n n n n
+n n n n n
+n n n n n
+n n n n n
+o o n n n
+o n n n n
+o o o o o
+o o o o o
+o o o o o
+o o o o o
+o o o o o
+p p p o p
+p p p p p
+p p p p p
+p p p p p
+q p p p p
+q r r r r
+q r r r r
+r r r r r
+r r r r r
+r r r s s
+r r r s s
+r r r s s
+r r r s s
+r r r s s
+r s s s s
+s s s s s
+Case #26:
+a a a a a a b b c c
+a a a a a a b b c c
+a a a a a a a b c c
+a a a a a a b b c c
+a a a a a b b b b b
+a b a a b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+b b b b b b b b b b
+Case #27:
+a a a a b b b b b b c d d d d e e e f g g g g g g h h i i i i i j j k k k k k k k k l l l l l l l
+a a a a b b b b b b c d d d d d e e e g g g g g g g h i i i i j j j k k k k k k k k l l l l l l l
+Case #28:
+a b b b c
+a d b c c
+a a e c c
+a f e c c
+a e e e c
+Case #29:
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+a a a a a
+b a a a b
+b b a b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+b b b b b
+Case #30:
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+a a a
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+b c b
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c c c
+c d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+Case #31:
+a a a a b b b c c
+a a a a b b b c c
+a a a a b b b c c
+d a a b b b b c c
+d a b b b b b c c
+e e e b b b b f f
+e e e b b b b b b
+e e e e b b b b b
+e e e e b b b b b
+e e e e g b b b b
+e e e g g g g h h
+e e g g g g h h h
+e e g g g h h h h
+e e g g g h i h h
+e e g g i i i i i
+j j g g i i i i i
+j j j i i i i i i
+j j j i i i i i i
+j j j i i i i i i
+j j j j i i k k k
+j j j j j j k k k
+j j j j j j k k k
+j j j j j j l l k
+j j j j j j l l l
+m j j j j j l l l
+n n j j o l l l l
+n n j o o o l l l
+n n o o o o o l p
+q n o o o o o l p
+q q o o o o o o p
+q r r o o o o o o
+r r r r o o o o o
+r r r r r o o o o
+s s s r r o o o o
+s s t t t t t o o
+Case #32:
+a a a a a b b b b b c c c c c c d e e e e e e f f f
+a a a g g b b b b b c c c c c c d e e e e e f f f f
+Case #33:
+a a a a a b b c c c c c d e e e f f f
+a a a a a b b c c c c d d e e e e f f
+Case #34:
+a a a b b b b b b c d d d d d d e e f f f
+a a a a b b b b b c d d d d g g g f f f f
+a a a a a b b b c c c d d g g g h f f f f
+a a a a a a a i c c c d j j g h h f f f f
+a a a a a a a i i c c c c h h h h f f f f
+Case #35:
+a b
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+c c
+c c
+d c
+d d
+e d
+e e
+e e
+e e
+e e
+e e
+e e
+e e
+e e
+f e
+f f
+f f
+f g
+g g
+g g
+g g
+g g
+g g
+g g
+h i
+i i
+i i
+i i
+j i
+j j
+j j
+j j
+j j
+j j
+k l
+k k
+k k
+k k
+m m
+m m
+Case #36:
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+Case #37:
+a a a
+a a a
+a a a
+b b c
+b b b
+b b d
+e e d
+e e e
+e e e
+f e e
+g g h
+g g h
+g g h
+g h h
+g h h
+g h h
+i j j
+i j j
+i i j
+k k l
+k k l
+k k l
+k l l
+l l l
+l l l
+l m m
+m m m
+m m m
+m m m
+Case #38:
+a a a a
+a a a a
+a a a b
+a a a b
+a a a b
+a c c c
+c c c c
+c c d d
+c d d d
+c d d d
+d d d d
+d d d e
+f f f f
+f f f f
+f f f f
+f f f f
+f f f f
+f g f f
+g g g g
+g g g g
+g g g g
+g g g g
+g g g g
+g h h h
+h h h h
+i i h h
+i i i h
+i i i i
+i i i i
+i i i i
+Case #39:
+a a a a
+b a a a
+b c c c
+b c c c
+c c c c
+c c c c
+d e c c
+d d c c
+Case #40:
+a a a a b b b c d d d
+a a a a b b b c d d d
+a a a b b b b b d d d
+a a a b b b b b b d d
+a a e e e e f b b f d
+a a e e e f f f f f f
+a a g g g f f f f f f
+a a g g g g f f f f f
+Case #41:
+a a a
+a a a
+a a a
+b b b
+Case #42:
+a b c d e f g h i j k l m
+n o p q r s t u v w x y z
+Case #43:
+a b b b c
+a d b c c
+a a a c c
+a e f c c
+a f f f c
+Case #44:
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+a a
+b b
+b b
+b b
+b b
+b b
+c b
+c b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+b b
+Case #45:
+a a a a b b b b c c d d e e e e e f f g g g h h h h h i i i i j j j j k k k k k k
+l a a b b b b b d d d d e e e e e g g g g g g h h h h i i i i j j j j j k k k k k
+Case #46:
+a a a a a a a b b b b b b b c c c c c c c c d d e e e e f f f f f f f f g g g g g g g g h h
+a a a a a a a a a b b b b b c c c c c c c d d d d e e f f f f i i i i i g g g g g g g h h h
+a a a a a a a a a a b b b b c c c c c c d d d d d d f f f f f f i i i i g g g g g g g h h h
+Case #47:
+a a a a a a a a b b b b b
+a a a a a a a b b b b b b
+c a a a a a a b b b b b b
+c c c a a a d d d d b b b
+c c c c a a d d d d b b b
+c c c c a a d d d b b b b
+Case #48:
+a a a a a a a a a a
+a a a a a a a a a a
+a a a a a a a a a a
+a a a a a a a a a a
+Case #49:
+a a b
+a a a
+a a c
+c c c
+c c c
+c c c
+c c c
+c c c
+Case #50:
+a a a b b b b c c c c c c
+a a a b b b b b c c c c c
+a a a d b b b e e c c c c
+a a d d d b e e e e c c c
+a a d d d e e e e e e e e
+Case #51:
+a a b b
+a a b b
+a a a c
+a a a c
+a d d d
+d d d d
+d d d d
+e d d d
+e d d d
+Case #52:
+a a a a a b b
+a a a a b b b
+a a a a b b b
+a c c c c b b
+d c c c c c c
+d c c c c c c
+e f c c g g g
+e e g g g g g
+e e e g g g g
+e e e g g g g
+e e e g g g g
+e e e e e g g
+Case #53:
+a b b b b c c
+a a b b b c c
+a a d b c c c
+a a e e c c c
+a f e e e g g
+Case #54:
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+c
+c
+c
+c
+c
+c
+d
+e
+e
+e
+e
+f
+f
+f
+f
+f
+f
+g
+g
+g
+g
+h
+h
+i
+i
+i
+Case #55:
+a a a a b b b b
+a a a a b b b b
+a a b b b b b b
+c c b b b b b b
+d d d e e e e e
+d d d e e e e e
+d d d d e e e e
+d d d d f f f f
+d d g g f f f f
+d g g g f f f f
+d g g h i h h h
+g g g h h h h h
+g g g h h h h h
+g g g h h h h h
+g g g g h h h h
+j g g j j h h h
+j j j j j j h h
+j j j j j j j h
+j j j j j j j j
+j j j j j j j j
+j j j j j j j j
+j j j j j j k k
+k j j k k k k k
+k k k k k k k k
+Case #56:
+a b b
+a a b
+a a a
+Case #57:
+a a b b b b b b c c c c c d d d e e e e e e e e f f f f f f f f f f g g g g h h h h h i j j k k k k l m m m m m m m m m n n o o o p p p p q
+a a r b b b b b c c c c d d d d e e e e e e e e s f f f f f f f f g g g g g h h h h h i t k k k k k l m m m m m m m m n n n n o o p p p p p
+Case #58:
+a a a b b b c c
+Case #59:
+a a a a b b c c c c c c d d d d e e e f f f g g g
+Case #60:
+a a a a a a a b b b b c c c c d d d d d d d e e e e f g g g g h h
+Case #61:
+a b b b b b c c c
+a b b b b c c c c
+Case #62:
+a a a b b b b b b c c c d d d d d d d d d e e e e e e e e e e
+a a a a b b b b c c c c f d d d d d d d d e e e e e e e e e e
+a a a a b b b c c c c c f d d d d d d d e e e e e e e e e e e
+Case #63:
+a a a a b b b b b b b b c c c d d e e e e e f f f f f f g g g g g g g h h h h h h h
+Case #64:
+a a a
+b b b
+Case #65:
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+Case #66:
+a b b b c c c d d d d d e e e e e e f
+a a a b b c c d d d d e e e e e e e f
+a a a a c c c d d d g g e e e e e h h
+a a a a c c c d g g g g g e e i h h h
+a a a a j j j j g g g g g k k k h h h
+a a a a a j j j j g g g k k k k h h h
+Case #67:
+a a a a a a a a a b
+Case #68:
+a b b b c
+a d b c c
+a a c c c
+a e f c c
+a f f f c
+Case #69:
+a b b b c
+a d b c c
+a a b c c
+a e f c c
+a f f f c
+Case #70:
+a a a a a a a a b b b b
+a a a a a a a a b b b b
+a a a a a a a a b b b b
+a a a a a a a a a b b b
+a a a a a a a a a a b c
+a a a a a a a c c c c c
+d a a a a a c c c c c c
+d a a a a e c c c c c c
+d a a e e e c c c c c c
+d e e e e e c c c c f f
+e e e e e e c f f f f f
+g g g e e e f f f f f f
+g g g g g f f f f f f f
+g g g g g g f f f f f f
+g g g g g g g f f f f f
+g g g g g g g f f f f h
+g g g g g g g i f i h h
+g g g g g g g i i i i h
+g g g g g g i i i i i h
+g g g g g g i i i i i i
+Case #71:
+a a a a a b c c
+a a a a a b c c
+a a a a a a c c
+a a a a a a c c
+a a a a a a c c
+a a a a d c c c
+a a a a c c c c
+e e e c c c c c
+e e e e c c c c
+f f e e c c c g
+f f f e c c g g
+f f f f h h i i
+f f f h h h i i
+f f f h h h i i
+f f h h h h h i
+Case #72:
+a a
+a a
+a a
+a a
+a b
+b b
+b b
+b b
+c c
+c c
+c c
+d c
+d d
+d d
+d d
+d e
+e e
+e e
+e e
+Case #73:
+a a a a a a
+a a a a a a
+a a a a a a
+a a a a a a
+a a a a a a
+a a a a a a
+a a a a a a
+a a a a a a
+a a a a a a
+b b b a a a
+b b b b b b
+b b b b b b
+b b b b b b
+b b b b b b
+b b b b b b
+b b b b b b
+b b b b b b
+Case #74:
+a a a a b b b b b b c c c c c c c c c c c c c c c d d d d d d e e e e e e e e e e e
+Case #75:
+a a a b b b c c c c c d d
+Case #76:
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+Case #77:
+a a
+a a
+b a
+Case #78:
+a a b b c d d
+a a b c c c d
+Case #79:
+a a a a b b b b b b b
+a a a a a b b b b c c
+a a a a a b b b b c c
+a a a a a b b b b c c
+a a a a b b b b b c c
+b b a a b b b b b b d
+b b b b b b b d d d d
+e b b d d d d d d d d
+e e b d d d d d d d d
+e e e e e d d d d d d
+e e e e e e e d d d d
+e e e e e e e e e d d
+e e e e e e e e e e f
+e e e e e e e e e e f
+e e e e e g g e e f f
+e e e e e g g f f f f
+e e e e g g g f f f f
+e e g g g g f f f f f
+g g g g g g g f f f f
+h g g g g g f f f f f
+h h i g g g f f f f j
+h h i i i i f k f j j
+h h h h l l l k k j j
+h h h h l l l l k j j
+h h h h l l l l l l l
+h h h h l l l l l l l
+h h h h l l l l l l m
+n n l l l l l l l m m
+n n n n l l m m m m m
+n n n n n n o o m m m
+n n n n n n o o o o o
+n n n n n o o o o o o
+Case #80:
+a a
+a a
+a a
+b b
+b b
+b b
+b b
+b b
+b b
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+d d
+d d
+d d
+d d
+d d
+d d
+d d
+d d
+d d
+e e
+f f
+f f
+f f
+f f
+g g
+g h
+i h
+i h
+i h
+i i
+i i
+i i
+i i
+i i
+i i
+i i
+j j
+k k
+k k
+k k
+k k
+k k
+k k
+k k
+k k
+k k
+l l
+Case #81:
+a a a a a a a a a a a a a
+Case #82:
+a a a a
+a a a a
+Case #83:
+a
+b
+b
+b
+b
+b
+b
+Case #84:
+a a a
+b b b
+b b b
+b b b
+b b b
+b b b
+b b b
+c c c
+c c c
+d c c
+d c c
+d c c
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+d d d
+Case #85:
+a a a a a a b b b b b
+a a a a a a b b b b b
+a a a a a b b b b b b
+a a a a a a b b b b b
+a a a a a b b b b b b
+a a a a a a b b b b b
+a a a a a a b b b b b
+a a a a a a b b b b b
+a a a a a b b b b b b
+c c c a a d d d d b b
+c c c c d d d d d d d
+c c c c d d d d d d d
+c c c d d d d d d d d
+c c c d d d d d d d d
+c c c c d d d d d d d
+c c c c d d d d d d d
+c c c d d d d d d d d
+c c d d d d d d d d d
+d d d d d d d d d d d
+d d d d d d d d d d d
+d d d d d d d d d d d
+Case #86:
+a a a b b c c c d
+a a a b e c c c c
+Case #87:
+a b b
+a a a
+a a a
+a a a
+c c c
+c c c
+d d d
+d d d
+d d d
+d d d
+e d d
+e e e
+e e e
+e e e
+e e e
+Case #88:
+a
+a
+Case #89:
+a a a a a a a a
+a a a a a a a a
+b a a a a a a a
+b c c c a a a a
+d d c e e e a f
+d d d g g e e f
+d g g g g e e f
+d g g g e e e f
+g g g e e e e f
+g g g e e e h f
+i i i e e e e j
+i i i e e e k k
+i i i i e k k k
+i i i i i k k k
+i i i i i i k k
+i i i i i i k k
+i i i l l i k m
+i i l l l l l m
+i l l l l l m m
+l l l l l l m m
+l l l l l l l m
+l l l l l n n n
+o o o o o n n n
+Case #90:
+a a a b b b b b c c d d d e e f
+Case #91:
+a a a a a b b b b b b b c c d d d e e e e e e e f f f g g g g g g g g h h h h h h h h h
+a a a a a a b b b b b c c c d d d e e e e e e e f f f g g g g g g g g h h h h h h h h h
+a a a a a a a b b b c c c c c d d e e e e e e e f f f g g g g g g g g g h i i i i h h h
+Case #92:
+a a a a a a a a b b b b b b b b b b b b b b b b b b b b c c c c c c c c c c c c d d d d d d d d d d d d d d d d d e e e e e e e e e e e f f f f g g g g g g h h h h h h h h h h h h i i i i i i i
+Case #93:
+a b b b c c d d d d e e e e e
+a a b b b b d d d d e e e e e
+a a a b b b b f f f f e e e e
+a a a a b b g f f f f h e i i
+a j j j b b f f f f f f i i i
+j j j j j b f f f f f k i i i
+j j j j j f f f f f k k k i i
+j j j j j j f l f f k k k k i
+Case #94:
+a a
+a a
+a a
+a a
+a b
+b b
+b b
+b b
+b b
+b b
+b b
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+c c
+d d
+d d
+d d
+d d
+d d
+e d
+e f
+g g
+g g
+g g
+g g
+g g
+g g
+g g
+h h
+h h
+h h
+h h
+i i
+i i
+i i
+i i
+i i
+j j
+j j
+j j
+j j
+j j
+j j
+j j
+Case #95:
+a a a a b b b b b
+c c a a a b b d d
+c c c a a a e e d
+c c f f f e e e d
+c c f f f f e e g
+c c f f f f e g g
+h c c f f g g g g
+Case #96:
+a a a a a b b c c c c c d d d e e
+a a a a a b f f f f c c d d e e e
+Case #97:
+a a a a a b b b b c c c c c d d d e e e e e e e f f f f f g g g g g h h h h h h i i i i i j j j j j j k k k k l l l l l l l l l l l l l l l l l l
+a a a a a b b b b b c c c c d d d e e e e e e e e f f f f g g g g h h h h h h h i i i i i j j j j j j k k k k l l l l l l l l l l l l l l l l l l
+Case #98:
+a b b b b c c c d
+Case #99:
+a
+a
+a
+Case #100:
+a a a
