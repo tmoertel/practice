@@ -1,3 +1,4 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 {-
 
 Solution to maze problem presented in http://neil.fraser.name/news/2013/03/16/.
@@ -142,19 +143,18 @@ extractSolution sets = Solution closedCount maxClosedArea areaReps
 
 
 viz :: Solution -> Maze -> String
-viz Solution{solnAreas = areaReps} (Maze maze) =
-  unlines $
+viz Solution{solnAreas = areaReps} (Maze maze) = unlines $
   concat . flip map [0..rmax] $ \r ->
   flip map [0..1] $ \topbot ->
   concat . flip map [0..cmax] $ \c ->
-  let areaName = case M.lookup (r, c, topbot) areaReps of
-        Just rep -> case M.lookup rep areaNames of
-          Just n -> n
+  let loc = (r, c, topbot)
+      Just areaName = (`M.lookup` areaNames) =<< M.lookup loc areaReps
+      label = sym areaName
   in case (topbot, maze ! (r, c)) of
-            (0, TLBR) -> sym areaName ++ "/"
-            (0, TRBL) -> "\\" ++ sym areaName
-            (1, TLBR) -> "/" ++ sym areaName
-            (1, TRBL) -> sym areaName ++ "\\"
+            (0, TLBR) -> label ++ "/"
+            (0, TRBL) -> "\\" ++ label
+            (1, TLBR) -> "/" ++ label
+            (1, TRBL) -> label ++ "\\"
             _         -> error "bogus map"
   where
     (_, (rmax, cmax)) = bounds maze

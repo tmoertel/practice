@@ -1,0 +1,78 @@
+
+./Grid.hs,1224
+module Main where10,11
+type CellLoc  =22,23
+type GraphLoc =23,24
+data Cell =25,26
+data Cell = TRBL --25,26
+          | TLBR --26,27
+data AreaSet =29,30
+data AreaSet = OpenSet             --29,30
+             | ClosedSet GraphLoc30,31
+data Solution =33,34
+data Solution = Solution {33,34
+data Solution = Solution { solnClosedCount   ::33,34
+                         , solnMaxClosedArea ::34,35
+                         , solnAreas         ::35,36
+type Neighbors =39,40
+newtype Maze      =41,42
+newtype Maze      = Maze      (Array41,42
+newtype MazeGraph =42,43
+newtype MazeGraph = MazeGraph (M.Map42,43
+type GraphSets =44,45
+main ::47,48
+main =48,49
+readMaze ::54,55
+readMaze s55,56
+parseCell ::63,64
+parseCell '0'64,65
+solve ::71,72
+solve maze72,73
+cellGraph ::78,79
+cellGraph (Maze79,80
+graphSets ::102,103
+graphSets (MazeGraph103,104
+unionConnectedSets ::108,109
+unionConnectedSets (MazeGraph109,110
+rep ::122,123
+rep v123,124
+extractSolution ::134,135
+extractSolution sets135,136
+viz ::144,145
+viz Solution{solnAreas145,146
+sym ::163,164
+sym n164,165
+showSoln ::170,171
+showSoln maze171,172
+testMaze ::180,181
+testMaze =181,182
+testMazeSpec ::184,185
+testMazeSpec =185,186
+
+./Setup.hs,11
+main =1,2
+
+./dist/build/autogen/Paths_vietnam_grid.hs,685
+module Paths_vietnam_grid (0,1
+catchIO ::9,10
+catchIO =10,11
+version ::13,14
+version =14,15
+bindir, libdir, datadir, libexecdir :: FilePath15,16
+bindir, libdir, datadir, libexecdir :: FilePath15,16
+bindir, libdir, datadir, libexecdir15,16
+bindir, libdir,15,16
+bindir     =17,18
+libdir     =18,19
+datadir    =19,20
+libexecdir =20,21
+getBinDir, getLibDir, getDataDir, getLibexecDir :: IO FilePath22,23
+getBinDir, getLibDir, getDataDir, getLibexecDir :: IO22,23
+getBinDir, getLibDir, getDataDir, getLibexecDir22,23
+getBinDir, getLibDir,22,23
+getBinDir =23,24
+getLibDir =24,25
+getDataDir =25,26
+getLibexecDir =26,27
+getDataFileName ::28,29
+getDataFileName name29,30
