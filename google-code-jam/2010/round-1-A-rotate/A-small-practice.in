@@ -1,0 +1,519 @@
+100
+7 3
+.......
+.......
+.......
+...R...
+...BB..
+..BRB..
+.RRBR..
+6 4
+......
+......
+.R...R
+.R..BB
+.R.RBR
+RB.BBB
+4 4
+R...
+BR..
+BR..
+BR..
+3 3
+...
+...
+...
+3 3
+B.B
+RBR
+RBR
+3 3
+RB.
+RRB
+BRB
+3 3
+R..
+BRR
+RBB
+3 3
+RB.
+RB.
+BRR
+3 3
+..R
+BRB
+BRR
+3 3
+...
+..B
+.RR
+3 3
+...
+...
+...
+3 3
+.B.
+RB.
+RRB
+3 3
+...
+...
+R.B
+3 3
+B.B
+RBR
+RBR
+3 3
+..R
+R.B
+RBB
+3 3
+...
+R.B
+R.B
+3 3
+...
+...
+...
+3 3
+BR.
+BR.
+RBR
+3 3
+BB.
+RBR
+BRR
+3 3
+...
+...
+R..
+3 3
+BR.
+BR.
+RBR
+3 3
+B..
+RBR
+BRR
+3 3
+BR.
+RB.
+RBR
+3 3
+R..
+BRB
+RRB
+3 3
+BR.
+BRB
+RBR
+3 3
+RB.
+RRB
+BRB
+3 3
+RB.
+RBB
+BRR
+3 3
+.RB
+.BR
+RRB
+3 3
+..R
+.BB
+BRR
+3 3
+.B.
+.BR
+BRR
+3 3
+RB.
+BRB
+RRB
+3 3
+RB.
+BRB
+RRB
+3 3
+B.R
+RBB
+RBR
+3 3
+BB.
+RRB
+RRB
+3 3
+R..
+R..
+BBR
+3 3
+.B.
+BR.
+BRR
+3 3
+...
+.B.
+.R.
+3 3
+RB.
+RRB
+BRB
+3 3
+.R.
+BRB
+RBR
+3 3
+...
+...
+RRB
+3 3
+.B.
+.BR
+BRR
+3 3
+RB.
+RBB
+BRR
+3 3
+B.R
+RBB
+RBR
+3 3
+...
+.RB
+BRR
+3 3
+...
+...
+.RB
+3 3
+.B.
+RB.
+RRB
+3 3
+R..
+BBR
+RBR
+3 3
+.R.
+BBR
+RBR
+3 3
+RB.
+RBB
+BRR
+3 3
+R..
+B.B
+R.R
+3 3
+RB.
+BRB
+RRB
+3 3
+.B.
+.RR
+BRB
+3 3
+B.R
+RBB
+RBR
+3 3
+.R.
+BRR
+BBR
+3 3
+RR.
+RB.
+BRB
+3 3
+..R
+.RB
+BRB
+3 3
+..B
+B.R
+BRR
+3 3
+.R.
+BBR
+BRR
+4 3
+R...
+B...
+B.B.
+RBRR
+4 3
+R..B
+BR.R
+BR.B
+RBRB
+4 3
+..B.
+..R.
+.RR.
+BRBB
+4 3
+..B.
+R.R.
+B.BB
+R.RR
+4 3
+.R.R
+BB.B
+RRBB
+RRBR
+4 3
+R.RR
+B.BR
+R.BB
+BBRR
+4 3
+R..B
+R..B
+BBRR
+BRRB
+4 3
+.B..
+.BR.
+RRB.
+BRBR
+4 3
+....
+R..B
+BBRR
+BBRR
+4 3
+R.B.
+BRR.
+RBBR
+BBRR
+4 3
+....
+...B
+RB.R
+RBBR
+4 3
+....
+RB.R
+BB.R
+BRRB
+4 3
+B...
+B...
+RR.R
+RBBR
+4 3
+..BR
+R.RR
+B.BB
+BBRR
+5 3
+BR...
+RR...
+BB...
+RRB..
+RRB.B
+5 5
+.....
+.....
+....R
+.B..B
+.BRRR
+5 3
+.....
+.....
+....B
+RR..R
+BRBRB
+5 3
+R....
+B....
+BB.R.
+RB.RR
+RR.BB
+5 3
+.....
+...R.
+...R.
+.B.BB
+.R.BR
+5 5
+.....
+.....
+.....
+.....
+.....
+5 4
+.....
+.....
+.....
+RB...
+BBRR.
+5 3
+.....
+B.R..
+R.B..
+B.R..
+RBBRR
+7 4
+.......
+.......
+.......
+B..R..R
+B..R..B
+R.BR.RB
+R.BBRBR
+7 3
+.......
+.......
+.......
+.......
+.......
+.......
+......R
+7 3
+.......
+.......
+.......
+.......
+.R.R...
+BB.BRB.
+RRBRBBR
+7 5
+..R...R
+..R...B
+..B..BR
+B.RR.BB
+BRBBBRR
+RRRBRRR
+RBRBBBB
+7 3
+.......
+.B.....
+.R.....
+.B.....
+.B.R...
+RR.R.RB
+BRRBRBB
+7 3
+.......
+.......
+.......
+.......
+.......
+.R.R...
+BB.B.RR
+7 3
+.......
+.......
+.......
+..R....
+B.B.RB.
+BRR.BR.
+RBR.RBB
+7 3
+.......
+.R.....
+.B....R
+BB.B.BB
+RR.R.RR
+BB.RRBR
+RRBBRBB
+7 3
+.......
+.......
+.......
+.......
+.....R.
+.R...RB
+RRBB.BB
+7 3
+.......
+.......
+.....B.
+.R...R.
+.R...B.
+RB...BB
+BRRBRRB
+7 3
+R......
+R......
+B......
+R...B..
+B...B..
+R.BRRBB
+BRBRRBR
+7 7
+.......
+.......
+.......
+.....B.
+.....R.
+.....B.
+RBBR.RR
+7 3
+.......
+.......
+.......
+.......
+....B..
+....B..
+R.R.RBR
+7 3
+.......
+.......
+.......
+....R..
+B.B.RR.
+B.R.BB.
+RBRBBRR
+7 3
+.......
+.......
+...R..B
+..RB.BB
+..RB.RR
+..BR.RB
+..RR.BB
+7 3
+.......
+.......
+.......
+.......
+.B...R.
+.R...R.
+BR..BB.
+7 3
+.......
+.......
+.......
+.......
+B..R..R
+BR.R.BB
+RR.B.BR
+7 5
+..R..B.
+.RB..B.
+.BRR.R.
+.RRB.B.
+.BRR.R.
+BBRBBR.
+RBBBRBR
+7 4
+.......
+.......
+.......
+.......
+.......
+.......
+BR.RB..
+7 5
+.......
+.......
+.......
+.......
+.......
+.R.....
+BBBRRRB
