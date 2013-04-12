@@ -42,56 +42,61 @@ def main():
 
 
 def solve(problem):
-    fave_custs = collections.defaultdict(set)
-    for c, faves in problem.cust_prefs.items():
-        for fave in faves:
-            fave_custs[fave].add(c)
-    wanted_malts = set(shake for shake, is_malted in fave_custs if is_malted)
+    N, M, cust_faves = problem
 
-    def all_satisfied(malts):
-        return all(any(is_malted == (1 if shake in malts else 0)
-                       for shake, is_malted in faves)
-                   for faves in problem.cust.prevs.iteritems())
+    max_cust_flavors = collections.defaultdict(int)
+    for cust, shakes in cust_faves.iteritems():
+        for flavor, _ in shakes:
+            max_cust_flavors[cust] = max(max_cust_flavors[cust], flavor)
 
-    lo = 0
-    hi = [len(wanted_malts)]
-
-    def search(shake, malts):
-        if all_satisfied(malts):
+    def search(n, malts, unsatisfied_custs):
+        if len(malts) > malt_max or len(malts) + N - n < malt_max:
+            return None
+        if not unsatisfied_custs:
             return malts
+        if any(n > max_cust_flavors[cust] for cust in unsatisfied_custs):
+            return None
+        nomalt_satisfied_custs = set()
+        malt_satisfied_custs = set()
+        for cust in unsatisfied_custs:
+            if (n, False) in cust_faves[cust]:
+                nomalt_satisfied_custs.add(cust)
+            if (n, True) in cust_faves[cust]:
+                malt_satisfied_custs.add(cust)
+        soln = search(n + 1, malts, unsatisfied_custs - nomalt_satisfied_custs)
+        if soln is not None:
+            return soln
+        return search(n + 1, malts.union(set([n])),
+                      unsatisfied_custs - malt_satisfied_custs)
 
-
-
-    if soln is None:
-        return "IMPOSSIBLE"
-    return ' '.join(str(is_malt) for is_malt in soln[1])
-
+    malts = search(1, set(), set(xrange(M)))
+    if malts is not None:
+        return ' '.join(str(int(flavor in malts)) for flavor in xrange(1, N+1))
+    return 'IMPOSSIBLE'
 
 
 def read_problems(lines):
-    N = int(lines.next())
-    for _ in xrange(N):
+    C = int(lines.next())
+    for _ in xrange(C):
         yield read_problem(lines)
 
 
 def read_problem(lines):
-    n_flavors = int(lines.next())
-    n_customers = int(lines.next())
-    cust_prefs = read_cust_prefs(n_customers, lines)
-    return Problem(n_flavors, n_customers, cust_prefs)
+    N = int(lines.next())  # flavor count
+    M = int(lines.next())  # customer count
+    cust_faves = read_cust_faves(M, lines)
+    return N, M, cust_faves
 
 
-def read_cust_prefs(n_customers, lines):
-    prefs = {}
-    for c in xrange(1, n_customers + 1):
-        cust_pref = set()
-        prefs[c] = cust_pref
+def read_cust_faves(M, lines):
+    faves = collections.defaultdict(set)
+    for cust in xrange(M):
         pref_spec = map(int, lines.next().split())
         T = pref_spec.pop(0)
         spec_items = iter(pref_spec)
         for _ in xrange(T):
-            cust_pref.add((spec_items.next(), spec_items.next()))
-    return prefs
+            faves[cust].add((spec_items.next(), bool(spec_items.next())))
+    return faves
 
 
 if __name__ == '__main__':
