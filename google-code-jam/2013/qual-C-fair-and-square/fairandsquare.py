@@ -58,9 +58,9 @@ def isqrt(x, want_upper_bound=False):
             return mid
 
 def palindromes(ndigits, min_leading_digit=1):
-    digits = xrange(min_leading_digit, 10)
     if ndigits == 0:
         return [0]
+    digits = range(min_leading_digit, 10)
     if ndigits == 1:
         return digits
     def pals2(ndigits):
@@ -69,9 +69,22 @@ def palindromes(ndigits, min_leading_digit=1):
         if ndigits == 1:
             return 10, range(10)
         mul, ps = pals2(ndigits - 2)
-        return 100 * mul, [10*mul*i + 10*p + i for i in xrange(10) for p in ps]
+        def gen():
+            for p in ps:
+                yield 10*p
+            for i in xrange(1, 10):
+                for p in pals2(ndigits - 2)[1]:
+                    yield 10*mul*i + 10*p + i
+        return 100 * mul, gen()
     mul, ps = pals2(ndigits - 2)
-    return (10*mul*i + 10*p + i for i in digits for p in ps)
+    def gen():
+        i = digits[0]
+        for p in ps:
+            yield 10*mul*i + 10*p + i
+        for i in digits[1:]:
+            for p in pals2(ndigits - 2)[1]:
+                yield 10*mul*i + 10*p + i
+    return gen()
 
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
