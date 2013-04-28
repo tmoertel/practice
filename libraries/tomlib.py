@@ -10,6 +10,7 @@ Tom Moertel <tom@moertel.com>
 # decorators
 
 import functools
+import sys
 
 def memoize(f):
     """Make a memoized version of f that returns cached results."""
@@ -46,21 +47,62 @@ def trace(f, printer=None):
 
 # numeric functions
 
-def find_int_by_bisection(f, lo, hi, goal):
-    """Find maximal int x in [lo, hi] such that f(x) <= goal."""
-    if goal < f(lo):
-        raise ValueError('solution is below lower bound')
-    if goal > f(hi):
-        raise ValueError('solution is above upper bound')
+EPSILON = sys.float_info.epsilon ** 0.5  # default to half of system precision
+
+def find_real_by_newtons_method(f, f_prime, x, y, e=EPSILON):
+    """From a guess x, find an improved x within e of the true soln f(x) = y.
+
+    You must supply f_prime, the first derivative of f.
+
+    Caveats: This method may converge slowly if f(x) - y = 0 has roots
+    with multiplicity > 1.  This method may fail outright if the first
+    derivative of f has zeros in the region of interest.  Use instead
+    find_real_by_bisection for slower but more robust convergence.
+
+    """
+    update = e
+    while abs(update) >= e:
+        update = (y - f(x)) / f_prime(x)
+        x += update
+    return x
+
+def find_real_by_bisection(f, lo, hi, y, e=EPSILON):
+    """Find x in [lo, hi] such that f(x) <= y < f(x + e).
+
+    Note: f must be monotonic within the range [lo, hi].
+
+    """
+    _check_bisection_bounds(f, lo, hi, y)
+    while lo < hi:
+        mid = (lo + hi) / 2.0
+        if f(mid) <= y:
+            lo = mid + e
+        else:
+            hi = mid - e
+    return lo if f(lo) <= y else lo - e
+
+def find_int_by_bisection(f, lo, hi, y):
+    """Find maximal int x in [lo, hi] such that f(x) <= y.
+
+    Note: f must be monotonic within the range [lo, hi].
+
+    """
+    _check_bisection_bounds(f, lo, hi, y)
     while lo < hi:
         mid = lo + ((hi - lo) >> 1)
-        if f(mid) <= goal:
+        if f(mid) <= y:
             lo = mid + 1
         else:
             hi = mid - 1
-    if f(lo) <= goal:
-        return lo
-    return lo - 1
+    return lo if f(lo) <= y else lo - 1
+
+def _check_bisection_bounds(f, lo, hi, y):
+    if lo > hi:
+        raise ValueError('lower bound is above upper bound')
+    if y < f(lo):
+        raise ValueError('solution is below lower bound')
+    if y > f(hi):
+        raise ValueError('solution is above upper bound')
 
 def isqrt(y):
     """Find maximal int x > 0 such that x * x <= y."""
@@ -253,17 +295,44 @@ def test_isqrt():
     from nose.tools import raises
     raises(ValueError)(isqrt)(-1)
 
+def test_find_real_by_newtons_method():
+    # use +/- inverse square root as oracle
+    scenarios = [[ 1, lambda x:  x*x, lambda x:  2*x],
+                 [-1, lambda x: -x*x, lambda x: -2*x]]
+    e = EPSILON
+    for sign, f, f_prime in scenarios:
+        y = sign * e
+        while abs(y) < 100.0:
+            x = find_real_by_newtons_method(f, f_prime, 1.0, y, e)
+            assert ((f(x) <= y and (f(x + e) > y or f(x - e) > y)) or
+                    (f(x) >= y and (f(x + e) < y or f(x - e) < y)))
+            y *= 1.1
+
+def test_find_real_by_bisection():
+    HIGH = 100.0
+    def f(x):
+        return x * x
+    def check(y, in_range):
+        while in_range(y):
+            x = find_real_by_bisection(f, 0.0, HIGH, y)
+            assert f(x) <= y < f(x + EPSILON)
+            y *= y
+    check(1.0 - EPSILON, lambda y: y > EPSILON)
+    check(1.0 + EPSILON, lambda y: y < HIGH)
+    from nose.tools import raises
+    raises(ValueError)(find_real_by_bisection)(f, 1.0, 0.0, 2.0)  # lo > hi
+    raises(ValueError)(find_real_by_bisection)(f, 2.0, 3.0, 2.0)  # f(lo) > y
+    raises(ValueError)(find_real_by_bisection)(f, 2.0, 3.0, 9.9)  # f(hi) < y
+
 def test_find_int_by_bisection_exc():
     """find_by_bisection must report out-of-bounds errors."""
     # exceptional cases (normal cases are tested by test_isqrt)
     def identity(x):
         return x
     from nose.tools import raises
-    @raises(ValueError)
-    def check_bound(x):
-        return find_int_by_bisection(identity, 0, 5, x)
-    check_bound(-1)  # below lower bound
-    check_bound(6)   # above upper bound
+    raises(ValueError)(find_int_by_bisection)(identity, 1, 0, 0)  # lo > hi
+    raises(ValueError)(find_int_by_bisection)(identity, 1, 2, 0)  # f(lo) > y
+    raises(ValueError)(find_int_by_bisection)(identity, 1, 2, 3)  # f(hi) < y
 
 def test_fast_pow():
     for x in xrange(10):
