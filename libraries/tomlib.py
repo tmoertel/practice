@@ -68,12 +68,11 @@ def mk_dot_product_mod(m):
     """Make a dot-product function that computes mod m."""
     def dot_product_mod(u, v):
         return sum((u[i] * v[i]) % m for i in xrange(len(u))) % m
-    dot_product_mod.__doc__ = ("Compute dot product of equal-length vectors "
-                               "u and v (mod %r)." % m)
     return dot_product_mod
 
-def dot_product_mod(u, v, n):
-    return mk_dot_product_mod(n)(u, v)
+def dot_product_mod(u, v, m):
+    """Compute dot product of equal-length vectors u and v (mod m)."""
+    return mk_dot_product_mod(m)(u, v)
 
 
 # matrices
@@ -114,6 +113,61 @@ def matrix_pow_mod(A, n, m):
     return fast_gpow(A, n, mk_matrix_mul(mk_dot_product_mod(m)), None)
 
 
+# number theory
+
+from bisect import bisect_right
+
+def primes_upto(n):
+    """Get an increasing list of all primes <= n.
+
+    Prefer primes_upto_at_least if you can tolerate extra primes > n.
+    """
+    global PRIMES, PRIME_TABLE_CUTOFF
+    if n > PRIME_TABLE_CUTOFF:
+        PRIME_TABLE_CUTOFF *= 2
+        PRIMES = _prime_sieve(PRIME_TABLE_CUTOFF)
+    return PRIMES[:bisect_right(PRIMES, n)]
+
+def primes_upto_at_least(n):
+    """Get an increasing list of all primes <= m for some m >= n."""
+    return PRIMES if n <= PRIME_TABLE_CUTOFF else primes_upto(n)
+
+def _prime_sieve(n):
+    """Get an increasing list of all primes <= n."""
+    candidates = [True] * (n + 1)
+    primes = []
+    for i in xrange(2, n + 1):
+        if candidates[i]:
+            primes.append(i)
+            for j in xrange(i + i, n + 1, i):
+                candidates[j] = False
+    return primes
+
+PRIME_TABLE_CUTOFF = 2**16
+PRIMES = _prime_sieve(PRIME_TABLE_CUTOFF)
+
+def prime_factors(n):
+    """Get an ordered list of the prime factors of n."""
+    if n < 1:
+        raise ValueError('n=%r cannot have prime factors' % (n, ))
+    if n == 1:
+        return [1]
+    primes = primes_upto_at_least(isqrt(n) + 1)
+    factors = []
+    for p in primes:
+        if p * p > n:
+            break
+        while True:
+            q, r = divmod(n, p)
+            if r:
+                break
+            factors.append(p)
+            n = q
+    if n > 1:
+        factors.append(n)
+    return factors
+
+
 # tests
 
 def test_isqrt():
@@ -152,8 +206,47 @@ def test_fast_gpow():
         for n in xrange(10):
             assert x**n == fast_gpow(x, n, mul, 1)
 
+def test_matrix_pow_():
+    A = [[6, -4], [1, 0]]
+    A1K1 = matrix_pow(A, 1001)
+    assert ([[A1K1[0][0] % 371, A1K1[0][1] % 371],
+             [A1K1[1][0] % 371, A1K1[1][1] % 371]] == [[131, 286], [114, 189]])
+    assert matrix_pow(A, 0) == identity_matrix(2)
+
 def test_matrix_pow_mod():
     A = [[6, -4], [1, 0]]
     A1K1 = matrix_pow_mod(A, 1001, 371)
     assert A1K1 == [[131, 286], [114, 189]]
     assert matrix_pow_mod(A, 0, 371) == identity_matrix(2)
+
+def test_prime_factors():
+    assert prime_factors(1) == [1]
+    for m in PRIMES[:5]:
+        for n in xrange(1, 10):
+            factors = prime_factors(m**n)
+            assert all(f == m for f in factors)
+            assert len(factors) == n
+    from operator import mul
+    for n in xrange(2, 1000):
+        assert reduce(mul, prime_factors(n)) == n
+    from nose.tools import raises
+    raises(ValueError)(prime_factors)(-1)
+    raises(ValueError)(prime_factors)(0)
+
+def test_primes_upto():
+    primes = _prime_sieve(PRIME_TABLE_CUTOFF + 1000)
+    l = len(PRIMES)
+    for i, p in list(enumerate(primes, 1))[l-10:l+10]:
+        ps = primes_upto(p)
+        assert p in ps
+        assert len(ps) == i
+        assert ps == primes[:i]
+
+def test_primes_upto_at_least():
+    primes = _prime_sieve(PRIME_TABLE_CUTOFF + 1000)
+    l = len(PRIMES)
+    for i, p in list(enumerate(primes, 1))[l-10:l+10]:
+        ps = primes_upto_at_least(p)
+        assert p in ps
+        assert len(ps) >= i
+        assert ps[:i] == primes[:i]
