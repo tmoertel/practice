@@ -127,10 +127,7 @@ def test_isqrt():
             assert (x + 1) * (x + 1) > y  # must be maximal
     # exceptional cases
     from nose.tools import raises
-    @raises(ValueError)
-    def check_negative():
-        return isqrt(-1)
-    check_negative()
+    raises(ValueError)(isqrt)(-1)
 
 def test_find_int_by_bisection_exc():
     """find_by_bisection must report out-of-bounds errors."""
