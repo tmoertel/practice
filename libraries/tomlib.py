@@ -7,6 +7,43 @@ Tom Moertel <tom@moertel.com>
 
 """
 
+# decorators
+
+import functools
+
+def memoize(f):
+    """Make a memoized version of f that returns cached results."""
+    cache = {}
+    @functools.wraps(f)
+    def g(*args):
+        ret = cache.get(args, cache)
+        if ret is cache:
+            ret = cache[args] = f(*args)
+        return ret
+    return g
+
+def trace(f, printer=None):
+    """Make a version of f that prints a trace of its calls."""
+    fnm = f.__name__
+    depth = [0]
+    def default_printer(depth, fnm, args, ret):
+        print '%s%s%r => %r' % ('  ' * depth, fnm, args, ret)
+    printer = printer or default_printer
+    @functools.wraps(f)
+    def g(*args):
+        depth[0] += 1
+        try:
+            ret = f(*args)
+        except Exception as e:
+            ret = e
+            raise
+        finally:
+            depth[0] -= 1
+            printer(depth[0], fnm, args, ret)
+        return ret
+    return g
+
+
 # numeric functions
 
 def find_int_by_bisection(f, lo, hi, goal):
@@ -169,6 +206,39 @@ def prime_factors(n):
 
 
 # tests
+
+def test_memoize():
+    counters = [0] * 5
+    def f(i):
+        counters[i] += 1
+        return counters[i]
+    for i in xrange(5):
+        assert f(i) != f(i)  # un-memoized f returns changing values
+    f = memoize(f)
+    for i in xrange(5):
+        assert f(i) == f(i)  # memoized f must return cached values
+
+def test_trace():
+    from nose.tools import raises
+    output = []
+    def recorder(*args):
+        output.append(args)
+    ex = Exception('Bang!')
+    def exploder():
+        raise ex
+    exploder = trace(exploder, recorder)
+    raises(Exception)(exploder)()
+    assert output == [(0, 'exploder', (), ex)]
+    output[:] = []  # reset flight recorder for next test
+    def factorial(i):
+        if i < 2:
+            return i
+        return i * factorial(i - 1)
+    factorial = trace(factorial, recorder)
+    factorial(3)
+    assert output == [(2, 'factorial', (1,), 1),
+                      (1, 'factorial', (2,), 2),
+                      (0, 'factorial', (3,), 6)]
 
 def test_isqrt():
     """isqrt(y) must return maximal x such that 0 <= x*x <= y."""
