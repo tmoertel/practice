@@ -7,31 +7,19 @@
 """Solution to "Manage Your Energy" Code Jam problem
 http://code.google.com/codejam/contest/2418487/dashboard#s=p1
 
+Claim: If for problem size k - 1 we know (1) the maximum gain g_{k-1},
+(2) how much energy e is available afterward (including recharge), and
+also (3) how much input slack s_i remains in each previous activity i
+< k, we can extend the solution to size k by filling in k's input
+slack to the maximum extent possible with energy obtained by spending
+less on the least-valuable activities i < k with v_i < v_k and
+transferring that energy to activity k through the input slack in the
+activities between, reducing their slack by the amount transferred.
+
 """
 
 import fileinput
-import functools
-
-
-def memoize(fn):
-    cache = dict()
-    @functools.wraps(fn)
-    def memoized_fn(*args):
-        if args in cache:
-            return cache[args]
-        return cache.setdefault(args, fn(*args))
-    return memoized_fn
-
-def trace(fn):
-    @functools.wraps(fn)
-    def traced_fn(*args):
-        try:
-            res = fn(*args)
-        except Exception as e:
-            res = e
-        print '%s%r => %r' % (fn.__name__, args, res)
-        return res
-    return traced_fn
+import heapq
 
 
 def main():
@@ -40,15 +28,29 @@ def main():
         print 'Case #%r: %r' % (i, s)
 
 def solve(problem):
-    E, R, N, vs = problem
-    @memoize
-    def max_gain(e, i):
-        if i == N:
-            return 0
-        v = vs[i]
-        return max(v * e_in + max_gain(min(E, e - e_in + R), i + 1)
-                   for e_in in xrange(0, e + 1))
-    return max_gain(E, 0)
+    E, R, _N, vs = problem
+    trades = []
+    slacks = []
+    gain = 0
+    e = E
+    for i, v in enumerate(vs):
+        slacks.append(E - e)
+        while e < E and trades and trades[0][0] <= v:
+            v1, i1, e1 = heapq.heappop(trades)
+            slack = min(slacks[i1 + 1:])
+            if not slack:
+                continue  # remove trade since it's unusable
+            e_transferred = min(E - e, e1, slack)
+            e += e_transferred
+            gain -= v1 * e_transferred
+            for j in xrange(i1 + 1, i + 1):
+                slacks[j] -= e_transferred
+            if e_transferred < e1:
+                heapq.heappush(trades, (v1, i1, e1 - e_transferred))
+        gain += v * e
+        heapq.heappush(trades, (v, i, e))
+        e = R
+    return gain
 
 def read_problems(lines):
     T = int(lines.next())
