@@ -246,6 +246,21 @@ def prime_factors(n):
         factors.append(n)
     return factors
 
+# disjoint sets
+
+def mk_union_find_domain(elems):
+    """Make union and find methods over disjoint singleton sets from elems."""
+    d = dict((e, e) for e in elems)
+    def union(u, v):
+        d[find(u)] = find(v)
+    def find(u):
+        urep = d[u]
+        if urep != u:
+            urep = d[u] = find(urep)
+        return urep
+    return union, find
+
+
 
 # tests
 
@@ -389,3 +404,31 @@ def test_primes_upto_at_least():
         assert p in ps
         assert len(ps) >= i
         assert ps[:i] == primes[:i]
+
+def test_mk_union_find_domain():
+    from random import randint, sample, shuffle
+    xs = range(100)
+    for _ in xrange(100):
+        # use a newly shuffled set of elements
+        shuffle(xs)
+        union, find = mk_union_find_domain(xs)
+        # break it into desired subsets
+        n_cuts = randint(1, len(xs))
+        cuts = sorted(sample(xrange(len(xs)), n_cuts)) + [len(xs)]
+        subsets = [xs[cuts[i - 1]:cuts[i]] for i in xrange(1, len(cuts))]
+        subsets = filter(None, subsets)
+        # join the elements of each subset
+        for subset in subsets:
+            subset = list(subset)
+            shuffle(subset)
+            for i in xrange(1, len(subset)):
+                union(subset[i - 1], subset[i])
+        # now verify:
+        def rep_elem_set(subset):
+            return set(find(e) for e in subset)
+        rep_elem_sets = map(rep_elem_set, subsets)
+        # for each subset, all elems must have the same representative elem
+        for res in rep_elem_sets:
+            assert len(res) == 1
+        # none of the disjoint subsets should share a representative element
+        assert len(reduce(set.union, rep_elem_sets)) == len(subsets)
