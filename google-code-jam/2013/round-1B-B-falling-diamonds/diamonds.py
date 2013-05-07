@@ -123,14 +123,17 @@ def solve(problem):
     return 1.0 - binom.cdf(b(i + 1) - abs(X) - 1, N - s(i), 0.5)
 
 def is_triangle_diamond(x, y, i):
+    """Test whether (x, y) locates a diamond in the complete triangle i."""
     size = b(i)
     xmax = size - y - 1
     return abs(x) <= xmax and (xmax + x) % 2 == 0
 
 def s(i):
+    """Get the size in diamonds of the complete triangle i."""
     return i * (2*i - 1)
 
 def b(i):
+    """Get the base length in diamonds of the complete triangle i."""
     if i < 1:
         return 0
     return 2 * i - 1
