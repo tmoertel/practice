@@ -7,12 +7,34 @@
 """Solution to "Garbled Email" Code Jam problem
 https://code.google.com/codejam/contest/2434486/dashboard#s=p2
 
+The logic behind this solution is straightforward, but the code is a
+little convoluted by our need to work around Python's recursion
+limitations.  Here's the easier-to-follow recursive version:
+
+def solve(words, S):
+    N = len(S)
+    dead_penalty = sys.maxint >> 1
+    @memoize
+    def mincost(i, subst_lockout, tree):
+        if i == N:
+            return 0 if EOW in tree else dead_penalty
+        def possibilities():
+            yield dead_penalty
+            if EOW in tree:
+                yield mincost(i, subst_lockout, words)
+            if S[i] in tree:
+                yield mincost(i + 1, max(0, subst_lockout - 1), tree[S[i]])
+            if subst_lockout == 0:
+                for l in LETTERS:
+                    if l != S[i] and l in tree:
+                        yield 1 + mincost(i + 1, 4, tree[l])
+        return min(possibilities())
+    return mincost(0, 0, words)
+
 """
 
-from collections import defaultdict
 import fileinput
-from heapq import heappop, heappush
-
+import sys
 
 LETTERS = ''.join(chr(i) for i in xrange(ord('a'), ord('z') + 1))
 
@@ -23,30 +45,42 @@ def main():
         print 'Case #%r: %r' % (i, s)
 
 def solve(words, S):
-    frontier = [(0, len(S), 0, S, words)]
-    seen = set(frontier[0])
-    def enqueue(*state):
-        if state not in seen:
-            seen.add(state)
-            heappush(frontier, state)
-    while frontier:
-        cost, slen, subst_lockout, s, t = heappop(frontier)
-        # have we reached the end of the message?
-        if not s:
-            if EOW in t:
-                return cost
+    N = len(S)
+    dead_penalty = sys.maxint >> 1
+
+    # the following is an ode to Python's tragic lack of tail-call elimination
+
+    cache = {None: 0}
+    root = (0, 0, words)
+    stack = [(root, 0, root)]
+    def push(*args):
+        stack.append(args)
+    while stack:
+        dest, incr, cell = job = stack.pop()
+        # if the answer to this job is known, use it
+        if cell in cache:
+            cache[dest] = min(cache.get(dest,dead_penalty), cache[cell] + incr)
             continue
-        # have we reached the end of a dictionary word?
-        if EOW in t:
-            enqueue(cost, slen, subst_lockout, s, words)
-        # consume the next character
-        c, s = s[0], s[1:]
-        if c in t:
-            enqueue(cost, slen - 1, min(0, subst_lockout + 1), s, t[c])
+        # otherwise, expand this job into its subjobs and let them run
+        push(*job)
+        push(cell, dead_penalty, None)  # default the cell to a dead end
+        i, subst_lockout, tree = cell
+        # are we at the end of the message?
+        if i == N:
+            cache[cell] = 0 if EOW in tree else dead_penalty
+            continue
+        # is there a possible word ending here?
+        if EOW in tree:
+            push(cell, 0, (i, subst_lockout, words))
+        # is the current char part of a dictionary word?
+        if S[i] in tree:
+            push(cell, 0, (i + 1, max(0, subst_lockout - 1), tree[S[i]]))
+        # can we change the current char to part of a dictionary word?
         if subst_lockout == 0:
             for l in LETTERS:
-                if l != c and l in t:
-                    enqueue(cost + 1, slen - 1, -4, s, t[l])
+                if l != S[i] and l in tree:
+                    push(cell, 1, (i + 1, 4, tree[l]))
+    return cache[root]
 
 class EOW(object):
     """End-of-word marker."""
@@ -54,13 +88,13 @@ class EOW(object):
         return '$'
 EOW = EOW()
 
-class iddict(defaultdict):
+class iddict(dict):
     def __hash__(self):
         return id(self)
 
 def prefix_tree(words):
     """Build a prefix tree representing a set of words."""
-    d = iddict(iddict)
+    d = iddict()
     for word in words:
         t = d
         for c in word:
