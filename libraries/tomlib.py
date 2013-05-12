@@ -192,6 +192,21 @@ def matrix_pow_mod(A, n, m):
     return fast_gpow(A, n, mk_matrix_mul(mk_dot_product_mod(m)), None)
 
 
+# combinatorics
+
+def binomial(n, k):
+    """Compute binomial coefficient "n choose k"."""
+    # use identity C(n, k) = C(n - 1, k - 1) * n // k
+    if k > n - k:
+        k = n - k
+    p = 1
+    n = n - k + 1
+    for k in xrange(1, k + 1):
+        p = p * n // k
+        n += 1
+    return p
+
+
 # number theory
 
 from bisect import bisect_right
@@ -432,3 +447,9 @@ def test_mk_union_find_domain():
             assert len(res) == 1
         # none of the disjoint subsets should share a representative element
         assert len(reduce(set.union, rep_elem_sets)) == len(subsets)
+
+def test_binomial():
+    from math import factorial as fact
+    for n in xrange(20):
+        for k in xrange(n + 1):
+            assert binomial(n, k) == fact(n) // fact(k) // fact(n - k)
