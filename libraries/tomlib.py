@@ -195,15 +195,29 @@ def matrix_pow_mod(A, n, m):
 # combinatorics
 
 def binomial(n, k):
-    """Compute binomial coefficient "n choose k"."""
+    """Compute binomial coefficient "n choose k" for integers n and k."""
     # use identity C(n, k) = C(n - 1, k - 1) * n // k
     if k > n - k:
         k = n - k
+    if k < 0:
+        return 0
     p = 1
     n = n - k + 1
     for k in xrange(1, k + 1):
         p = p * n // k
         n += 1
+    return p
+
+def real_binomial(r, k):
+    """Compute binomial coefficient "r choose k" for real r and integer k."""
+    # use identity C(r, k) = C(r - 1, k - 1) * r / k
+    if k < 0:
+        return 0
+    p = 1.0
+    r = r - k + 1
+    for k in xrange(1, k + 1):
+        p = p * r / k
+        r += 1
     return p
 
 
@@ -449,7 +463,21 @@ def test_mk_union_find_domain():
         assert len(reduce(set.union, rep_elem_sets)) == len(subsets)
 
 def test_binomial():
+    approx_eq = lambda x, y: abs(x - y) < EPSILON
+    from operator import __eq__
     from math import factorial as fact
-    for n in xrange(20):
-        for k in xrange(n + 1):
-            assert binomial(n, k) == fact(n) // fact(k) // fact(n - k)
+    assert isinstance(real_binomial(1, 1), float)
+    for f, eq in ((binomial, __eq__), (real_binomial, approx_eq)):
+        for n in xrange(20):
+            for k in xrange(n + 10):
+                if k > n:
+                    assert eq(f(n, k), 0)
+                else:
+                    assert eq(f(n, k), fact(n) / fact(k) / fact(n - k))
+                    if k > 0 :
+                        assert eq(f(n, -k), 0)
+    # To prove correct our implementation of the binomial coefficient
+    # C(r, k) for real r, int k, we only need one non-integer test
+    # case beyond our tests for r = integer n above.  This case shows
+    # that we're not using floor division.
+    assert approx_eq(real_binomial(-5.5, 2), 17.875)
