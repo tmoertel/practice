@@ -9,18 +9,47 @@ https://code.google.com/codejam/contest/2437488/dashboard#s=p1
 
 """
 
+import collections
 import fileinput
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print 'Case #%r: %s' % (i, s)
 
 def solve(problem):
-    # dynamic programming for making change?
     X, Y = problem
-    soln = None  # IMPORTANT! OUTPUT FOR LARGE PROBLEM IS DIFFERENT !!!
-    return soln
+    # breadth-first search
+    visited = set()
+    frontier = collections.deque([(0, 0, 1, None)])
+    def schedule(x, y, step, path):
+        if (x, y, step) not in visited:
+            visited.add((x, y, step))
+            frontier.append((x, y, step, path))
+    schedule(0, 0, 1, None)
+    while frontier:
+        x, y, step, path = frontier.popleft()
+        if (x, y) == (X, Y):
+            break  # found solution
+        path = ((x, y), path)
+        for x1, y1 in ((x, y-step), (x, y+step), (x-step, y), (x+step, y)):
+            schedule(x1, y1, step+1, path)
+    # backtrack along the solution path to get the directions
+    def unwind(path):
+        px, py = X, Y
+        while path is not None:
+            (x, y), path = path
+            if x < px:
+                d = 'E'
+            elif x > px:
+                d = 'W'
+            elif y < py:
+                d = 'N'
+            else:
+                d = 'S'
+            yield d
+            px, py = x, y
+    return ''.join(reversed(list(unwind(path))))
 
 def read_problems(lines):
     T = int(lines.next())
