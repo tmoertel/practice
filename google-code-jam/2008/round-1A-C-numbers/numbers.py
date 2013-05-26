@@ -9,8 +9,8 @@
 http://code.google.com/codejam/contest/32016/dashboard#s=p2
 
 We want C_n = (3 + √5)^n mod 1000, but when n is large, the √5 term is
-going to expensive to maintain with necessary precision.  Further, it
-would be nice to get rid of that term altogether so we could use
+going to be expensive to maintain with necessary precision.  Further,
+it would be nice to get rid of that term altogether so we could use
 integer operations exclusively.
 
 So let's consider D = (3 - √5), the conjugate to C = (3 + √5).  Since
