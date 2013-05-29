@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 #
 # Tom Moertel <tom@moertel.com>
 # 2013-03-31
@@ -7,32 +8,30 @@
 """Solution to "Milkshakes" problem
 http://code.google.com/codejam/contest/32016/dashboard#s=p1
 
-Note that this problem is equivalent to the following binary
-integer programming problem:
+Claim 1.  If all customers like at least one unmalted shake, making
+all batches unmalted satisfies all customers.
 
-Let:  i         = 1, 2, ... #Flavors
-      j         = 1, 2, ... #Customers
-      k         = {0 = unmalted, 1 = malted}
-      m_i       = 1 if batch for flavor i is to be malted; else 0
-      p_{i,j,k} = 1 if customer j likes flavor i with malt status k; else 0
+Claim 2.  If a customer's only like is a malted shake, and if there is
+a solution, then in that solution the batch for that shake must be
+prepared malted.
 
-Minimize sum_i{m_i}
-s.t.     forall j. sum_i{p_{i,j,{m_i}}} > 0
-
-
-m_1 - m_2 > -1
+In light of these claims, we can arrive at an optimal solution by
+finding a customer whose only like is a malted shake, making the
+corresponding batch malted, and removing from the problem all
+customers satisfied by that choice, resulting in a new smaller
+problem, to which we can apply the same strategy.  If we can find no
+such customer, all remaining customers (by Claim 1) can be satisfied
+by unmalted batches, and we have a solution, and it must be optimal
+since we have made no malted batches but those strictly required
+(Claim 2).  However if making one of the required malted batches
+eliminates the last chance to satisfy some other customer, no solution
+is possible.
 
 """
-
-
 
 import collections
 import fileinput
 import sys
-
-
-Problem = collections.namedtuple('Problem', 'n_flavors n_customers cust_prefs')
-
 
 def main():
     sys.setrecursionlimit(2000)
@@ -40,64 +39,58 @@ def main():
         s = solve(p)
         print 'Case #%r: %s' % (i, s)
 
-
 def solve(problem):
-    N, M, cust_faves = problem
-
-    max_cust_flavors = collections.defaultdict(int)
-    for cust, shakes in cust_faves.iteritems():
-        for flavor, _ in shakes:
-            max_cust_flavors[cust] = max(max_cust_flavors[cust], flavor)
-
-    def search(n, malts, unsatisfied_custs):
-        if len(malts) > malt_max or len(malts) + N - n < malt_max:
-            return None
-        if not unsatisfied_custs:
-            return malts
-        if any(n > max_cust_flavors[cust] for cust in unsatisfied_custs):
-            return None
-        nomalt_satisfied_custs = set()
-        malt_satisfied_custs = set()
-        for cust in unsatisfied_custs:
-            if (n, False) in cust_faves[cust]:
-                nomalt_satisfied_custs.add(cust)
-            if (n, True) in cust_faves[cust]:
-                malt_satisfied_custs.add(cust)
-        soln = search(n + 1, malts, unsatisfied_custs - nomalt_satisfied_custs)
-        if soln is not None:
-            return soln
-        return search(n + 1, malts.union(set([n])),
-                      unsatisfied_custs - malt_satisfied_custs)
-
-    malts = search(1, set(), set(xrange(M)))
-    if malts is not None:
-        return ' '.join(str(int(flavor in malts)) for flavor in xrange(1, N+1))
-    return 'IMPOSSIBLE'
-
+    N, _M, likes_by_cust = problem
+    likes_by_flavor = collections.defaultdict(set)
+    customers_liking_only_a_malt = []
+    for cust, likes in likes_by_cust.iteritems():
+        for flavor, is_malted in likes:
+            likes_by_flavor[flavor].add((cust, is_malted))
+        if len(likes) == 1:
+            flavor, is_malted = list(likes)[0]
+            if is_malted:
+                customers_liking_only_a_malt.append((cust, flavor))
+    malts = set()
+    while customers_liking_only_a_malt:
+        cust, flavor = customers_liking_only_a_malt.pop()
+        if cust not in likes_by_cust:
+            continue  # customer is already satisfied
+        malts.add(flavor)
+        for cust, is_malted in likes_by_flavor[flavor]:
+            if cust in likes_by_cust:
+                if is_malted:
+                    del likes_by_cust[cust]  # we've just satisfied this cust
+                else:
+                    likes_by_cust[cust].remove((flavor, is_malted))
+                    if len(likes_by_cust[cust]) == 0:
+                        return 'IMPOSSIBLE'
+                    elif len(likes_by_cust[cust]) == 1:
+                        flavor0, is_malted0 = list(likes_by_cust[cust])[0]
+                        if is_malted0:
+                            customers_liking_only_a_malt.append((cust, flavor0))
+    return ' '.join(('1' if flavor in malts else '0')
+                    for flavor in xrange(1, N + 1))
 
 def read_problems(lines):
     C = int(lines.next())
     for _ in xrange(C):
         yield read_problem(lines)
 
-
 def read_problem(lines):
     N = int(lines.next())  # flavor count
     M = int(lines.next())  # customer count
-    cust_faves = read_cust_faves(M, lines)
-    return N, M, cust_faves
+    cust_likes = read_cust_likes(M, lines)
+    return N, M, cust_likes
 
-
-def read_cust_faves(M, lines):
-    faves = collections.defaultdict(set)
+def read_cust_likes(M, lines):
+    likes = collections.defaultdict(set)
     for cust in xrange(M):
-        pref_spec = map(int, lines.next().split())
-        T = pref_spec.pop(0)
-        spec_items = iter(pref_spec)
+        like_spec = map(int, lines.next().split())
+        T = like_spec.pop(0)
+        spec_items = iter(like_spec)
         for _ in xrange(T):
-            faves[cust].add((spec_items.next(), bool(spec_items.next())))
-    return faves
-
+            likes[cust].add((spec_items.next(), bool(spec_items.next())))
+    return likes
 
 if __name__ == '__main__':
     main()
