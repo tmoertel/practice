@@ -232,7 +232,8 @@ def primes_upto(n):
     """
     global PRIMES, PRIME_TABLE_CUTOFF
     if n > PRIME_TABLE_CUTOFF:
-        PRIME_TABLE_CUTOFF *= 2
+        while PRIME_TABLE_CUTOFF < n:
+            PRIME_TABLE_CUTOFF *= 2
         PRIMES = _prime_sieve(PRIME_TABLE_CUTOFF)
     return PRIMES[:bisect_right(PRIMES, n)]
 
