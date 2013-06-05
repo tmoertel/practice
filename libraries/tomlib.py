@@ -281,7 +281,7 @@ def prime_factors(n):
 def mk_union_find_domain(elems):
     """Make union and find methods over disjoint singleton sets from elems."""
     d = dict((e, e) for e in elems)
-    r = dict((e, 1) for e in elems)  # ranks
+    r = dict((e, 1) for e in d)  # ranks
     def union(u, v):
         urep = find(u)
         vrep = find(v)
