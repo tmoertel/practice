@@ -9,9 +9,9 @@ https://code.google.com/codejam/contest/32017/dashboard#s=p2&a=0
 
 """
 
+from array import array
+import collections
 import fileinput
-
-
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
@@ -37,54 +37,52 @@ def loc_sequence(k):
         k -= 1
         card += 1
 
-# binary tree = None | Node(left_count val left right)
-class Node(object):
-    def __init__(self, left_count, val, left, right):
-        self.left_count = left_count
-        self.val = val
-        self.left = left
-        self.right = right
-    def __repr__(self):
-        def f(t, indent=0):
-            if t is None:
-                return '  ' * indent + '*'
-            left = f(t.left, indent + 1)
-            right = f(t.right, indent + 1)
-            return '\n'.join(['  ' * indent +
-                              ('%r (%r)' % (t.left_count, t.val)),
-                              left, right])
-        return f(self)
+Tree = collections.namedtuple('Tree', 'left_count_heap index_heap val_heap')
 
-def mktree(size, starting_val=1):
-    if size == 0:
-        return None
-    if size == 1:
-        return Node(1, starting_val, None, None)
-    mid = size // 2
-    left = mktree(mid, starting_val)
-    right = mktree(size - mid - 1, starting_val + mid + 1)
-    return Node(mid + 1, starting_val + mid, left, right)
+def mktree(size):
+    depth = 1
+    while 2**depth - 1 < size:
+        depth += 1
+    zeroes = [0] * (2 ** depth + 1)
+    left_counts = array('L', zeroes)
+    indices = array('L', zeroes)
+    def init(i, size, starting_value):
+        if size == 0:
+            return
+        mid = size // 2
+        init(2 * i, mid, starting_value)
+        init(2 * i + 1, size - mid - 1, starting_value + mid + 1)
+        left_counts[i] = mid + 1
+        indices[i] = starting_value + mid
+    init(1, size, 1)
+    return Tree(left_counts, indices, array('L', zeroes))
 
 def assign_card(tree, index, card):
-    if tree.left_count < index:
-        assign_card(tree.right, index - tree.left_count, card)
-    elif tree.left_count > index:
-        tree.left_count -= 1
-        assign_card(tree.left, index, card)
-    else:
-        tree.left_count -= 1
-        if not isinstance(tree.val, tuple):
-            tree.val = (tree.val, card)
+    counts = tree.left_count_heap
+    values = tree.val_heap
+    i = 1  # start at root
+    while True:
+        c = counts[i]
+        if c < index:
+            (i, index) = (2 * i + 1, index - c)
+        elif c == index and values[i] == 0:
+            counts[i] -= 1
+            values[i] = card
+            break
         else:
-            assign_card(tree.left, index, card)
+            counts[i] -= 1
+            i = 2 * i
 
 def get_card(tree, size, index):
-    mid = size // 2
-    if index <= mid:
-        return get_card(tree.left, mid, index)
-    if index == mid + 1:
-        return tree.val[1]
-    return get_card(tree.right, size - mid - 1, index - mid - 1)
+    i = 1  # start at root
+    while True:
+        mid = size // 2
+        if index <= mid:
+            (i, size) = (2 * i, mid)
+        elif index == mid + 1:
+            return tree.val_heap[i]
+        else:
+            (i, size, index) = (2 * i + 1, size - mid - 1, index - mid - 1)
 
 def read_problems(lines):
     T = int(lines.next())
