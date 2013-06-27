@@ -7,28 +7,24 @@
 """Solution to "Ticket Swapping" Code Jam problem
 https://code.google.com/codejam/contest/2442487/dashboard
 
-As a first stab at solving the problem, think about a single
-passenger.  When an exiting customer swaps to get the card that
-minimizes his fee, the customer on the other end of that swap ends up
-with a card that increases her fee.  Is the benefit to him greater
-than the cost to her?
+Since all passengers must enter and exit at their normal stops, the
+only thing that can affect the city's loss is swapping entry cards.
+For a swap to have any effect, it must be between people exiting at
+different stops and for cards obtained at different stops.
 
-To answer this question, let us think about how fees are calculated.
-On a subway line of N stations, the fee for presenting a card that
-claims a ride of i segments is
+To understand the effect of swaps, let us consider the usual fare for
+traveling i segments on a subway line of N stations:
 
-    p(i) = i * N - (i * (i + 1) / 2).
+    p(i) = i * N - (i * (i + 1) / 2),    0 <= i < N.
 
-Consider p over the full range of ride lengths 0 <= i < N. As i
-increases, the first term in p(i) increases by N but the second term
-decreases by (i + 1) / 2.  Since i < N, the first term dominates, and
-p(i) is strictly increasing.
+As i increases, the first term in p(i) increases by N but the second
+term decreases by (i + 1) / 2.  Since i < N, the first term dominates,
+and p(i) is strictly increasing.
 
-When an exiting customer swaps his card to get a non-exiting
-customer's more-recently taken card, his apparent ride is reduced and
-hers extended.  If his ticket was taken at stop i and hers at stop
-j > i, and if he is exiting now at stop e and she later at f > e,
-they would have paid in total
+Now consider what happens when an exiting passenger swaps his card to
+get a non-exiting passenger's more-recently taken card.  If his ticket
+was taken at stop i and hers at stop j > i, and if he is exiting now
+at stop e and she later at f > e, they would have paid in total
 
     p(e - i) + p(f - j).           (1a)
 
@@ -37,12 +33,12 @@ But, after swapping, they will instead pay
     p(e - j) + p(f - i).           (1b)
 
 Letting g = f - e and k = j - i and h = e - j, we can rewrite the
-fees to better see the effect of the swap:
+fees to see the effect of the swap:
 
     {- no swap -}
     p(e - i) + p(f - j)
-    p(e - j + k) + p(e + g - j)
-    p(h + k) + p(h + g).           (2a)
+  = p(e - j + k) + p(e + g - j)
+  = p(h + k) + p(h + g).           (2a)
 
     {- swap -}
     p(e - j) + p(f - i)
@@ -51,52 +47,51 @@ fees to better see the effect of the swap:
   = p(h) + p(h + (g + k))
   = p(h) + p((h + g) + k)          (2b)
 
-Comparing (2a) to the swapping total (2b), we see that the effect, as
-expected, is to reduce the first rider's apparent ride by k segments
-and to extend the second's by the same amount.  But *where* along the
-fare spectrum each passenger's reduction or extension has its effect
-is different.
+Comparing (2a) to the swapping total (2b), we see that the effect is
+to reduce the first rider's apparent ride by k segments and to extend
+the second's by the same amount but at g > 0 segments farther into the
+fare schedule, where changes have diminished effect.  Letting
 
-The fare effect at point h is q(h) = p(h + k) - p(h).  Since p grows
-more slowly with h for larger values of h, the growth in the -p(h)
-term dominates p(h + k), and q(h) is strictly decreasing.
+    q(h) = p(h + k) - p(h),
 
-Using q to express the total loss to the city from the card swap, we
-arrive at the formula
+the additional loss to the city is (2a) - (2b) and can be written
 
-    (total loss caused by swap) = q(h) - q(h + g).
+    q(h) - q(h + g).
 
-Since q is strictly decreasing and g > 0, we have q(h) > q(h + g) for
-all h.  Therefore, first customer's gain always exceeds the second
-customer's loss and, together, their card swap results in an
-additional loss for the city.
+Since p(h) grows more slowly with h for larger values of h, the growth
+of -p(h) dominates the growth of p(h + k) in q(h), and q(h) is
+strictly decreasing.  Therefore, q(h) > q(h + g) for all h, and a swap
+of this kind always results in an additional loss for the city.
+Further, the larger k = j - i is, the larger the loss.
 
-This result suggests that we can greedily apply the same swapping
-strategy for all customers to arrive at a maximal loss for the city.
-Can we prove that the greedy strategy works?
+This result suggests that we can apply a greedy strategy to maximize
+the city's loss:  Before exiting, each passenger swaps to obtain the
+most-recently obtained entry card available, including cards from
+people entering at the same stop.
 
-We proceed by contradiction.  Assume that when all passengers follow
-the strategy the city does *not* experience a maximal loss.  Since the
-only thing that can affect the city's loss is ticket swaps between
-people exiting at different stops, there must be some additional swap
-that can be performed to increase the city's loss further.
+Can we prove that this strategy leads to a maximal loss for the city?
+We proceed by contradiction.  Assume that the strategy does *not*
+cause a maximal loss.  Since the only thing that can affect the loss
+is ticket swaps, there must be some additional swap that can be
+performed to increase the city's loss.
 
 Let this swap occur between a passenger exiting at e and holding a
 card from j and a passenger exiting later at f and holding a card from
-i.  Since up until now the passengers were following our strategy, we
-know that j >= i.  Further, for the swap to have any effect, i and j
-can't be the same, so we know j > i.  Therefore, this swap will cause
-the first passenger to receive a card taken at an earlier stop and the
-second to receive a card taken at a later stop.
+a different stop i.  Since up until now the passengers were following
+our strategy, we know that j > i.  Therefore, this new swap will cause
+the first passenger to receive the card taken at i and the second to
+receive the card taken at j.
 
-But, in that case, these customers could swap cards a second time,
-using our normal greedy strategy to increase the city's loss even
-more.  But swapping twice is equivalent to not swapping at all!
-Therefore the effect of the first swap must be the opposite of our
-normal swap: it must actually *decrease* the city's loss.  This
+But, after the swap, these two passengers will satisfy the conditions
+for our normal swapping strategy to be effective.  So they should swap
+cards a second time to further increase the city's loss.  But swapping
+twice is equivalent to not swapping at all!  Therefore the first and
+second swaps must have had inverse effects.  Since we know the second
+swap must have increased the city's loss -- we've already proved it --
+the first must have actually *decreased* the city's loss.  But this
 contradicts our assumption a loss-increasing swap was available.
-Therefore, the greedy swapping strategy cannot be improved upon and
-results in a maximal loss for the city.
+Therefore, the loss caused our greedy strategy must have been maximal
+to begin with, and our proof is complete.
 
 """
 
