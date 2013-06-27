@@ -42,9 +42,8 @@ fees to see the effect of the swap:
 
     {- swap -}
     p(e - j) + p(f - i)
-  = p(h) + p((g + e) + (k - j))
-  = p(h) + p((e - j) + (g + k))
-  = p(h) + p(h + (g + k))
+  = p(h) + p((e + g) + (k - j))
+  = p(h) + p((e - j + g) + k)
   = p(h) + p((h + g) + k)          (2b)
 
 Comparing (2a) to the swapping total (2b), we see that the effect is
@@ -54,7 +53,7 @@ fare schedule, where changes have diminished effect.  Letting
 
     q(h) = p(h + k) - p(h),
 
-the additional loss to the city is (2a) - (2b) and can be written
+the additional loss to the city, (2a) - (2b), can be written
 
     q(h) - q(h + g).
 
@@ -110,7 +109,7 @@ def solve(problem):
         """Compute the price of traveling a number of stops."""
         return stops * N - stops * (stops + 1) // 2
 
-    # split journeys into a series enter and exit events
+    # split journeys into a series of enter and exit events
     events = []
     for origin, end, passenger_count in journeys:
         # order entry events before exit events to ensure that they
