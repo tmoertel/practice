@@ -49,6 +49,32 @@ def trace(f, printer=None):
 
 EPSILON = sys.float_info.epsilon ** 0.5  # default to half of system precision
 
+def find_minimum_by_newtons_method(f, f1, f2, x, e=EPSILON, a=0.25, b=0.5):
+    """Find x' near x such that f(x') is a local minimum.
+
+    You must supply f, the objective function, which must be convex
+    in the region of x.  You must also supply its first and second
+    derivatives, f1 and f2, which must exist within the region.
+
+    Reference: _Convex Optimization_, Boyd and Vandenberghe, 2004, p. 484.
+
+    """
+    while True:
+        # find descent direction
+        f1x = f1(x)
+        delta = -f1x/f2(x)
+        # check stopping criterion
+        if -delta * f1x <= 2 * e:
+            return x
+        # choose step size t via backtracking search
+        t = 1.0
+        fx = f(x)
+        while f(x + t * delta) > fx + a * t * delta * f1x:
+            t *= b
+        # update
+        x += t * delta
+    return x
+
 def find_real_by_newtons_method(f, f_prime, x, y, e=EPSILON):
     """From a guess x, find an improved x within e of the true soln f(x) = y.
 
@@ -304,6 +330,9 @@ def mk_union_find_domain(elems):
 
 # tests
 
+def approx_eq(x, y):
+    return abs(x - y) < EPSILON
+
 def test_memoize():
     counters = [0] * 5
     def f(i):
@@ -349,6 +378,29 @@ def test_isqrt():
     # exceptional cases
     from nose.tools import raises
     raises(ValueError)(isqrt)(-1)
+
+def test_find_minimum_by_newtons_method():
+    def make_objective_for_parabola(X, Y, a, b):
+        X = float(X)
+        Y = float(Y)
+        a = float(a)
+        b = float(b)
+        def f(x):
+            y = (a * (x - b * X))**2 + Y
+            return y
+        def f1(x):
+            return 2 * a**2 * (x - b * X)
+        def f2(x):
+            return 2 * a**2
+        return f, f1, f2
+    for X in xrange(-10, 11):
+        for Y in xrange(-10, 11):
+            for a in xrange(1, 6):
+                for b in xrange(1, 6):
+                    f, f1, f2 = make_objective_for_parabola(X, Y, a, b)
+                    for guess in xrange(-5, 6):
+                        x = find_minimum_by_newtons_method(f, f1, f2, guess)
+                        assert approx_eq(x, b * X)
 
 def test_find_real_by_newtons_method():
     # use +/- inverse square root as oracle
@@ -474,7 +526,6 @@ def test_mk_union_find_domain():
         assert len(reduce(set.union, rep_elem_sets)) == len(subsets)
 
 def test_binomial():
-    approx_eq = lambda x, y: abs(x - y) < EPSILON
     from operator import __eq__
     from math import factorial as fact
     assert isinstance(real_binomial(1, 1), float)
