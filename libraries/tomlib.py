@@ -62,7 +62,7 @@ def find_minimum_by_newtons_method(f, f1, f2, x, e=EPSILON, a=0.25, b=0.5):
     while True:
         # find descent direction
         f1x = f1(x)
-        delta = -f1x/f2(x)
+        delta = -f1x/max(0.001, abs(f2(x)))  # keep f2(x) positive
         # check stopping criterion
         if -delta * f1x <= 2 * e:
             return x
