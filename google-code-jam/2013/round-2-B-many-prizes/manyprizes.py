@@ -38,7 +38,7 @@ team would find fewer opponents it could win against.)
 Following this strategy every round leads to a linear-time recursive
 algorithm to compute a team's best possible ranking in an N-round
 tournament, given w, the number of remaining teams it can win against
-(i.e., those with higher team numbers: w = 2^N - 1 - i):
+(i.e., those with higher team numbers):
 
     best_rank(0, 0) = 0
     best_rank(N, 0) = 1 * 2^(N-1) + best_rank(N-1, 0) = 2^N - 1
@@ -79,7 +79,7 @@ best_rank and worst_rank are both nondecreasing functions of i (see
 proofs below) and we can use a bisection search to find Y and Z.  Each
 search takes O(log N) calls to the appropriate ranking function, for
 an overall run time of O(N log N) for each solution. This is fast
-enough to solve the "large" problem almost instantly.
+enough to solve the "large" problem set almost instantly.
 
 But can we go farther?
 
