@@ -77,9 +77,9 @@ Since i = 0..2^N-1 for N as large a 50, we need some way to speed the
 search for the maximum i that satisfies the test.  Fortunately,
 best_rank and worst_rank are both nondecreasing functions of i (see
 proofs below) and we can use a bisection search to find Y and Z.  Each
-search takes O(log N) calls to the appropriate ranking function, for
-an overall run time of O(N log N) for each solution. This is fast
-enough to solve the "large" problem set almost instantly.
+search takes O(log 2^N) = O(N) calls to the appropriate ranking
+function, for an overall run time of O(N^2) for each solution.
+This is fast enough to solve the "large" problem set almost instantly.
 
 But can we go farther?
 
