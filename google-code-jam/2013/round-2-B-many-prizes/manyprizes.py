@@ -126,11 +126,17 @@ And, next, let's undo the subtraction by one:
 Therefore, if i = 0 in the final iteration of the recursive algorithm,
 i had to have been 1 or 2 in the previous iteration.  Since the
 original problem asks for the largest team number that could achieve a
-given ranking, we can fix C to its largest possible value 1, and
-iterate in this way, backward from i = 0 up to the largest i for which
-the corresponding W(j) <= P - 1.  This gives us a linear-time
-algorithm to find the highest-numbered team i that can receive one of
-P prizes in a tournament of N rounds, given worst-case conditions.
+given ranking, we can fix C to its largest possible value 1 and
+declare the solution to be 2.  Iteratively applying this logic lets us
+compute the largest team numbers i to have final rankings W(2), W(3),
+and so on.  There's only one wrinkle.  For W(N) the largest team
+number i will exceed 2^N - 1, the largest actual team number, so we
+must handle j = N as a special case.
+
+This gives us a simple, linear-time algorithm to solve the original
+problem.  Start with i = j = 0 and update j := j + 1 and i := 2*i + 2
+while W(j) <= P.  The final value of i is the solution.  (This is the
+max_team_worst_case code below.)
 
 A similar approach works for the best-case conditions, but here we are
 iterating on w, and since smaller w values correspond to larger i
@@ -219,20 +225,21 @@ def solve(problem):
     return '{} {}'.format(Y, Z)
 
 def max_team_worst_case(N, P):
-    n = N
-    i = 0
     W = 1 << (N - 1)
+    i = 0
+    n = N
     while n and P > W:
         W |= W >> 1
         i = 2*i + 2  # to maximize i, use max C = 1
         n -= 1
-    return min(i, (1 << N) - 1)
+    i = min(i, (1 << N) - 1)  # N iters of i :-> 2*i+2 can exceed 2^N-1
+    return i
 
 def max_team_best_case(N, P):
-    n = N
-    W = (1 << N) - 1
+    W = (1 << N) - 1  # all ones
     w = 0
-    while n and W >= P:
+    n = N
+    while n and P <= W:
         W >>= 1
         w = 2*w + 1  # to maximize i, minimize w, and so use min C = 0
         n -= 1
@@ -240,7 +247,7 @@ def max_team_best_case(N, P):
     return i
 
 
-# O(N log N) time solution
+# O(N^2) time solution
 
 def solve_O_N_log_N(problem):
     N, P = problem
