@@ -63,7 +63,7 @@ the one's complement of best_rank(N, i) and vice versa:
     worst_rank(N, i) = (2^N - 1) - best_rank(N, i)
     best_rank(N, w)  = (2^N - 1) - worst_rank(N, w)
 
-Thus we need implement only one of the algorithms.
+Thus we need to implement only one of the algorithms.
 
 Now let us return to the original problem.  We are asked to find the
 largest-numbered team that is guaranteed to win a prize, and the
@@ -78,10 +78,13 @@ search for the maximum i that satisfies the test.  Fortunately,
 best_rank and worst_rank are both nondecreasing functions of i (see
 proofs below) and we can use a bisection search to find Y and Z.  Each
 search takes O(log 2^N) = O(N) calls to the appropriate ranking
-function, for an overall run time of O(N^2) for each solution.
-This is fast enough to solve the "large" problem set almost instantly.
+function, and the ranking functions take O(N) time, giving an overall
+run time of O(N^2) for each solution.  This is fast enough to solve
+the "large" problem set almost instantly since N <= 50.
+
 
 But can we go farther?
+======================
 
 Looking at the worst_rank algorithm, it is clear that its output will
 always be an N-bit number with the leading bits all ones and the
@@ -126,22 +129,39 @@ And, next, let's undo the subtraction by one:
 Therefore, if i = 0 in the final iteration of the recursive algorithm,
 i had to have been 1 or 2 in the previous iteration.  Since the
 original problem asks for the largest team number that could achieve a
-given ranking, we can fix C to its largest possible value 1 and
+given ranking, we can fix C to its largest possible value of 1 and
 declare the solution to be 2.  Iteratively applying this logic lets us
-compute the largest team numbers i to have final rankings W(2), W(3),
-and so on.  There's only one wrinkle.  For W(N) the largest team
-number i will exceed 2^N - 1, the largest actual team number, so we
-must handle j = N as a special case.
+compute the largest team numbers to have final rankings W(2), W(3),
+and so on.
 
 This gives us a simple, linear-time algorithm to solve the original
-problem.  Start with i = j = 0 and update j := j + 1 and i := 2*i + 2
-while W(j) <= P.  The final value of i is the solution.  (This is the
-max_team_worst_case code below.)
+problem for the worst-case scenario.  Start with i = j = 0 and update
+j := j + 1 and i := 2*i + 2 while W(j) <= P.  The final value of i is
+the solution.
 
-A similar approach works for the best-case conditions, but here we are
-iterating on w, and since smaller w values correspond to larger i
-values (recall that w = 2^N - 1 - i), we use C = 0 for the reverse
-mapping to minimize w and, consequently, maximize i.
+As a refinement, we could note that for any value of j, the
+corresponding value of i is going to be given by the linear recurrence
+
+    i[j] = 2 * i[j-1] + 2,
+
+where i[0] = 0.  Solving for a closed form gives us the following
+formula,
+
+    i(j) = 2^(j+1) - 2,
+
+which lets us remove i from the iterations.  Now we can just find the
+maximum j such that W(j) <= P and then return i(j) as the solution.
+The only wrinkle is that if P = 2^N, j will run all the way up to N,
+and i(N) = 2^(N+1) - 2, which is greater than the maximum team number
+2^N - 1.  So we must handle j = N as a special case: i(N) = 2^N - 1.
+
+As before, we can get a best-case algorithm from the worst-case
+algorithm -- or vice versa -- by appealing to fact that every
+best-case scenario has a worst-case dual (see Proof C).  Of the two,
+I chose to implement the best-case algorithm because its closed form
+solution for i(j) is 2^j - 1 (because C = 0) and thus never exceeds
+the maximum team number 2^N - 1.  This eliminates the need to test
+for the special case j = N.
 
 
 Proofs
@@ -179,6 +199,55 @@ the opposite sign.  Therefore, worst_rank is nondecreasing with *its*
 second argument, which is team number.  Therefore, worst-case rank is
 a nondecreasing function of team number.
 
+C.  Duality of best- and worst-case maximal prize-winning teams
+
+Let there be a tournament of N rounds and let T = 2^N be the total
+number of teams.  If BC(P) and WC(P) give the highest-numbered teams
+that can win one of P prizes under best- and worst-case conditions,
+respectively, then
+
+    BC(P) = T - WC(T - P) - 2, and           (1)
+    WC(P) = T - BC(T - P) - 2.               (2)
+
+Proof.  First, we introduce c(t), the one's complement function that
+maps the range of team numbers, 0..T-1, onto itself, mapping 0 <=>
+T-1, 1 <=> T-2, and so on:
+
+    c(t) = T - t - 1
+
+Note that c is an involution, i.e., its own inverse: c(c(t)) = t.
+
+Also note that if i < j, c(i) > c(j).  Thus, under the tournament
+rules, any game played between i and j will have its outcome reversed
+if the same teams play again under their complementary numbers.
+
+Now let i = BC(P) be the highest-numbered team to win a prize under
+best-case conditions.  If we take the tournament list that led to this
+outcome and replay it with every team t renumbered as its complement
+c(t), every win will become a loss and vice versa.  The P teams that
+had done the best will now do the worst.  This time, if we award T - P
+prizes, none of the P teams that had originally won a prize will win
+one now.  Therefore, under these now worst-case conditions for the
+original team i, we know that its complement c(i) must not only be
+without a prize but the lowest-numbered of all teams without a prize.
+Consequently, c(i) - 1 must be the highest-numbered team to win a
+prize, and we have
+
+    WC(T - P) = c(i) - 1
+              = c(BC(P)) - 1
+              = (T - BC(P) - 1) - 1
+              = T - BC(P) - 2
+
+Solving for BC(P), we complete our proof for equation (1):
+
+    BC(P) = T - WC(T - P) - 2.
+
+Since (1) holds for any P such that 0 <= P <= T, the proof of (2)
+follows immediately from substituting P :-> T - P into equation (1)
+and solving for WC(P).
+
+And that completes our proof.
+
 
 Note on Google's Contest Analysis
 =================================
@@ -197,14 +266,35 @@ as a solution:
     def ManyPrizes(N, P):
       print 2 ** N - LowRankCanWin(N, 2 ** N - P) - 2, LowRankCanWin(N, P)
 
-But this logic will produce erroneous results.  For example, in a
-tournament of N = 3 rounds, if P = 8 prizes are awarded, every one of
-the 2^N = 8 teams will get a prize.  Thus the correct answer for
-ManyPrizes(3, 8) should be (7, 7).  The sample code, however, produces
-the following:
+But this logic will produce erroneous results when P = N^2.  For
+example, in a tournament of N = 3 rounds, if P = 8 prizes are awarded,
+every one of the 2^N = 8 teams will get a prize.  Thus the correct
+answer for ManyPrizes(3, 8) should be (7, 7).  The sample code,
+however, produces the following:
 
     >>> ManyPrizes(3, 8)
     14 7
+
+The problem is that LowRankCanWin doesn't work properly when P = 0.
+While P = 0 is ruled out as a legal input value, P = 2^N is not.  And
+when ManyPrizes is called with P = 2^N, it calls LowRankCanWin with
+the dual value of P = 0.
+
+Therefore, if we're going to use duality to avoid implementing one of
+the solvers, the solver we do implement must handle P = 0 properly.
+
+So what should the result be for P = 0?  The dual formulas from Proof
+C give us the answer.  Instead of finding BC(0), we can instead find
+the equivalent and well-defined N^2 - WC(N^2) - 2.  Since WC(N^2) is
+obviously N^2 - 1, we have our answer: BC(0) = -1.
+
+Thus we can fix the sample code by inserting the following test into
+LowRankCanWin:
+
+    def LowRankCanWin(N, P):
+      if P == 0:
+        return -1
+      # rest of code as before
 
 """
 
@@ -220,36 +310,29 @@ def main():
 
 def solve(problem):
     N, P = problem
-    Y = max_team_worst_case(N, P)
+    n_teams = 1 << N
+    Y = n_teams - 2 - max_team_best_case(N, n_teams - P)
     Z = max_team_best_case(N, P)
     return '{} {}'.format(Y, Z)
 
-def max_team_worst_case(N, P):
-    W = 1 << (N - 1)
-    i = 0
-    n = N
-    while n and P > W:
-        W |= W >> 1
-        i = 2*i + 2  # to maximize i, use max C = 1
-        n -= 1
-    i = min(i, (1 << N) - 1)  # N iters of i :-> 2*i+2 can exceed 2^N-1
-    return i
-
 def max_team_best_case(N, P):
-    W = (1 << N) - 1  # all ones
-    w = 0
-    n = N
-    while n and P <= W:
-        W >>= 1
-        w = 2*w + 1  # to maximize i, minimize w, and so use min C = 0
-        n -= 1
-    i = (1 << N) - 1 - w
-    return i
+    if P == 0:  # need to handle this case because it's dual to P == 2^N
+        return -1
+    j = longest_initial_winning_streak(N, P)
+    return (1 << N) - (1 << j)
+
+def longest_initial_winning_streak(N, P):
+    k = 0
+    W = 1
+    while W < P:
+        W = (W << 1) | 1
+        k += 1
+    return N - k
 
 
 # O(N^2) time solution
 
-def solve_O_N_log_N(problem):
+def solve_ON2(problem):
     N, P = problem
     n_teams = 1 << N
     def worst(i):
@@ -277,6 +360,8 @@ def find_int_by_bisection(f, lo, hi, y):
         else:
             hi = mid - 1
     return lo if f(lo) <= y else lo - 1
+
+# helpers
 
 def read_problems(lines):
     T = int(lines.next())
