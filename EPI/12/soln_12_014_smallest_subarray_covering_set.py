@@ -29,37 +29,69 @@ keeping track of the shortest covering range that *ends* with the
 current element.  We append each new element to the tail of the
 current range and then remove from the range's head any elements that
 are duplicated.  The result is the shortest valid range that ends at
-the current element.  If it's shorter than the current shortest range,
-we have found a new shortest range.  After we've examined the final
-element, we will have found the shortest valid range that ends with
-one of A's elements also in Q.  And since all valid shortest ranges
-must end with such an element, and since we have examined all such
-ranges, our final shortest range must be the shortest in all of A.
+the current element. After we've examined the final element, we will
+have found the shortest valid range that ends with one of A's elements
+also in Q.  And since all valid shortest ranges must end with such an
+element, and since we have examined all such ranges, our final
+shortest range must be the shortest in all of A.
 
-The key to making the algorithm fast is choosing the right data
-structures.  To keep track of the elements in the candidate range, we
-pair a double-ended queue with a dictionary of element counts.  With
-this pairing, we can quickly add a new element to the end of the range
-by appending it to the back of the deque and incrementing its count in
-the dictionary.  We can also quickly remove from the deque's front any
-element that has a count greater than one.  All of the operations take
-O(1) time and since each element in A can be involved in at most two
-deque and two dictionary operations, the overall running time of the
-algorithm is O(|A|).  Worst-case storage requirements are O(|A|) for
-the deque and O(|Q|) for the dictionary of counts, for O(|A|+|Q|)
-overall, or just O(|A|) if we expect that |Q| < |A|.  Typical storage
-use is likely to be much better, however, since we only store elements
-in the deque that are contributing to the current shortest candidate,
-which can never be longer than the longest shortest candidate, which
-is likely to be much shorter than A.  Thus the algorithm is
-(worst-case) linear in both time and storage, but usually much
-better on storage.
+The key to making the algorithm fast and efficient is choosing the
+right data structures.  To keep track of the elements in the candidate
+range, we could pair a double-ended queue with a dictionary of element
+counts.  With this pairing, we could quickly add a new element to the
+end of the range by appending it to the back of the deque and
+incrementing its count in the dictionary.  We could also quickly
+remove from the deque's front any element that has a count greater
+than one.  All of the operations take O(1) time and since each element
+in A can be involved in at most two deque and two dictionary
+operations, the overall running time of the algorithm is O(|A|), which
+is the best we would hope for.  Worst-case storage requirements are
+also O(|A|) (for the deque), however.
 
-This algorithm also has the advantage of being amenable to streaming,
-since we only examine elements of A sequentially and never need to
-reexamine earlier elements.  (This claim is easy to prove by looking
-at the code below.  We access A only through enumerate(A), which
-provides elements via an iterator, which does not support random access.)
+Can we do better?  Do we really need to store the candidate range's
+duplicated elements?  They can't affect the size of the range since
+they'll never occur in the front position (because we remove such
+duplicates), nor can they affect the back position (since it's always
+the current element's position).  The only time the duplicates come
+into play, then, is when an earlier duplicate is removed, making what
+was an interior element into a front element.  But if this newly
+exposed element is a duplicate, it too will be removed.  Thus we need
+only store, for each element in Q, the position of its rightmost
+occurrence within the candidate range -- the only one that won't
+be removed when it comes to the front.
+
+This we can do with a dictionary mapping elements to positions.  But
+we'll also need to maintain the order of the elements since we'll need
+to quickly determine the first element's position to compute the size
+of the candidate range.  This we can do having the dictionary store
+pointers to a doubly linked list of positions.  The first position is
+available in O(1) time, and any element's position can be moved to the
+end of the list in O(1) time when we encounter a new occurrence of
+that element.  For example, when A = "aabacad" and Q = "abc" and we've
+just advanced the end of the candidate range to position j = 5, we
+will update our data structures to look like this:
+
+                        j
+                     | ||
+                   0123456
+              A = "aabacad"   Q = "abc"
+
+              -------------------------
+                b         c         a                dictionary
+              -------------------------
+                |         |         |
+                v         v         v
+    front --> +---+ --> +---+ --> +---+ --> /
+              | 2 |     | 4 |     | 5 |              linked list
+        / <-- +---+ <-- +---+ <-- +---+ <-- back
+
+Luckily, the Python data type OrderedDict provides exactly this
+dict-and-list combo, making implementation of our algorithm
+straightforward.
+
+The algorithm requires storage only for O(|Q|) entries and, since each
+element in A participate in at most two O(1) OrderedDict operations,
+the running time is O(|A|).
 
 
 Tom Moertel <tom@moertel.com>
@@ -67,38 +99,37 @@ Tom Moertel <tom@moertel.com>
 
 """
 
-from collections import Counter, deque
+from collections import OrderedDict
 
 def smallest_subarray_covering_set(A, Q):
     """Find smallest range (i,j) s.t. all q in Q are in A[i..j]."""
+
+    # handle 0-length covering
+    if not Q:
+        return 0, -1
 
     # start with no best and an empty candidate covering range
     Q = set(Q)  # want O(1) membership test
     min_size = None
     min_covering_range = None
-    cand_locs = deque()
-    cand_counts = Counter()
+    cand_locs = OrderedDict()
 
     # stream elements of A, maintaining the shortest covering range
     # that ends at the current element
-    for loc, elem in enumerate(A):
+    for j, elem in enumerate(A):
 
         # skip elements that can't contribute to a covering
         if elem not in Q:
             continue
 
-        # extend the candidate range with the current elem
-        cand_locs.append((elem, loc))
-        cand_counts.update(elem)  # bumps count
-
-        # trim from the candidate any initial elems that are redundant
-        while cand_counts and cand_counts[cand_locs[0][0]] > 1:
-            elem, _ = cand_locs.popleft()
-            cand_counts.subtract(elem)
+        # extend the candidate range with the current elem,
+        # removing any previous instance of the same elem
+        cand_locs.pop(elem, None)
+        cand_locs[elem] = j  # will be added in final position
 
         # if the new candidate is legal and better, make it the current best
-        if len(cand_counts) == len(Q):
-            i, j = cand_locs[0][1], cand_locs[-1][1]
+        if len(cand_locs) == len(Q):
+            i = cand_locs.itervalues().next()  # get front position, O(1) time
             if min_size is None or j - i < min_size:
                 min_size = j - i
                 min_covering_range = i, j
@@ -109,6 +140,7 @@ def smallest_subarray_covering_set(A, Q):
 def test():
     from nose.tools import assert_equal as eq
     S = smallest_subarray_covering_set
+    eq(S("a", ""), (0, -1))  # 0-length covering exists
     eq(S("", "a"), None)
     eq(S("..a", "a"), (2, 2))
     eq(S("aa", "a"), (0, 0))  # when many ranges are smallest, earliest wins
