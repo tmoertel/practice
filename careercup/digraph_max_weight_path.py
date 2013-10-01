@@ -9,10 +9,10 @@ Consider the following problem offered at CareerCup:
     paths of arbitrarily large weight can be performed in time
 
     (a) O(n)
-    (b) O(n · log(n)) but not O(n)
-    (c) O(n1.5) but not O(n log n)
-    (d) O(n3) but not O(n1.5)
-    (e) O(2n) but not O(n3)
+    (b) O(n log(n)) but not O(n)
+    (c) O(n^1.5) but not O(n log n)
+    (d) O(n^3) but not O(n^1.5)
+    (e) O(2^n) but not O(n^3)
 
     Source: http://www.careercup.com/question?id=6111168305299456
 
