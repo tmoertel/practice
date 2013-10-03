@@ -23,8 +23,9 @@ that a clockwise rotation results in a new matrix in which A's entry
 at (i, j) appears at the new coordinates (j, M - i - 1).  Therefore,
 rotation can be seen not merely as a rearrangement of elements but,
 alternatively, as a transformation of coordinates.  (It is not,
-however, a linear transformation.  We can make it one by transforming
-(i, j, 1) instead and ignoring the final coordinate.)
+however, a linear transformation since (0, 0) is not mapped to itself.
+But we can make it one by transforming (i, j, k) instead and by fixing
+k = 1 for all of our operations.)
 
 This alternative view provides an another means of rotating a matrix,
 one that is advantageous when the element array is large: leave the
@@ -35,11 +36,12 @@ a 3x3 matrix, allowing us to compose transformations using matrix
 multiplication.  Further, all of the transformed versions of a
 matrix will share the original's underlying element storage.
 
-In this example, I just use a matrix multiplication for each element
-access (expensive), but in a real implementation we would probably
-generate optimized code whenever we update the coordinate
-transformation matrix, which is likely to contain many 0, 1, and -1
-entries, none of which require a multiplication.
+In this example, I just use (an expensive) matrix multiplication for
+each element access.  In a real implementation we would probably
+generate optimized element-access code whenever we update the
+coordinate transformation matrix.  All of the matrix multiplications
+(for these matrices) can be resolved to additions and subtractions,
+making the coordinate transforms fast and practical.
 
 """
 
@@ -70,8 +72,8 @@ class CoordTransform(object):
       [ j' ] = T [ j ] .
       [ 1  ]     [ 1 ]
 
-    Two transformers C1 and C2 can be composed via the '*' operator
-    to create a new transformer:
+    Two transformers C1 and C2 can be composed via the binary '*'
+    operator to create a new transformer:
 
         (C1 * C2)(i, j) = C1(*(C2(i, j))).
 
@@ -109,13 +111,13 @@ class Matrix(object):
     def __init__(self, arr, dims):
         """Create a 2D matrix from a 1D backing array."""
         self.arr = arr
-        self.dims = dims
+        self.dims = self.arr_dims = dims
         self.coord_xform = identity_xform
 
     def get(self, i, j):
         """Get the element at the i'th row and j'th column."""
         i, j = self.coord_xform(i, j)
-        return self.arr[i * self.dims[0] + j]
+        return self.arr[i * self.arr_dims[1] + j]
 
     def tolists(self):
         """Convert the matrix into its list of lists representation."""
@@ -124,23 +126,25 @@ class Matrix(object):
 
     def rot_cw(self):
         """Rotate the matrix clockwise via O(1) coordinate change."""
+        M = self.dims[0]
         return self.transpose().reverse_cols()
 
     def rot_ccw(self):
         """Rotate the matrix counter-clockwise via O(1) coordinate change."""
+        N = self.dims[1]
         return self.reverse_cols().transpose()
 
     def transpose(self):
         """Transpose the matrix via O(1) coordinate change."""
         A = copy(self)
-        A.dims = tuple(reversed(self.dims))
-        A.coord_xform = transpose_xform * A.coord_xform
+        A.dims = tuple(reversed(A.dims))
+        A.coord_xform *= transpose_xform
         return A
 
     def reverse_cols(self):
-        """Reverse the column ordering via O(1) coordinate change."""
+        """Reverse the columns of a matrix via O(1) coordinate change."""
         A = copy(self)
-        A.coord_xform = mk_rev_cols_xform(A.dims[1]) * A.coord_xform
+        A.coord_xform *= mk_rev_cols_xform(A.dims[1])
         return A
 
 
@@ -154,15 +158,21 @@ def test():
     from nose.tools import assert_equals as eq
 
     # rotate via brute-force element arrangement
-    A = [['a', 'b'], ['c', 'd']]
-    eq(rot90(A), [['c', 'a'], ['d', 'b']])
+    eq(rot90([['a', 'b'], ['c', 'd']]), [['c', 'a'], ['d', 'b']])
 
     # transpose via coordinate transformation
-    A = Matrix('abcd', (2, 2))
-    eq(A.transpose().tolists(), [['a', 'c'], ['b', 'd']])
+    A = Matrix('abcdef', (2, 3))
+    eq(A.transpose().tolists(), [['a', 'd'], ['b', 'e'], ['c', 'f']])
+
+    # transpose via coordinate transformation
+    eq(A.reverse_cols().tolists(), [['c', 'b', 'a'], ['f', 'e', 'd']])
 
     # rotate via coordinate transformation
-    eq(A.rot_ccw().tolists(), [['c', 'a'], ['d', 'b']])
+    eq(A.rot_cw().tolists(), [['d', 'a'], ['e', 'b'], ['f', 'c']])
+    eq(A.rot_ccw().tolists(), [['c', 'f'], ['b', 'e'], ['a', 'd']])
+    eq(A.rot_cw().rot_cw().tolists(),  [['f', 'e', 'd'], ['c', 'b', 'a']])
+    eq(A.rot_ccw().rot_cw().tolists(), [['a', 'b', 'c'], ['d', 'e', 'f']])
+    eq(A.rot_cw().rot_ccw().tolists(), [['a', 'b', 'c'], ['d', 'e', 'f']])
 
     # 4 rotations must be equivalent to identity transform
     Arrrr = A.rot_ccw().rot_ccw().rot_ccw().rot_ccw()
