@@ -126,12 +126,10 @@ class Matrix(object):
 
     def rot_cw(self):
         """Rotate the matrix clockwise via O(1) coordinate change."""
-        M = self.dims[0]
         return self.transpose().reverse_cols()
 
     def rot_ccw(self):
         """Rotate the matrix counter-clockwise via O(1) coordinate change."""
-        N = self.dims[1]
         return self.reverse_cols().transpose()
 
     def transpose(self):
@@ -164,7 +162,7 @@ def test():
     A = Matrix('abcdef', (2, 3))
     eq(A.transpose().tolists(), [['a', 'd'], ['b', 'e'], ['c', 'f']])
 
-    # transpose via coordinate transformation
+    # reverse columns via coordinate transformation
     eq(A.reverse_cols().tolists(), [['c', 'b', 'a'], ['f', 'e', 'd']])
 
     # rotate via coordinate transformation
