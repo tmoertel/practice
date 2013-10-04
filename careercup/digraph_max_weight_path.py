@@ -1,4 +1,7 @@
 #!/usr/bin/python
+#
+# Tom Moertel <tom@moertel.com>
+# 2013-10-01
 
 """Find the maximum weight path of a directed graph.
 

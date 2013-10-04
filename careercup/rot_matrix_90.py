@@ -1,4 +1,7 @@
 #!/usr/bin/python
+#
+# Tom Moertel <tom@moertel.com>
+# 2013-10-02
 
 
 """Rotate an M*N matrix 90 degrees.
