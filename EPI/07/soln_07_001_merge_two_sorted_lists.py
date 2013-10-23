@@ -24,18 +24,21 @@ class Cons(object):
 
 def merge(xs, ys):
     """Merge nodes of two sorted singly linked lists."""
-    if not xs and not ys:
-        return None
-    elif not xs:
-        return ys
-    elif not ys:
-        return xs
-    elif xs.head <= ys.head:
-        xs.tail = merge(xs.tail, ys)
-        return xs
-    else:
-        ys.tail = merge(xs, ys.tail)
-        return ys
+    anchor = prev = Cons(None)
+
+    # consume elements until at least one list empties
+    while xs and ys:
+        if xs.head <= ys.head:
+            prev.tail = xs
+            xs, prev = xs.tail, xs
+        else:
+            prev.tail = ys
+            ys, prev = ys.tail, ys
+
+    # handle any partially remaining lists
+    prev.tail = xs or ys
+
+    return anchor.tail
 
 
 # testing apparatus
