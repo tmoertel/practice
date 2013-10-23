@@ -66,10 +66,12 @@ parity of the single 64-bit summary of column parities.  That is:
     ====
     j=0
 
-where xsum = XOR(A[i] for i = 0..N-1).  This gives us an algorithm
-that requires only N fast XOR operations, with O(1) overhead to
-compute the final parity from the summary of column parities.  I've
-implemented this algorithm in the array_parity function below.
+where xsum = XOR(A[i] for i = 0..N-1) = reduce(XOR, A, 0).
+
+This gives us an algorithm that requires only N fast XOR operations,
+with O(1) overhead to compute the final parity from the summary of
+column parities.  I've implemented this algorithm in the array_parity
+function below.
 
 More discussion.
 
@@ -88,10 +90,10 @@ Well, I solved a different problem, but it was fun, too  :-)
 
 """
 
+from operator import xor
+
 def array_parity(xs):
-    xsum = 0
-    for x in xs:
-        xsum ^= x
+    xsum = reduce(xor, xs, 0)
     return int_parity(xsum)
 
 def int_parity(x):
