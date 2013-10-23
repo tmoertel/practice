@@ -66,7 +66,7 @@ parity of the single 64-bit summary of column parities.  That is:
     ====
     j=0
 
-where xsum = xor(A[i] for i = 0..N-1).  This gives us an algorithm
+where xsum = XOR(A[i] for i = 0..N-1).  This gives us an algorithm
 that requires only N fast XOR operations, with O(1) overhead to
 compute the final parity from the summary of column parities.  I've
 implemented this algorithm in the array_parity function below.
