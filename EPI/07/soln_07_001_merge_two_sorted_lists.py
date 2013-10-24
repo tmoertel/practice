@@ -45,15 +45,11 @@ def merge(xs, ys):
 
 def test():
     from nose.tools import assert_equals as eq
-    for m in xrange(5):
-        xs = range(m)
-        for n in xrange(5):
-            ys = range(n)
-            for xs_sub in powerset(xs):
-                for ys_sub in powerset(ys):
-                    spec = sorted(xs_sub + ys_sub)
-                    result = merge(from_seq(xs_sub), from_seq(ys_sub))
-                    eq(to_pylist(result), spec)
+    for xs in powerset(range(7)):
+        for ys in powerset(range(7)):
+            spec = sorted(xs + ys)
+            result = merge(from_seq(xs), from_seq(ys))
+            eq(to_pylist(result), spec)
 
 def powerset(xs):
     if not xs:
