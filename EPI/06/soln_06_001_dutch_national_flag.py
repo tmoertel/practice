@@ -69,27 +69,16 @@ def partition(A, i):
 
 def test():
     from nose.tools import assert_equal as eq
+    from itertools import permutations
     def stable_partition(A, x):
         return ([a for a in A if a < x] +
                 [a for a in A if a == x] +
                 [a for a in A if a > x])
     for n in xrange(5):
         for A in permutations(range(n)):
+            A = list(A)
             for i in xrange(n):
                 x = A[i]
                 AP = partition(A, i)
                 eq(sorted(AP), sorted(A))  # must preserve all elems
                 eq(AP, stable_partition(AP, x))  # must be a valid partition
-
-def permutations(xs):
-    if not xs:
-        yield []
-    else:
-        for x, xs in selections(xs):
-            for pxs in permutations(xs):
-                yield [x] + pxs
-
-def selections(xs):
-    if xs:
-        for i in xrange(len(xs)):
-            yield xs[i], xs[:i] + xs[i + 1:]
