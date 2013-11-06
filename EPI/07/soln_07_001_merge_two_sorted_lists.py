@@ -18,6 +18,9 @@ list, instead of creating a new list of new nodes.
 
 class Cons(object):
     """Cons cell for a singly linked list."""
+
+    __slots__ = 'head tail'.split()
+
     def __init__(self, head, tail=None):
         self.head = head
         self.tail = tail
