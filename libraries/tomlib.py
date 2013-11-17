@@ -114,13 +114,14 @@ def find_int_by_bisection(f, lo, hi, y):
 
     """
     _check_bisection_bounds(f, lo, hi, y)
+    hi0 = hi
     while lo < hi:
         mid = lo + ((hi - lo) >> 1)
         if f(mid) <= y:
             lo = mid + 1
         else:
             hi = mid - 1
-    return lo if f(lo) <= y else lo - 1
+    return lo - 1 if lo > hi0 or f(lo) > y else lo
 
 def _check_bisection_bounds(f, lo, hi, y):
     if lo > hi:
