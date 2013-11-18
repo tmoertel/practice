@@ -253,7 +253,7 @@ def intersect_by_mid_search(A, B):
             go(amid + 1, ahi, bmid, bhi)
         elif a > b:
             go(alo, ahi, bmid + 1, bhi)
-        elif a == b:
+        else:  # a == b
             go(alo, amid - 1, blo, bmid - 1)
             if not C or C[-1] != a:
                 C.append(a)  # must occur between amid-1 and amid+1 calls
