@@ -25,7 +25,7 @@ giving the source and destination cells.
 The array A can be seen as representing a graph in which each white
 cell is connected to its white neighbors.  A path from source to exit
 exists in the maze iff there is a path from the source to the exit in
-the graph.  To solve the problem them, I'll interpret the array A as a
+the graph.  To solve the problem then, I'll interpret the array A as a
 graph and use a breadth-first search from s, looking for e.  Using BFS
 ensures that no path of length N + 1 is considered before all paths of
 length N have been exhausted.  From this property it follows that, if
