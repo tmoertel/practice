@@ -89,7 +89,7 @@ But can we go farther?
 Looking at the worst_rank algorithm, it is clear that its output will
 always be an N-bit number with the leading bits all ones and the
 remaining bits all zeroes.  Thus there are only N+1 possible distinct
-worst-case ranks to assign to the 2^N values of team number:
+worst-case ranks W(j) to assign to the 2^N values of team number:
 
     j  W(j)
    --- ----------------
@@ -225,13 +225,13 @@ Now let i = BC(P) be the highest-numbered team to win a prize under
 best-case conditions.  If we take the tournament list that led to this
 outcome and replay it with every team t renumbered as its complement
 c(t), every win will become a loss and vice versa.  The P teams that
-had done the best will now do the worst.  This time, if we award T - P
+had done the best will now do the worst.  Therefore, if we award T - P
 prizes, none of the P teams that had originally won a prize will win
 one now.  Therefore, under these now worst-case conditions for the
-original team i, we know that its complement c(i) must not only be
-without a prize but the lowest-numbered of all teams without a prize.
-Consequently, c(i) - 1 must be the highest-numbered team to win a
-prize, and we have
+original team i, we know that the team must not only be prizeless but
+that its number in the new tournament, c(i), must be the lowest
+non-prize-winning team number.  Consequently, c(i) - 1 must be the
+highest prize-winning number, and we have
 
     WC(T - P) = c(i) - 1
               = c(BC(P)) - 1
