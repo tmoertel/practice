@@ -14,8 +14,8 @@ of Programming Interviews_.
 
 Discussion.  To write the anonymous letter L, we need to take its
 constituent characters from the magazine M.  Thus we can write the
-letter only if there are enough intances of each needed letter in the
-magazine.  In other words, only if L is a "subdocument" of M.  More
+letter only if there are enough instances of each needed letter in the
+magazine -- in other words, only if L is a "subdocument" of M.  More
 formally, if we let c_D(x) denote the count of occurrences of the
 letter x in the document D, we can write the letter iff, forall x in
 L, c_L(x) <= c_M(x).  To keep track of the counts, we can use a map
@@ -56,7 +56,7 @@ board during an interview and told to reduce the memory footprint of
 your existing implementation as far as you can, then your set of
 potential use cases collapses into the much smaller set of cases in
 which space is the primary concern.  Opportunities for reuse still
-matter, but not if you must pay in space to preserve them.
+matter, but not if you must consume space to preserve them.
 
 Anyway, the reason I bring up the authors' suggested approach is to
 compare it to mine and show the underlying correspondence between
@@ -72,9 +72,9 @@ zero or negative:
     x - y <= 0
 
 So in my code, I'm basically counting the occurrences of each
-character x in the document L, then I'm counting the occurrences of
-each character x in the document M, then for each character x, I'm
-comparing its count in L to its count in M:
+character in the document L, then I'm counting the occurrences of
+each character in the document M, then for each character x in L,
+I'm comparing its count in L to its count in M:
 
     c_L(x) <= c_M(x)
 
