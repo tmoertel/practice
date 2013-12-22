@@ -62,7 +62,7 @@ within the difference between triangles i+1 and i, that is, along one
 of triangle i+1's sides.
 
 For example, when N = 8, (X, Y) must locate one of the white diamonds
-in the diagram below:
+in the diagram below if it falls into Case B:
 
        ◇
       ◇ ◇         N      =  8
