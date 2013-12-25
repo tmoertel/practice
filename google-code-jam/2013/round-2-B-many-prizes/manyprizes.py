@@ -76,7 +76,7 @@ Y and Z, where
 Since i = 0..2^N-1 for N as large a 50, we need some way to speed the
 search for the maximum i that satisfies the test.  Fortunately,
 best_rank and worst_rank are both nondecreasing functions of i (see
-proofs below) and we can use a bisection search to find Y and Z.  Each
+proofs below) and we can use a binary search to find Y and Z.  Each
 search takes O(log 2^N) = O(N) calls to the appropriate ranking
 function, and the ranking functions take O(N) time, giving an overall
 run time of O(N^2) for each solution.  This is fast enough to solve

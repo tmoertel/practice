@@ -11,16 +11,16 @@ and returns the index of the first occurrence of k in A. Return -1 if
 k does not appear in A."  Source: _Elements of Programming
 Interviews._
 
-Discussion.  This function requires a straightforward bisection
-search.  The only wrinkle is that if a matching element is found, we
-cannot be certain that it is the left-most matching element and must
-search leftward.  This we could do with a linear search but, in the
-worst case when all of the elements in the array match, this leads to
-linear-time performance.  So it is best to use another bisection
-search to find the left-most match.  But this second search can be
-folded into the first.  Compare the first and second implementations
-below to see how it is done.  Both have the desired O(log N) runtime
-to find a match within an array of length N.
+Discussion.  This function requires a straightforward binary search.
+The only wrinkle is that if a matching element is found, we cannot be
+certain that it is the left-most matching element and must search
+leftward.  This we could do with a linear search but, in the worst
+case when all of the elements in the array match, this leads to
+linear-time performance.  So it is best to use another binary search
+to find the left-most match.  But this second search can be folded
+into the first.  Compare the first and second implementations below to
+see how it is done.  Both have the desired O(log N) runtime to find a
+match within an array of length N.
 
 """
 
