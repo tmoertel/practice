@@ -22,10 +22,10 @@ The problem:
   Source:  http://www.datagenetics.com/blog/july22012/index.html
 
 Reasoning behind my solution.  We are looking for N(F=100, E=2), the
-maximum number of trial drops required to find the highest of F floors
-from which we can drop an egg without it breaking, given that we have
-E eggs to use for trials.  It's obvious that N(F, 1) = F, but what
-about when E > 1?
+worst-case number of trial drops required to find the highest of F
+floors from which we can drop an egg without it breaking, given that
+we have E eggs to use for trials.  It's obvious that N(F, 1) = F, but
+what about when E > 1?
 
 In that case, we could drop one of our spare eggs at the midpoint of
 the floors to partition the search space in half, as in a binary
