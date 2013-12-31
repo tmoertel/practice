@@ -1,7 +1,7 @@
 Solution to "Find k-unbalanced node problem", 9.2 in EPI.
 
 The problem, paraphrased from problem 9.2 of _Elements
-of Programming _Interviews_, v. 1.3.1, is as follows:
+of Programming Interviews_, v. 1.3.1, is as follows:
 
     Let a tree node be considered "k-balanced" iff the number of left
     children differs from the number of right children by at most k.
