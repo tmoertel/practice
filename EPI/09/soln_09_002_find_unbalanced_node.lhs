@@ -35,18 +35,18 @@ as the (least) fixed point of the following term functor:
 In this definition, 'a' is the type of node labels and 'x' is the type
 of the underlying carrier.
 
-We can interpret 'TreeF a' as an endofunctor that lifts some
-underlying type 'a' to binary-tree terms over that type.  Here is the
-corresponding functor instance:
+We can interpret 'TreeF a' as an endofunctor in Hask (the category of
+Haskell types) that lifts some underlying carrier type to binary-tree
+terms over that carrier.  Here is the corresponding functor instance:
 
 > instance Functor (TreeF a) where
 >   fmap _ Empty        = Empty
 >   fmap f (Node x l r) = Node x (f l) (f r)
 
 To create actual binary trees from the terms, we must allow the terms
-to recursively include other terms.  To do this, we introduce the
-standard Fix newtype, which lets us find the (least) fixed point
-of some underlying functor 'f':
+to recursively carry other terms.  To do this, we introduce the
+standard 'Fix' newtype, which lets us find the (least) fixed point of
+some underlying functor 'f':
 
 > newtype Fix f = Fix { unFix :: f (Fix f) }
 
@@ -55,23 +55,28 @@ tree-functor terms:
 
 > type Tree a = Fix (TreeF a)
 
-Here are some examples of binary trees.  First, an empty tree:
+Now let's create some binary trees.  We'll start by defining smart
+constructors to reduce the syntactic 'Fix' overhead of creating trees:
 
-> emptyTree = Fix Empty
+> empty :: Tree a
+> empty = Fix Empty
+>
+> node :: a -> Tree a -> Tree a -> Tree a
+> node x l r = Fix $ Node x l r
 
-Now, a tree of a single node labeled with 1:
+Now, let's make a tree containing a single node labeled with 1:
 
-> oneTree   = Fix $ Node 1 (Fix Empty) (Fix Empty)
+> oneTree = node 1 empty empty
 
-And, our final example, a two-node tree whose root is labeled 0, whose
-left subtree is empty, and whose right subtree is the single-node tree we
-defined earlier:
+And here's a two-node tree.  Its root is labeled 0, its left subtree
+is empty, and its right subtree is the single-node tree we defined
+earlier:
 
-> unbalTree = Fix $ Node 0 (Fix Empty) oneTree
+> unbalTree = node 0 empty oneTree
 
-Note that this tree's root node is not 0-balanced: its left subtree
-contains no nodes but its right subtree contains 1 node.  Later, we
-will see of our solution correctly identifies node 0 as 0-unabalanced.
+Note that this tree's root node is not 0-balanced: its left subtree is
+empty, but its right subtree contains 1 node.  Later, we will test
+whether our solution correctly identifies node 0 as 0-unabalanced.
 
 Now, back to the original problem.
 
@@ -91,6 +96,7 @@ And we'll create a function to convert a term into its size:
 
 Basically, an 'Empty' term has a size of 0 and a 'Node' term has a
 size of 1 plus the sum of the sizes of its left and right subtrees.
+Note that the size of a term can be computed in constant time.
 
 The algebraically inclined reader will note that 'termSize' represents
 an F-algebra having the carrier type 'NodeCount'.  An F-algebra
@@ -99,7 +105,7 @@ a single summary value of the carrier type:
 
 > type Algebra f a = f a -> a
 
-Thus 'termSize' is an F-algebra having the following type:
+Thus 'termSize' is an F-algebra from tree terms to node counts:
 
 > termSize :: Algebra (TreeF a) NodeCount
 
@@ -112,20 +118,25 @@ Basically, a catamorphism applies an F-algebra to a recursive data
 structure to crush the structure into a single summary value.  The
 concept works for all recursive data types that we can represent as
 fixed points of term functors.  For these types, 'Fix' is a
-structure-preserving initial algebra.  (We'll see why this initial
-algebra is important in a moment.)  For binary trees, for example, we
-take 'Fix' "at" the 'TreeF a' type:
+structure-preserving initial algebra.  (We'll see why this algebra is
+important in a moment.)  For binary trees, for example, we take 'Fix'
+"at" the 'TreeF a' type:
 
 > treeInitialAlg :: Algebra (TreeF a) (Tree a)
 > treeInitialAlg = Fix
 
-Because this algebra is initial, there is a unique homomorphism from
-it to each F-algebra having the same term functor.  This unique
-homomorphism is the F-algebra's corresponding catamorphism.  For all
-F-algebras, it has the same formulation:
+Because this algebra is initial (in the category of F-algebras), there
+is a unique homomorphism from it to each F-algebra 'alg' having the
+same term functor.  This unique homomorphism is the F-algebra's
+corresponding catamorphism, 'cata alg'.  For all such F-algebras, it
+has the same formulation:
 
 > cata :: Functor f => Algebra f a -> Fix f -> a
 > cata alg = alg . fmap (cata alg) . unFix
+
+In other words, this one formula lets us crush *any* recursive data
+structure (derived from a term functor) into a single value.  All we
+need is a suitable algebra, and the rest follows automatically.
 
 This machinery is all very abstract, but its use is straightforward.
 To return to our task, for example, the function we seek to compute
@@ -137,7 +148,7 @@ the size of an arbitrary tree is merely the catamorphism for the
 
 A few trial runs:
 
-    >>> treeSize emptyTree
+    >>> treeSize empty
     0
 
     >>> treeSize oneTree
@@ -160,8 +171,21 @@ boolean value indicating k-balancedness with a node count:
 >   !size  = termSize sizeTerm
 >   sizeTerm@(Node _ leftSize rightSize) = fmap snd term
 
+Let's take our new algebra for a spin with k = 0:
+
+    >>> cata (termBalance 0) empty
+    (True,0)
+
+    >>> cata (termBalance 0) oneTree
+    (True,1)
+
+    >>> cata (termBalance 0) unbalTree
+    (False,2)
+
+Recall that 'unbalTree' has two nodes and is not 0-balanced.
+
 As our pentultimate step, we will create a slightly more ambitious
-algebra to search for a k-unbalanced node having balanced children.
+algebra to search for k-unbalanced nodes having balanced children.
 The result of a search is either negative, indicating that we haven't
 (yet) found a node that meets our search criteria, or positive,
 indicating that we have.  In the negative case, we will return a
@@ -199,7 +223,7 @@ original problem:
 
 To test our solution, a few simple cases:
 
-    >>> findUnbalancedNode 0 emptyTree  -- empty tree has no unbalanced nodes
+    >>> findUnbalancedNode 0 empty  -- empty tree has no unbalanced nodes
     Nothing
 
     >>> findUnbalancedNode 0 unbalTree  -- the root node is 0-unbalanced
