@@ -32,10 +32,10 @@ as the (least) fixed point of the following term functor:
 
 > data TreeF a x = Empty | Node a x x deriving Show
 
-In this definition, 'a' is the type of node labels and 'x' is the type
+In this definition, *a* is the type of node labels and *x* is the type
 of the underlying carrier.
 
-We can interpret 'TreeF a' as an endofunctor in Hask (the category of
+We can interpret *TreeF a* as an endofunctor in Hask (the category of
 Haskell types) that lifts some underlying carrier type to binary-tree
 terms over that carrier.  Here is the corresponding functor instance:
 
@@ -45,8 +45,8 @@ terms over that carrier.  Here is the corresponding functor instance:
 
 To create actual binary trees from the terms, we must allow the terms
 to recursively carry other terms.  To do this, we introduce the
-standard 'Fix' newtype, which lets us find the (least) fixed point of
-some underlying functor 'f':
+standard *Fix* newtype, which lets us find the (least) fixed point of
+some underlying functor *f*:
 
 > newtype Fix f = Fix { unFix :: f (Fix f) }
 
@@ -56,7 +56,7 @@ tree-functor terms:
 > type Tree a = Fix (TreeF a)
 
 Now let's create some binary trees.  We'll start by defining smart
-constructors to reduce the syntactic 'Fix' overhead of creating trees:
+constructors to reduce the syntactic *Fix* overhead of creating trees:
 
 > empty :: Tree a
 > empty = Fix Empty
@@ -94,18 +94,18 @@ And we'll create a function to convert a term into its size:
 > termSize (Empty)                       = 0
 > termSize (Node _ !leftSize !rightSize) = 1 + leftSize + rightSize
 
-Basically, an 'Empty' term has a size of 0 and a 'Node' term has a
+Basically, an *Empty* term has a size of 0 and a *Node* term has a
 size of 1 plus the sum of the sizes of its left and right subtrees.
 Note that the size of a term can be computed in constant time.
 
-The algebraically inclined reader will note that 'termSize' represents
-an F-algebra having the carrier type 'NodeCount'.  An F-algebra
-reduces some term functor 'f' over an underlying carrier type 'a' into
+The algebraically inclined reader will note that *termSize* represents
+an F-algebra having the carrier type *NodeCount*.  An F-algebra
+reduces some term functor *f* over an underlying carrier type *a* into
 a single summary value of the carrier type:
 
 > type Algebra f a = f a -> a
 
-Thus 'termSize' is an F-algebra from tree terms to node counts:
+Thus *termSize* is an F-algebra from tree terms to node counts:
 
 > termSize :: Algebra (TreeF a) NodeCount
 
@@ -117,18 +117,18 @@ it for all recursive data types with the concept of a catamorphism.
 Basically, a catamorphism applies an F-algebra to a recursive data
 structure to crush the structure into a single summary value.  The
 concept works for all recursive data types that we can represent as
-fixed points of term functors.  For these types, 'Fix' is a
+fixed points of term functors.  For these types, *Fix* is a
 structure-preserving initial algebra.  (We'll see why this algebra is
-important in a moment.)  For binary trees, for example, we take 'Fix'
-"at" the 'TreeF a' type:
+important in a moment.)  For binary trees, for example, we take *Fix*
+"at" the *TreeF a* type:
 
 > treeInitialAlg :: Algebra (TreeF a) (Tree a)
 > treeInitialAlg = Fix
 
 Because this algebra is initial (in the category of F-algebras), there
-is a unique homomorphism from it to each F-algebra 'alg' having the
+is a unique homomorphism from it to each F-algebra *alg* having the
 same term functor.  This unique homomorphism is the F-algebra's
-corresponding catamorphism, 'cata alg'.  For all such F-algebras, it
+corresponding catamorphism, *cata alg*.  For all such F-algebras, it
 has the same formulation:
 
 > cata :: Functor f => Algebra f a -> Fix f -> a
@@ -141,7 +141,7 @@ need is a suitable algebra, and the rest follows automatically.
 This machinery is all very abstract, but its use is straightforward.
 To return to our task, for example, the function we seek to compute
 the size of an arbitrary tree is merely the catamorphism for the
-'termSize' algebra:
+*termSize* algebra:
 
 > treeSize :: Tree a -> NodeCount
 > treeSize = cata termSize
@@ -158,7 +158,7 @@ A few trial runs:
     2
 
 Now let us move on to our second warm-up.  We will augment our
-'termSize' algebra to also determine whether a term is k-balanced.
+*termSize* algebra to also determine whether a term is k-balanced.
 We'll do this by computing a "balance summary," which will combine a
 boolean value indicating k-balancedness with a node count:
 
@@ -182,7 +182,7 @@ Let's take our new algebra for a spin with k = 0:
     >>> cata (termBalance 0) unbalTree
     (False,2)
 
-Recall that 'unbalTree' has two nodes and is not 0-balanced.
+Recall that *unbalTree* has two nodes and is not 0-balanced.
 
 As our pentultimate step, we will create a slightly more ambitious
 algebra to search for k-unbalanced nodes having balanced children.
@@ -192,7 +192,7 @@ indicating that we have.  In the negative case, we will return a
 'BalanceSummary'; it will be useful in continuing the search upward
 into the tree.  In the positive case, we will return the matching
 node's label directly.  Thus a search result over a tree having labels
-of type 'a' has the following type:
+of type *a* has the following type:
 
 > data BalanceSearchResult a = Neg !BalanceSummary
 >                            | Pos !a
