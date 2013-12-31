@@ -8,7 +8,7 @@
 
 This is problem 15.11 in the book Elements of Programming Interviews.
 
-Problem:  Given two strings A and B, computer the Levenshtein distance
+Problem:  Given two strings A and B, compute the Levenshtein distance
           between them.
 
 The Levenshtein distance is defined to be the minimum number of
