@@ -26,9 +26,9 @@ or given by a root node
 
     Node x l r
 
-where x is the node's label and l and r are the tree's left and right
-subtrees, respectively.  In Haskell, one way to define such a tree is
-as the (least) fixed point of the following term functor:
+where *x* is the node's label and *l* and *r* are the tree's left and
+right subtrees, respectively.  In Haskell, one way to define such a
+tree is as the (least) fixed point of the following term functor:
 
 > data TreeF a x = Empty | Node a x x deriving Show
 
@@ -89,7 +89,7 @@ of a tree by counting its nodes.  We'll use integers for node counts:
 
 > type NodeCount = Int
 
-And we'll create a function to convert a term into its size:
+And we'll create a function to convert a term into its node count:
 
 > termSize (Empty)                       = 0
 > termSize (Node _ !leftSize !rightSize) = 1 + leftSize + rightSize
@@ -189,10 +189,10 @@ algebra to search for k-unbalanced nodes having balanced children.
 The result of a search is either negative, indicating that we haven't
 (yet) found a node that meets our search criteria, or positive,
 indicating that we have.  In the negative case, we will return a
-'BalanceSummary'; it will be useful in continuing the search upward
+*BalanceSummary*; it will be useful in continuing the search upward
 into the tree.  In the positive case, we will return the matching
-node's label directly.  Thus a search result over a tree having labels
-of type *a* has the following type:
+node's label directly.  Thus a search result, for a tree having labels
+of type *a*, has the following type:
 
 > data BalanceSearchResult a = Neg !BalanceSummary
 >                            | Pos !a
