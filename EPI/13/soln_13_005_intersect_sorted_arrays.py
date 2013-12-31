@@ -6,13 +6,19 @@
 
 """Solution to "Intersect Sorted Arrays", problem 13.5 in EPI
 
-"Problem 13.5: Given sorted arrays A and B of lengths n and m
+"Problem 13.5: Given sorted arrays A and B of lengths m and n
 respectively, return an array C containing elements common to A and
 B. The array C should be free of duplicates.  How would you perform
-this intersection if (1) n is near m and (2) n is much less than m?"
+this intersection if (1) m is near n and (2) m is much less than n?"
 
 Source: _Elements of Programming Interviews_, Aziz, Prakash, and Lee,
 v. 1.3.1.
+
+Note: I have swapped m and n in the problem description above,
+compared to how they appear in the book, because it's easier to
+remember that m = len(A) and n = len(B) since m comes before n,
+and A comes before B, alphabetically.
+
 
 Discussion.  Since A and B are both sorted, their elements are
 nondecreasing.  That is, for all valid indices i, j, i + 1, and j + 1,
