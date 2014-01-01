@@ -1,5 +1,7 @@
 Solution to "Find k-unbalanced node problem", 9.2 in EPI.
 
+Tom Moertel <tom@moertel.com> / 2013-10-31
+
 The problem, paraphrased from problem 9.2 of _Elements
 of Programming Interviews_, v. 1.3.1, is as follows:
 
