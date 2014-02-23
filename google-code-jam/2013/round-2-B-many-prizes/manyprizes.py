@@ -169,16 +169,15 @@ Proofs
 
 A. Best-case rank is a nondecreasing function of team number.
 
-We proceed by contradiction.  Let I be team i's lowest possible rank.
-Now assume that with a certain tournament list a higher-numbered team
-j > i is able to achieve a lower rank of J < I.  If we swap i and j in
-this list, team i will win every game that j would have won (since i <
-j) and achieve a rank no greater than J.  But J < I, which means that
-team i would, under this swapped list, achieve a lower rank than its
-lowest possible rank, which is a contradiction.  Therefore, no list
-exists that allows a higher-numbered team to achieve a lower best-case
-rank than a lower-numbered team, and it follows that best-case rank is
-a nondecreasing function of team number.
+Let an arbitrary team j's lowest possible rank be J.  Now take an
+arbitrary team i < j.  If team i plays under the tournament list that
+allowed team j to achieve rank J, it will win every game that j had
+won (and possibly more) and achieve a ranking no worse than J.  Thus J
+is the worst that team i's best-case rank I could possibly be.  Since
+i and j were chosen arbitrarily, we have established that i < j
+implies I <= J, and therefore that best-case rank is a nondecreasing
+function of team number.
+
 
 B. Worst-case rank is a nondecreasing function of team number.
 
