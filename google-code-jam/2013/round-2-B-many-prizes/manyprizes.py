@@ -265,7 +265,7 @@ as a solution:
     def ManyPrizes(N, P):
       print 2 ** N - LowRankCanWin(N, 2 ** N - P) - 2, LowRankCanWin(N, P)
 
-But this logic will produce erroneous results when P = N^2.  For
+But this logic will produce erroneous results when P = 2^N.  For
 example, in a tournament of N = 3 rounds, if P = 8 prizes are awarded,
 every one of the 2^N = 8 teams will get a prize.  Thus the correct
 answer for ManyPrizes(3, 8) should be (7, 7).  The sample code,
@@ -284,8 +284,8 @@ the solvers, the solver we do implement must handle P = 0 properly.
 
 So what should the result be for P = 0?  The dual formulas from Proof
 C give us the answer.  Instead of finding BC(0), we can instead find
-the equivalent and well-defined N^2 - WC(N^2) - 2.  Since WC(N^2) is
-obviously N^2 - 1, we have our answer: BC(0) = -1.
+the equivalent and well-defined 2^N - WC(2^N) - 2.  Since WC(2^N) is
+obviously 2^N - 1, we have our answer: BC(0) = -1.
 
 Thus we can fix the sample code by inserting the following test into
 LowRankCanWin:
