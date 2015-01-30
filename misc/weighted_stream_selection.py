@@ -34,30 +34,34 @@ def select_weighted_value(weighted_values):
 """Proof of correctness.
 
 Suppose for input the function is given a series of non-negatively
-weighted values (w_i, x_i) for i = 1..N.  Let W = sum(w_i for all i).
-We want to show that, when the loop exits, each value x_i will have
-had a w_i/W probability of having been selected.  Our proof will
-proceed by induction on N.
+weighted values (w_i, x_i) for i = 1..N.  Let W = sum(w_i for all i)
+be greater than 0.  We want to show that, when the loop exits, each
+value x_i will have had a w_i/W probability of having been selected.
+Our proof will proceed by induction on N.
 
-First, the base case of N = 1.  In this case, when the final
-if-statement within the loop is evaluated, weight and total_weight
-will be the same, and x_1 will always be selected since all randomly
-selected integers within 1..x_1 are less than or equal to x_1.
+First, the base case of N = 1.  In this case, there is only one
+value to select and thus the only properly weighted selection is
+that value (provided that w_1 > 0, which our assumption that W > 0
+implies when N = 1).  When the final if-statement within the loop
+is evaluated, weight = total_weight = w_1, and x_1 will always be
+selected since all randomly selected integers within the range
+1..w_1 are less than or equal to w_1.  Thus, when N = 1, the
+algorithm always returns a properly weighted selection.
 
 As our induction hypothesis, suppose that the algorithm works for
 inputs of length N - 1.  Now consider inputs of length N.  When the
 loop finally exits, it will have just considered the final input value
 x_N.  At that time, total_weight will have accumulated all of the
 input weights and will equal W.  Therefore, when x_N was considered,
-it was given exactly the desired w_N/W probability of having been
-selected.  If it was selected, the algorithm returns a properly
-weighted selection.  If it was not selected, it can ruled out, and the
+it must have been given exactly the proper w_N/W probability of having
+been selected.  If x_N was selected, then, the algorithm returns a
+properly weighted selection.  Otherwise, x_N can ruled out, and the
 problem becomes equivalent to returning a properly weighted selection
 from the remaining N - 1 inputs.  In this case, the algorithm returns
 whatever was already in selected_value.  This value is the same as
-what would have been returned had the algorithm been called on just
-the first N - 1 inputs.  By our induction hypothesis, this is a
-properly weighted selection.  Q.E.D.
+what would have been returned by the algorithm had it been called on
+just the first N - 1 inputs.  By our induction hypothesis, this is
+also a properly weighted selection.  Q.E.D.
 
 """
 
