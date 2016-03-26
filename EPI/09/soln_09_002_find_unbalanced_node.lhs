@@ -26,9 +26,9 @@ Now, let us define a binary tree as either
 
 or given by a root node
 
-    Node x l r
+    Node a l r
 
-where *x* is the node's label and *l* and *r* are the tree's left and
+where *a* is the node's label and *l* and *r* are the tree's left and
 right subtrees, respectively.  In Haskell, one way to define such a
 tree is as the (least) fixed point of the following term functor:
 
