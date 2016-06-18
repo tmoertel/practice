@@ -23,8 +23,8 @@ since cycles of length two have the property that they have no
 circle. In fact, any *two* chains that terminate in the same 2-cycle
 but enter the 2-cycle in opposite nodes can also be arranged in a
 circle. Further, any number of these chain-augmented 2-cycles can be
-arranged in a circle. (These properties do not hold for larger
-cycles. They would result in circles with cycle "warts" attached.)
+arranged in a circle. These properties do not hold for larger
+cycles. (They would result in circles with cycle "warts" attached.)
 Therefore, a solution must take one of two forms: (1) one or more
 chain-augmented 2-cycles, or (2) a single cycle of length > 2.
 
@@ -73,7 +73,7 @@ def solve(problem):
     G = graph_from_edges(enumerate(bffs, 1))
     cycles = find_cycles(G)
     # Construct reverse-edged graph and scan its cycles.
-    G_reverse = graph_from_edges(((j, i) for i, j in enumerate(bffs, 1)))
+    G_reverse = graph_from_edges((j, i) for i, j in enumerate(bffs, 1))
     max_large_cycle_size = sum_of_2_cycle_sizes = 0
     for size, entry_node in cycles:
         if size == 2:
