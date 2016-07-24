@@ -99,13 +99,14 @@ def find_real_by_bisection(f, lo, hi, y, e=EPSILON):
 
     """
     _check_bisection_bounds(f, lo, hi, y)
+    hi0 = hi  # save upper bound
     while lo < hi:
         mid = (lo + hi) / 2.0
         if f(mid) <= y:
             lo = mid + e
         else:
             hi = mid - e
-    return lo if f(lo) <= y else lo - e
+    return lo if lo <= hi0 and f(lo) <= y else lo - e
 
 def find_int_by_bisection(f, lo, hi, y):
     """Find maximal int x in [lo, hi] such that f(x) <= y.
@@ -114,7 +115,7 @@ def find_int_by_bisection(f, lo, hi, y):
 
     """
     _check_bisection_bounds(f, lo, hi, y)
-    hi0 = hi
+    hi0 = hi  # save upper bound
     while lo < hi:
         mid = lo + ((hi - lo) >> 1)
         if f(mid) <= y:
