@@ -142,27 +142,44 @@ def isqrt(y):
 
 def fast_pow(x, n):
     """Raise numeric x to integer power n."""
+    # I first wrote this algorithm recursively and then translated it into
+    # the iterative form you see in the implementation. The recursive version:
+    #
+    # def fast_pow(x, n):
+    #     if n == 0:
+    #         return 1
+    #     def go(x, n):
+    #         if n == 1:
+    #             return x
+    #         if n & 1:
+    #             return x * go(x, n - 1)
+    #         return go(x * x, n >> 1)
+    #     return go(x, n)
     if n == 0:
         return 1
-    def go(x, n):
-        if n == 1:
-            return x
+    m = 1
+    while n > 1:
         if n & 1:
-            return x * go(x, n - 1)
-        return go(x * x, n >> 1)
-    return go(x, n)
+            m *= x
+            n -= 1
+        else:
+            x *= x
+            n >>= 1
+    return m * x
 
 def fast_gpow(x, n, mul, mul_identity):
     """Raise generalized numeric x to integer power n."""
     if n == 0:
         return mul_identity
-    def go(x, n):
-        if n == 1:
-            return x
+    m = mul_identity
+    while n > 1:
         if n & 1:
-            return mul(x, go(x, n - 1))
-        return go(mul(x, x), n >> 1)
-    return go(x, n)
+            m = mul(m, x)
+            n -= 1
+        else:
+            x = mul(x, x)
+            n >>= 1
+    return mul(m, x)
 
 
 # vectors
@@ -209,15 +226,12 @@ def identity_matrix(n):
 
 def matrix_pow(A, n, dot=dot_product):
     """Raise matrix A to the integer power n."""
-    if n == 0:
-        return identity_matrix(len(A))
-    return fast_gpow(A, n, mk_matrix_mul(dot), None)
+    return fast_gpow(A, n, mk_matrix_mul(dot), identity_matrix(len(A)))
 
 def matrix_pow_mod(A, n, m):
     """Raise matrix A to the integer power n (mod m)."""
-    if n == 0:
-        return identity_matrix(len(A))
-    return fast_gpow(A, n, mk_matrix_mul(mk_dot_product_mod(m)), None)
+    return fast_gpow(A, n, mk_matrix_mul(mk_dot_product_mod(m)),
+                     identity_matrix(len(A)))
 
 
 # combinatorics
