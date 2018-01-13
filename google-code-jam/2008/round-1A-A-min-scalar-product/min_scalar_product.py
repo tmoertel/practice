@@ -15,7 +15,7 @@ minimum scalar product (MSP) of U and V, and in Y the least element of
 U, u, is *not* paired with the maximum element of V, v, but instead
 with some smaller element v' < v.  Since v is not paired with u, it
 must be paired with some greater element u' > u.  Thus the
-contribution u, u', v, and v' to Y is
+contribution of u, u', v, and v' to Y is
 
   u*v' + u'*v.
 
