@@ -70,7 +70,7 @@ in the diagram below if it falls into Case B:
     ◇ ◆ ◆ ◇       s[i]   =  6
    ◇ ◆ ◆ ◆ ◇      s[i+1] = 15
 
-But since N < s[i+i], we know that some of the white diamonds are
+But since N < s[i+1], we know that some of the white diamonds are
 missing from the structure.  At minimum the peak diamond is missing.
 Thus the question becomes, What is the probability that the white
 diamond at (X, Y) remains after s[i+1] - N white diamonds have been
