@@ -143,7 +143,10 @@ def isqrt(y):
 def fast_pow(x, n):
     """Raise numeric x to integer power n."""
     # I first wrote this algorithm recursively and then translated it into
-    # the iterative form you see in the implementation. The recursive version:
+    # the iterative form you see in the implementation, as explained in
+    # http://blog.moertel.com/posts/2013-05-11-recursive-to-iterative.html.
+    #
+    # For comparison, here is the recursive version:
     #
     # def fast_pow(x, n):
     #     if n == 0:
