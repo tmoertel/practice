@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """Solution to the "Find a duplicate" problem from Interview Cake.
 
@@ -11,7 +12,7 @@ for space use.
 
 https://www.interviewcake.com/question/java/find-duplicate-optimize-for-space
 
-Solution:
+Solution 1:
 
 The first solution I came up with requires O(1) space and O(N) time.
 
@@ -32,9 +33,67 @@ already contain a j. Therefore, we can solve the find-a-duplicate
 problem by implementing our sorting scheme with the additional
 check for encountering a duplicate along the way.
 
+Solution 2:
+
+The Interview Cake web site poses a variant of the problem in which
+you are not allowed to modify the input array. The obvious way to
+solve this problem is to compute the histogram of the array's
+contents, with each integer getting its own bin, and then find bin
+whose count greater than one. But this approach requires O(N) space,
+and the problem asks for a solution that minimizes space use.
+
+To reduce space use to O(1), we can reduce the number of bins in the
+histogram to a small constant, say 2. If we let M = floor(N/2), the
+first bin will cover the integers 1..M and the second bin (M+1)..N.
+If there are no duplicates in the array, the first bin must accumulate
+a count of M, and the second bin a count of (N - M). Therefore, if we
+find a bin that has a greater count than expected, we know it must
+contain at least one duplicate. Then we can repeat the process,
+focusing only on the integers covered by that bin, until we find
+an overly full bin of width one, identifying a duplicate integer.
+
+Unfortunately, this scheme doesn't quite work. Consider the input
+1133. For this input, N = 4 and thus M = 2, giving us a bin for the
+integers 1..2 and another for the integers 3..4. For this input, both
+bins will contain a count of 2, the same as if there had been no
+duplicates. (Consider that the duplicate-free input 1234 has the same
+bins and counts.)
+
+OK. What if we don't *count* the integers that fall into each but
+*add* them? Then we could identify bins that contain duplicates by
+looking for incorrect sums. For the bin 1..2, we'd expect a sum of 3.
+But, for the input 1133, the sum for that bin would be only 2, calling
+attention to the duplicate it contains.
+
+However, this scheme is also flawed. Consider the input 11446677,
+giving rise to the bins 1..4 and 5..8. Both bins would accumulate
+that expected sums (and counts if we tried the counting scheme).
+
 """
 
 import random
+
+def trace(f, printer=None):
+    """Make a version of f that prints a trace of its calls."""
+    import functools
+    fnm = f.__name__
+    depth = [0]
+    def default_printer(depth, fnm, args, ret):
+        print '%s%s%r => %r' % ('  ' * depth, fnm, args, ret)
+    printer = printer or default_printer
+    @functools.wraps(f)
+    def g(*args):
+        depth[0] += 1
+        try:
+            ret = f(*args)
+        except Exception as e:
+            ret = e
+            raise
+        finally:
+            depth[0] -= 1
+            printer(depth[0], fnm, args, ret)
+        return ret
+    return g
 
 def FindDupeViaInPlaceSort(A):
     """Finds a duplicate in A if it exists.
@@ -61,6 +120,44 @@ def FindDupeViaInPlaceSort(A):
     # All elements of the array are in their place, so there are no duplicates.
     return None
 
+
+def FindDupeViaDivideAndConquerOverIntegers(A):
+    """Finds a duplicate in A if it exists.
+
+    Returns None if there is no duplicate.
+    Raises ValueError if there's a value not in 1..len(A).
+
+    """
+    for x in A:
+        if not 0 < x <= len(A):
+            return ValueError('Encountered illegal value {} in array of len {}'.
+                              format(x, len(A)))
+    @trace
+    def Signature(elems):
+        sig1 = 0
+        sig2 = 1
+        for x in elems:
+            sig1 += 1
+            sig2 += x * x
+        return sig1
+    lo = 1
+    hi = len(A)
+    while lo <= hi:
+        mid = lo + (hi - lo) // 2
+        expected_sig = Signature(range(lo, mid + 1))
+        actual_sig = Signature([x for x in A if lo <= x <= mid])
+        if actual_sig > expected_sig:
+            if lo == hi:
+                return lo
+            hi = mid
+            continue
+        expected_sig = Signature(range(mid + 1, hi + 1))
+        actual_sig = Signature([x for x in A if mid + 1 <= x <= hi])
+        if actual_sig > expected_sig:
+            lo = mid + 1
+            continue
+        return None
+    return None
 
 def _MakeRandomArrayWithDupes(array_size, num_dupes):
     dupes = set()
@@ -90,7 +187,7 @@ def _Test(f):
             for num_dupes in range(array_size + 1):
                 A, dupes = _MakeRandomArrayWithDupes(array_size, num_dupes)
                 result = f(A)
-                # print('f({}; {}) => {}'.format(A, dupes, result))
+                print('f({}; {}) => {}'.format(A, dupes, result))
                 if dupes:
                     assert result in dupes
                 else:
@@ -99,4 +196,5 @@ def _Test(f):
 
 
 if __name__ == '__main__':
+    _Test(FindDupeViaDivideAndConquerOverIntegers)
     _Test(FindDupeViaInPlaceSort)
