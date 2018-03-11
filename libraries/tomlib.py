@@ -151,38 +151,30 @@ def fast_pow(x, n):
     # def fast_pow(x, n):
     #     if n == 0:
     #         return 1
-    #     def go(x, n):
-    #         if n == 1:
-    #             return x
-    #         if n & 1:
-    #             return x * go(x, n - 1)
-    #         return go(x * x, n >> 1)
-    #     return go(x, n)
-    if n == 0:
-        return 1
+    #     if n & 1:
+    #         return x * fast_pow(x, n - 1)
+    #     return fast_pow(x * x, n >> 1)
     m = 1
-    while n > 1:
+    while n > 0:
         if n & 1:
             m *= x
             n -= 1
         else:
             x *= x
             n >>= 1
-    return m * x
+    return m
 
 def fast_gpow(x, n, mul, mul_identity):
     """Raise generalized numeric x to integer power n."""
-    if n == 0:
-        return mul_identity
     m = mul_identity
-    while n > 1:
+    while n > 0:
         if n & 1:
             m = mul(m, x)
             n -= 1
         else:
             x = mul(x, x)
             n >>= 1
-    return mul(m, x)
+    return m
 
 
 # vectors
