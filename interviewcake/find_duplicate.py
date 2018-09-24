@@ -38,9 +38,9 @@ Solution 2:
 The Interview Cake web site poses a variant of the problem in which
 you are not allowed to modify the input array. The obvious way to
 solve this problem is to compute the histogram of the array's
-contents, with each integer getting its own bin, and then find bin
-whose count greater than one. But this approach requires O(N) space,
-and the problem asks for a solution that minimizes space use.
+contents, with each integer getting its own bin, and then find the bin
+whose count is greater than one. But this approach requires O(N)
+space, and the problem asks for a solution that minimizes space use.
 
 To reduce space use to O(1), we can reduce the number of bins in the
 histogram to a small constant, say 2. If we let M = floor(N/2), the
@@ -51,49 +51,13 @@ find a bin that has a greater count than expected, we know it must
 contain at least one duplicate. Then we can repeat the process,
 focusing only on the integers covered by that bin, until we find
 an overly full bin of width one, identifying a duplicate integer.
-
-Unfortunately, this scheme doesn't quite work. Consider the input
-1133. For this input, N = 4 and thus M = 2, giving us a bin for the
-integers 1..2 and another for the integers 3..4. For this input, both
-bins will contain a count of 2, the same as if there had been no
-duplicates. (Consider that the duplicate-free input 1234 has the same
-bins and counts.)
-
-OK. What if we don't *count* the integers that fall into each but
-*add* them? Then we could identify bins that contain duplicates by
-looking for incorrect sums. For the bin 1..2, we'd expect a sum of 3.
-But, for the input 1133, the sum for that bin would be only 2, calling
-attention to the duplicate it contains.
-
-However, this scheme is also flawed. Consider the input 11446677,
-giving rise to the bins 1..4 and 5..8. Both bins would accumulate
-that expected sums (and counts if we tried the counting scheme).
+In essence, we do a binary search over the integers 1..N. Since
+we need lg(N) iterations, and each iteration scans all N elements
+of the array, the total run time of this solution is O(N lg N).
 
 """
 
 import random
-
-def trace(f, printer=None):
-    """Make a version of f that prints a trace of its calls."""
-    import functools
-    fnm = f.__name__
-    depth = [0]
-    def default_printer(depth, fnm, args, ret):
-        print '%s%s%r => %r' % ('  ' * depth, fnm, args, ret)
-    printer = printer or default_printer
-    @functools.wraps(f)
-    def g(*args):
-        depth[0] += 1
-        try:
-            ret = f(*args)
-        except Exception as e:
-            ret = e
-            raise
-        finally:
-            depth[0] -= 1
-            printer(depth[0], fnm, args, ret)
-        return ret
-    return g
 
 def FindDupeViaInPlaceSort(A):
     """Finds a duplicate in A if it exists.
@@ -122,42 +86,34 @@ def FindDupeViaInPlaceSort(A):
 
 
 def FindDupeViaDivideAndConquerOverIntegers(A):
-    """Finds a duplicate in A if it exists.
+    """Finds a duplicate in A, where len(A)=N+1 and all(1 <= a <= N for a in A).
 
-    Returns None if there is no duplicate.
-    Raises ValueError if there's a value not in 1..len(A).
+    Raises ValueError if the input is malformed.
 
     """
-    for x in A:
-        if not 0 < x <= len(A):
-            return ValueError('Encountered illegal value {} in array of len {}'.
-                              format(x, len(A)))
-    @trace
-    def Signature(elems):
-        sig1 = 0
-        sig2 = 1
-        for x in elems:
-            sig1 += 1
-            sig2 += x * x
-        return sig1
-    lo = 1
-    hi = len(A)
-    while lo <= hi:
+    N = len(A) - 1
+    # Verify that we have a well-formed problem.
+    if N < 1:
+        raise ValueError('There can be no duplicates in an array of length {}.'.
+                         format(N + 1))
+    for a in A:
+        if not 1 <= a <= N:
+            raise ValueError('The value {} is not between 1 and {} '
+                             '= array length - 1.'.format(a, N))
+    # Find a duplicate by binary search over the range 1..N.
+    lo, hi = 1, N
+    while lo < hi:
         mid = lo + (hi - lo) // 2
-        expected_sig = Signature(range(lo, mid + 1))
-        actual_sig = Signature([x for x in A if lo <= x <= mid])
-        if actual_sig > expected_sig:
-            if lo == hi:
-                return lo
+        histogram = [0] * 2
+        for a in A:
+            if lo <= a <= hi:
+                histogram[int(a > mid)] += 1
+        if histogram[0] > mid - lo + 1:
             hi = mid
-            continue
-        expected_sig = Signature(range(mid + 1, hi + 1))
-        actual_sig = Signature([x for x in A if mid + 1 <= x <= hi])
-        if actual_sig > expected_sig:
+        else:
             lo = mid + 1
-            continue
-        return None
-    return None
+    return lo
+
 
 def _MakeRandomArrayWithDupes(array_size, num_dupes):
     dupes = set()
@@ -180,14 +136,20 @@ def _MakeRandomArrayWithDupes(array_size, num_dupes):
     return A, dupes
 
 
-def _Test(f):
+def _IsStrictlyLegal(A):
+    N = len(A) - 1
+    return N > 0 and all(1 <= a <= N for a in A)
+
+
+def _Test(f, only_strictly_legal_instances=False):
     import math
     for array_size in range(7):
         for _random_case in range(math.factorial(array_size)):
             for num_dupes in range(array_size + 1):
                 A, dupes = _MakeRandomArrayWithDupes(array_size, num_dupes)
+                if only_strictly_legal_instances and not _IsStrictlyLegal(A):
+                    continue
                 result = f(A)
-                print('f({}; {}) => {}'.format(A, dupes, result))
                 if dupes:
                     assert result in dupes
                 else:
@@ -196,5 +158,6 @@ def _Test(f):
 
 
 if __name__ == '__main__':
-    _Test(FindDupeViaDivideAndConquerOverIntegers)
     _Test(FindDupeViaInPlaceSort)
+    _Test(FindDupeViaDivideAndConquerOverIntegers,
+          only_strictly_legal_instances=True)
