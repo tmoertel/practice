@@ -55,6 +55,11 @@ In essence, we do a binary search over the integers 1..N. Since
 we need lg(N) iterations, and each iteration scans all N elements
 of the array, the total run time of this solution is O(N lg N).
 
+As an optimization to further reduce memory use, we observe that since
+the histogram has only two bins, knowing the count of the bottom-half
+bin gives us the full histogram: the top-half bin's count must be the
+total number of items minus the lower-half count.
+
 """
 
 import random
@@ -104,11 +109,11 @@ def FindDupeViaDivideAndConquerOverIntegers(A):
     lo, hi = 1, N
     while lo < hi:
         mid = lo + (hi - lo) // 2
-        histogram = [0] * 2
+        histogram_bottom_half_count = 0
         for a in A:
-            if lo <= a <= hi:
-                histogram[int(a > mid)] += 1
-        if histogram[0] > mid - lo + 1:
+            if lo <= a <= mid:
+                histogram_bottom_half_count += 1
+        if histogram_bottom_half_count > mid - lo + 1:
             hi = mid
         else:
             lo = mid + 1
