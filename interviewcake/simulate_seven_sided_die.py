@@ -36,7 +36,11 @@ to rand5, by starting with rand4 and working to rand7:
     = E[# of calls to rand5 for each call to rand4]
     = sum(i * P(need exactly i calls to rand5) for i = 1..infinity)
     = sum(i * (1/5)^(i-1) * (4/5) for i = 1..infinity)
-    = 5/4.  { courtesy of Wolfram Alpha }
+    = 4/5 * sum(i * (1/5)^(i-1) for i = 1..infinity)
+    = 4 * sum(i * (1/5)^i for i = 1..infinity)
+    = 4 * ((1/5) / (1 - (1/5))^2)  { closed form of sum; see below }
+    = 4 * (1/5) / (4/5)^2
+    = 5/4.
 
   Cost(rand8)
     = 2 * Cost(rand4)
@@ -45,10 +49,48 @@ to rand5, by starting with rand4 and working to rand7:
   Cost(rand7)
     = Cost(rand8) * E[# of calls to rand8 for each call to rand7]
     = (5/2) * sum(i * (1/8)^(i-1) * (7/8) for i = 1..infinity)
-    = (5/2) * (8/7)  { again, courtesy of Wolfram Alpha }
+    = (5/2) * 7 * sum(i * (1/8)^i for i = 1..infinity)
+    = (5/2) * 7 * ((1/8) / (1 - (1/8))^2)  { closed form of sum }
+    = (5/2) * 7 * ((1/8) / 7/8)^2)
+    = (5/2) * 7 * (1/8) * (64/49)
+    = (5/2) * (8/7)
     = 20/7 =~ 2.9.
 
 Therefore, the amortized cost of rand7 is < 3 calls to rand5.
+
+
+Proof that sum(i * a^i for i = 1..infinity) = a / (1 - a)^2 for a < 1.
+
+Let's call the summation in question S. Except for the factor of i in
+each term, our S summation is similar to a common geometric series
+
+  G = sum(a^i for i = 1..infinity),
+
+which has the well-known closed-form solution 1 / (1 - a) for a < 1.
+
+Can we transform the G summation into our S summation? If so, we may
+be able apply the same transformation to the closed form of G to
+derive a closed-form solution for S.
+
+To introduce the needed i term into the summation for G, let’s take G's
+derivative with respect to a:
+
+  G’ = sum(i * a^(i - 1) for i = 1..infinity)
+
+And then, to get the needed exponent of i, we can multiply by a:
+
+  a * G’ = sum(i * a^i for i = 1..infinity)
+
+Thus a * G’ is the same as our summation S. So let's apply the same
+transformations to the closed form of G to get a closed form for S:
+
+S = a * G’
+  = a * d/da (1 / (1 - a))
+  = a * (1 / (1 - a)^2)
+  = a / (1 - a)^2.
+
+QED.
+
 
 Proof that rand4 is uniformly distributed.
 
@@ -69,7 +111,7 @@ for i = 1..4. From basic probability, we can compute Y's distribution:
     = 1/4.
 
 Therefore, Y is uniformly distributed from 1 to 4, and so is rand4.
-A similar proof holds for rand7.
+A similar proof holds for rand7. QED.
 
 """
 
