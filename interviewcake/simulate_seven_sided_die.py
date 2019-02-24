@@ -62,20 +62,23 @@ Therefore, the amortized cost of rand7 is < 3 calls to rand5.
 Proof that sum(i * a^i for i = 1..infinity) = a / (1 - a)^2 for a < 1.
 
 Let's call the summation in question S. Except for the factor of i in
-each term, our S summation is similar to a common geometric series
+each term, our S summation is similar to a the sum of a geometric
+series starting at term 1 instead of 0:
 
-  G = sum(a^i for i = 1..infinity),
-
-which has the well-known closed-form solution a / (1 - a) for a < 1.
+  G = sum(a^i for i = 1..infinity).
+  
+Since sum(a^i for i = 0..infinity) has the well-known closed-form
+solution 1 / (1 - a) for a < 1, and G is the same summation less
+term 0, we have G = 1 / (1 - a) - 1 = a / (1 - a).
 
 Can we transform the G summation into our S summation? If so, we may
 be able apply the same transformation to the closed form of G to
 derive a closed-form solution for S.
 
-To introduce the needed i term into the summation for G, let’s take G's
+To introduce the needed i term into the summation for G, let's take G's
 derivative with respect to a:
 
-  G’ = sum(i * a^(i - 1) for i = 1..infinity)
+  G’ = sum(i * a^(i - 1) for i = 0..infinity)
 
 And then, to get the needed exponent of i, we can multiply by a:
 
