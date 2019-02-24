@@ -66,7 +66,7 @@ each term, our S summation is similar to a common geometric series
 
   G = sum(a^i for i = 1..infinity),
 
-which has the well-known closed-form solution 1 / (1 - a) for a < 1.
+which has the well-known closed-form solution a / (1 - a) for a < 1.
 
 Can we transform the G summation into our S summation? If so, we may
 be able apply the same transformation to the closed form of G to
@@ -85,7 +85,7 @@ Thus a * G’ is the same as our summation S. So let's apply the same
 transformations to the closed form of G to get a closed form for S:
 
 S = a * G’
-  = a * d/da (1 / (1 - a))
+  = a * d/da (a / (1 - a))
   = a * (1 / (1 - a)^2)
   = a / (1 - a)^2.
 
