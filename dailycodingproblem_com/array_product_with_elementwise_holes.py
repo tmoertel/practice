@@ -73,6 +73,8 @@ So we should add this assertion to our test cases:
 
   for all x: assert soln([x]) == [1]
 
+This solution is implemented below in `array_of_products_1`.
+
 ** Variant: No division allowed
 
 The problem also asks us how we would solve the problem if we were not
@@ -99,9 +101,64 @@ solution array can be generated in linear time:
   for i in range(len(X)):
     output[i] = l_prods[i] * r_prods[i]
 
+This solution is implemented below in `array_of_products_2`.
+
+** Variant: Reduced space use
+
+The previous solution employs two internal arrays to keep track of the
+left-to-right and right-to-left running products. As we have seen in
+the code samples above, we can compute the left-to-right running
+product as we scan from left to right through the input array. Since
+the loop we use to populate the output array is also left to right, we
+can combine these two steps to eliminate the `l_prods` array:
+
+  l_running_product = 1
+  for i in range(len(X)):
+    output[i] = l_running_product * r_prods[i]
+    l_running_product *= X[i]
+
+Can we use the same idea to get rid of the `r_prods` array? Yes!
+Multiplication on integers is associative and commutative, so we can
+rearrange the multiplications however we want. We can compute the
+left-to-right and right-to-level running products at the same time
+and incrementally multiply them into the output arrays:
+
+  l_running_product = r_running_product = 1
+  n = len(X)
+  result = [1] * n
+  for i in range(n):
+      result[i] *= l_running_product
+      result[n - i - 1] *= r_running_product
+      l_running_product *= X[i]
+      r_running_product *= X[n - i - 1]
+  return result
+
+
 ** Performance analysis
 
-Both solutions run in linear time and space.
+All three solutions run in linear time and space since they consume
+O(1) time and space per element of the input array. This performance
+is asymptotically optimal.
+
+Proof of optimality: Any solution must run in at least linear time
+because it must visit all of the elements of the input array, since
+every element must be accounted for in the products in the output
+array. Likewise, any solution must run in at least linear space
+because it must produce an output array that is the same length as
+the input array.
+
+(In truth, a strict reading of the problem statement allows us to
+always return an empty array as the solution, as an empty array
+trivially satisfies the requirement that "each element at index i of
+the new array is the product of all the numbers in the original array
+except the one at i." That is, there is no explicitly stated
+requirement that the set of indicies i for the output array must be
+the same as for the input array. Thus, any output length from 0 to the
+length of the input array is technically capable of satisfying the
+problem statment. But common sense suggest that a problem that could
+be solved by `return []` is probably not what the interviewer meant
+when posing the problem. This would be a good opportunity to point out
+the loophole and ask the interviewer to clarify the requirements.)
 
 """
 
@@ -117,6 +174,17 @@ def array_of_products_2(X):
     r_prods = reversed(lagged_running_products(reversed(X)))
     return [x * y for x, y in zip(l_prods, r_prods)]
 
+def array_of_products_3(X):
+    l_running_product = r_running_product = 1
+    n = len(X)
+    result = [1] * n
+    for i in range(n):
+        result[i] *= l_running_product
+        result[n - i - 1] *= r_running_product
+        l_running_product *= X[i]
+        r_running_product *= X[n - i - 1]
+    return result
+
 # Helpers.
 
 def lagged_running_products(X):
@@ -131,14 +199,14 @@ def lagged_running_products(X):
 # Tests.
 
 def test():
-    for soln in (array_of_products_1, array_of_products_2):
+    for soln in (array_of_products_1, array_of_products_2, array_of_products_3):
         # Corner case: empty input array.
         assert soln([]) == []
         # Corner case: singleton input array.
         for x in range(1, 10):
             assert soln([x]) == [1]
         # Zero-handling cases.
-        if soln == array_of_products_2:
+        if soln != array_of_products_1:
             assert soln([0]) == [1]
             assert soln([1, 0, 2, 0]) == [0, 0, 0, 0]
         # General cases.
