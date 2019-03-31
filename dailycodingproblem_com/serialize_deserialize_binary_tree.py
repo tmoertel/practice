@@ -33,6 +33,7 @@ class Node:
         self.left = left
         self.right = right
 
+# Implementation using straight recursion.
 def serialize(tree):
     """Returns an inorder encoding of a tree."""
     output_buffer = []
@@ -50,8 +51,42 @@ def serialize(tree):
     traverse(tree)
     return ''.join(output_buffer)
 
+# Implementation using recursion simulated on an explicit stack.
+# (Avoids Python's recursion-depth limit, which is necessary to
+# serialize very deep trees.)
+#
+# Note how we push instructions onto the the stack in reverse order
+# compared to the straight-recursion implementation above. This is so
+# that when the instructions are popped from the stack, they will be
+# performed in the same sequence as above.
+def serialize(tree):
+    """Returns an inorder encoding of a tree."""
+    output_buffer = []
+    # Implement the recursive algorithm on a simple stack machine
+    # having two instructions:
+    #   ')'  = append ')' to the output
+    #   tree = serialize this tree
+    stack = [tree]
+    while stack:
+        instruction = stack.pop()
+        if instruction == ')':
+            output_buffer.append(')')
+            continue
+        tree = instruction
+        # Base case: empty tree.
+        if tree is None:
+            output_buffer.append('*')
+            continue
+        # Recursive case: non-empty tree.
+        output_buffer.append('(')
+        output_buffer.extend([repr(len(tree.val)), ',', tree.val])
+        stack.append(')')
+        stack.append(tree.right)
+        stack.append(tree.left)
+    return ''.join(output_buffer)
+
 def deserialize(serialized_tree):
-    """Returns the whose serialized form is `serialized_tree`."""
+    """Returns the tree whose serialized form is `serialized_tree`."""
     _start, tree = parse_tree(0, serialized_tree)
     return tree
 
