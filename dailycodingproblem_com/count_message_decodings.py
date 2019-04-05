@@ -37,13 +37,21 @@ If S isn't empty, it must have a leading digit.
 
       assert '0' <= S[0] <= '9'
 
-Assume that the digit isn't 1 or 2. In that case, we can be certain
-that it represents a single character in the original message, so the
-number of ways to decode S is the same as the number of ways to decode
-S[1:], that is S with the first digit removed. So:
+What if the leading digit is 0? Since there are no legal encodings
+that start with 0, we know that the number of messages that could have
+generated that encoding is zero:
 
-      # Case: encoding starts with a digit other than 1 or 2.
-      elif S[:1] > '2':
+      # Case: encoding starts with 0.
+      if S[0] == '0':
+          return 0
+
+Assume that the digit isn't 0, 1, or 2. In that case, we can be
+certain that it represents a single character in the original message,
+so the number of ways to decode S is the same as the number of ways to
+decode S[1:] (that is, S with the first digit removed). So:
+
+      # Case: encoding starts with a digit greater than 2.
+      if S[:1] > '2':
           return count_decodings(S[1:])
 
 But what if the leading digit is 1? In that case, it could be that the
@@ -55,30 +63,30 @@ would be the same as to decode S[2:]. Since both possibilities exist,
 the number of possible decodings of S is sum of those two options:
 
       # Case: encoding starts with a 1.
-      elif S[:1] == '1':
+      if S[:1] == '1':
           if S[:2] == '1':
               # No following digit: only one option.
               return count_decodings(S[1:])
           # Following digit: two options.
-          assert '0' <= S[2] <= '9'
+          assert '0' <= S[1] <= '9'
           return count_decodings(S[1:]) + count_decodings(S[2:])
 
-And, finally, what if the leading digit is 2? This is similar to the
-case when the leading digit is 1, but the second option appears only
-when the following digit is between 1 and 6, since 27, 28, and 29
-don't participate in the mapping that defines the encoding.
+Next, what if the leading digit is 2? This is similar to the case when
+the leading digit is 1, but the second option appears only when the
+following digit is between 0 and 6, since 27, 28, and 29 don't
+participate in the mapping that defines the encoding.
 
       # Case: encoding starts with a 2.
-      else:
+      if S[:1] == '2':
           if S[:2] == '2':
               # No following digit: only one option.
               return count_decodings(S[1:])
           # Following digit exists.
-          assert '0' <= S[2] <= '9'
-          if '0' <= S[2] <= 6:
-              # Following digit is 1, 2, 3, 4, 5, or 6: two options.
+          assert '0' <= S[1] <= '9'
+          if '0' <= S[1] <= 6:
+              # Following digit is 0-6: two options.
               return count_decodings(S[1:]) + count_decodings(S[2:])
-          # Following digit is 7, 8, or 9: one option.
+          # Following digit is 7-9: one option.
           return count_decodings(S[1:])
 
 This logic gives us a recursive solution to the problem, but as an
@@ -100,7 +108,39 @@ TODO: discuss translation of implementation to dynamic programming.
 
 """
 
-def count_decodings_1(encoded_message):
+def count_decodings(S):
+    # Base case: empty encoding.
+    if S == '':
+        return 1
+    # Non-empty cases follow.
+    assert '0' <= S[0] <= '9'
+    # Case: encoding starts with a digit greater than 2.
+    if S[:1] > '2':
+        return count_decodings(S[1:])
+    # Case: encoding starts with 0.
+    if S[:1] == '0':
+        return 0
+    # Case: encoding starts with a 1.
+    if S[:1] == '1':
+        if S[:2] == '1':
+            # No following digit: only one option.
+            return count_decodings(S[1:])
+        # Following digit: two options.
+        assert '0' <= S[1] <= '9'
+        return count_decodings(S[1:]) + count_decodings(S[2:])
+    # Case: encoding starts with a 2.
+    if S[:1] == '2':
+        if S[:2] == '2':
+            # No following digit: only one option.
+            return count_decodings(S[1:])
+        assert '0' <= S[1] <= '9'
+        if '0' <= S[1] <= '6':
+            # Following digit is 0-6: two options.
+            return count_decodings(S[1:]) + count_decodings(S[2:])
+        # Following digit is 7-9: one option.
+        return count_decodings(S[1:])
+
+def count_decodings_dp1(encoded_message):
     n = len(encoded_message)
     # Helper: Returns char at index i (or '' if i is out of bounds).
     def char(i):
@@ -108,18 +148,19 @@ def count_decodings_1(encoded_message):
     # Helper: Returns true iff there is a 2-digit value at index i.
     def two_digits_at(i):
         return ((char(i) == '1' and '0' <= char(i + 1) <= '9') or
-                (char(i) == '2' and  '0' <= char(i + 1) <= '6'))
+                (char(i) == '2' and '0' <= char(i + 1) <= '6'))
     # 
     subcounts = [0] * (n + 2)
     subcounts[n] = 1
     for i in range(n - 1, -1, -1):
         assert '0' <= char(i) <= '9'
-        subcounts[i] = subcounts[i + 1]
+        if char(i) > '0':
+            subcounts[i] = subcounts[i + 1]
         if two_digits_at(i):
             subcounts[i] += subcounts[i + 2]
     return subcounts[0]
 
-def count_decodings_2(encoded_message):
+def count_decodings_dp2(encoded_message):
     n = len(encoded_message)
     # Helper: Returns char at index i (or '' if i is out of bounds).
     def char(i):
@@ -127,24 +168,33 @@ def count_decodings_2(encoded_message):
     # Helper: Returns true iff there is a 2-digit value at index i.
     def two_digits_at(i):
         return ((char(i) == '1' and '0' <= char(i + 1) <= '9') or
-                (char(i) == '2' and  '0' <= char(i + 1) <= '6'))
+                (char(i) == '2' and '0' <= char(i + 1) <= '6'))
     #
-    subcounts_lag_2 = 0
-    subcounts = subcounts_lag_1 = 1
+    subcount = subcount_lag_1 = 1
+    subcount_lag_2 = 0
     for i in range(n - 1, -1, -1):
         assert '0' <= char(i) <= '9'
-        if two_digits_at(i):
-            subcounts += subcounts_lag_2
-        subcounts_lag_1, subcounts_lag_2 = subcounts, subcounts_lag_1
-    return subcounts
+        if char(i) == '0':
+            subcount = 0
+        elif two_digits_at(i):
+            subcount += subcount_lag_2
+        subcount_lag_1, subcount_lag_2 = subcount, subcount_lag_1
+    return subcount
 
 def test():
-    for soln in count_decodings_1, count_decodings_2:
+    for soln in count_decodings, count_decodings_dp1, count_decodings_dp2:
         print soln.__name__
         # Empty message has only one decoding: the empty message.
         assert soln('') == 1
+        assert soln('0') == 0
         assert soln('1') == 1
         assert soln('11') == 2
+        assert soln('21') == 2
+        assert soln('10') == 1
+        assert soln('20') == 1
+        assert soln('18') == 2
+        assert soln('28') == 1
+        assert soln('30') == 0
         # Examples from the problem statement.
         assert soln('111') == 3
     
