@@ -34,109 +34,109 @@ import functools
 import random
 
 # Simple recursive implementation using string slices.
-def match_regexp_1(s, r):
+def match_regex_1(s, r):
     """Returns true if string s is matched by regex r; false otherwise."""
     # Case: string is empty.
     if not s:
         if not r:
             return True
         if r[0] == '*':
-            return match_regexp_1(s, r[1:])
+            return match_regex_1(s, r[1:])
         return False
     # Case: string is not empty.
     if not r:
         return False
-    regexp_instruction = r[0]
-    if regexp_instruction in ('.', s[0]):
-        return match_regexp_1(s[1:], r[1:])
-    if regexp_instruction == '*':
-        return match_regexp_1(s[1:], r[1:]) or match_regexp_1(s[1:], r)
+    regex_instruction = r[0]
+    if regex_instruction in ('.', s[0]):
+        return match_regex_1(s[1:], r[1:])
+    if regex_instruction == '*':
+        return match_regex_1(s[1:], r[1:]) or match_regex_1(s[1:], r)
     return False
 
 # Efficiency optimization that avoids repeatitive work:
 # Memoized recursive implementation using substring indices instead of slices.
-def match_regexp_2(s, r):
+def match_regex_2(s, r):
     """Returns true if string s is matched by regex r; false otherwise."""
-    m = len(s)
-    n = len(r)
+    s_len = len(s)
+    r_len = len(r)
     @memoize
-    def match(i, j):
-        """Matches string s[i:] to regex r[j:]."""
+    def match(s_idx, r_idx):
+        """Matches string s[s_idx:] to regex r[r_idx:]."""
         # Case: string is empty.
-        if i == m:
-            if j == n:
+        if s_idx == s_len:
+            if r_idx == r_len:
                 return True
-            if r[j] == '*':
-                return match(i, j + 1)
+            if r[r_idx] == '*':
+                return match(s_idx, r_idx + 1)
             return False
         # Case: string is not empty.
-        if j == n:
+        if r_idx == r_len:
             return False
-        regexp_instruction = r[j]
-        if regexp_instruction in ('.', s[i]):
-            return match(i + 1, j + 1)
-        if regexp_instruction == '*':
-            return match(i + 1, j + 1) or match(i + 1, j)
+        regex_instruction = r[r_idx]
+        if regex_instruction in ('.', s[s_idx]):
+            return match(s_idx + 1, r_idx + 1)
+        if regex_instruction == '*':
+            return match(s_idx + 1, r_idx + 1) or match(s_idx + 1, r_idx)
         return False
     return match(0, 0)
 
 # Variant:
 # Simulated recursion using stack machine (avoids Python's stack-depth limit).
-def match_regexp_3(s, r):
+def match_regex_3(s, r):
     """Returns true if string s is matched by regex r; false otherwise."""
-    m = len(s)
-    n = len(r)
+    s_len = len(s)
+    r_len = len(r)
     stack = [(0, 0)]
     while stack:
-        i, j = stack.pop()
+        s_idx, r_idx = stack.pop()
         # Case: string is empty.
-        if i == m:
-            if j == n:
+        if s_idx == s_len:
+            if r_idx == r_len:
                 return True
-            if r[j] == '*':
-                stack.append((i, j + 1))
+            if r[r_idx] == '*':
+                stack.append((s_idx, r_idx + 1))
             continue
         # Case: string is not empty.
-        if j == n:
+        if r_idx == r_len:
             continue
-        regexp_instruction = r[j]
-        if regexp_instruction in ('.', s[i]):
-            stack.append((i + 1, j + 1))
-        if regexp_instruction == '*':
-            stack.append((i + 1, j + 1))
-            stack.append((i + 1, j))
+        regex_instruction = r[r_idx]
+        if regex_instruction in ('.', s[s_idx]):
+            stack.append((s_idx + 1, r_idx + 1))
+        if regex_instruction == '*':
+            stack.append((s_idx + 1, r_idx + 1))
+            stack.append((s_idx + 1, r_idx))
     return False
 
 # Variant:
 # Simulated recursion using memoized stack machine; avoids repetitive work.
-def match_regexp_4(s, r):
+def match_regex_4(s, r):
     """Returns true if string s is matched by regex r; false otherwise."""
-    m = len(s)
-    n = len(r)
+    s_len = len(s)
+    r_len = len(r)
     stack = [(0, 0)]
     explored = set()  # States we've already explored.
-    def explore(i, j):
-        if (i, j) not in explored:
-            explored.add((i, j))
-            stack.append((i, j))
+    def explore(s_idx, r_idx):
+        if (s_idx, r_idx) not in explored:
+            explored.add((s_idx, r_idx))
+            stack.append((s_idx, r_idx))
     while stack:
-        i, j = stack.pop()
+        s_idx, r_idx = stack.pop()
         # Case: string is empty.
-        if i == m:
-            if j == n:
+        if s_idx == s_len:
+            if r_idx == r_len:
                 return True
-            if r[j] == '*':
-                explore(i, j + 1)
+            if r[r_idx] == '*':
+                explore(s_idx, r_idx + 1)
             continue
         # Case: string is not empty.
-        if j == n:
+        if r_idx == r_len:
             continue
-        regexp_instruction = r[j]
-        if regexp_instruction in ('.', s[i]):
-            explore(i + 1, j + 1)
-        if regexp_instruction == '*':
-            explore(i + 1, j + 1)
-            explore(i + 1, j)
+        regex_instruction = r[r_idx]
+        if regex_instruction in ('.', s[s_idx]):
+            explore(s_idx + 1, r_idx + 1)
+        if regex_instruction == '*':
+            explore(s_idx + 1, r_idx + 1)
+            explore(s_idx + 1, r_idx)
     return False
 
 def memoize(f):
@@ -151,8 +151,13 @@ def memoize(f):
     return g
 
 def test():
-    for M in match_regexp_1, match_regexp_2, match_regexp_3, match_regexp_4:
+    for M in match_regex_1, match_regex_2, match_regex_3, match_regex_4:
+        # Case: empty string and empty regex.
         assert M('', '')
+        # Case: non-empty string and empty regex.
+        assert M('c', '') == False
+        assert M('co', '') == False
+        # Case: empty string and non-empty regex.
         assert M('', '*')
         assert M('', '**')
         assert M('', '***')
@@ -161,7 +166,10 @@ def test():
         assert M('', '.*') == False
         assert M('', '*.*') == False
         assert M('', 'c') == False
+        # Case: non-empty string and non-empty regex.
         assert M('ray', 'ra.')
         assert M('raymond', 'ra.') == False
         assert M('chat', '.*at')
         assert M('chats', '.*at') == False
+        assert M('chat', 'char') == False
+        assert M('chat', 'hat') == False
