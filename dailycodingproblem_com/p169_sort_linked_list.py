@@ -21,12 +21,14 @@ We use the classic Lisp representation of lists: singly linked "cons"
 cells.
 
 Since the lists don't support efficient random access, we choose to
-sort them using a mergesort. (Mergesorts need only sequential scans
+sort them using a mergesort. Mergesorts need only sequential scans
 and were often used for disk-based sorting in the days before
-solid-state drives.)
+solid-state drives.
 
-Our implementation does O(lg n) passes in which we merge successively
-larger sublists. Each pass takes O(n) time. For example:
+Our implementation does O(lg n) passes in which we merge sublists
+whose length doubles each pass. Each pass takes O(n) time.
+
+Example:
 
 Input list:     5 -> 3 -> 4 -> 1 -> 2
 
@@ -52,9 +54,6 @@ This solution runs in O(1) space and O(n lg n) time.
 
 """
 
-import math
-import random
-
 # We start with a classic linked-list representation based on cons
 # cells, as in Lisp. In this representation, a list is either empty
 # (represented by None) or given by a cell having a value and a
@@ -69,30 +68,23 @@ class Cons(object):
 
 # The sorting logic.
 
-class Sublist(object):
-    """Identifies list cells from `start` up to but not including `end`."""
-    def __init__(self, start=None, end=None):
-        self.start = start
-        self.end = end
+def merge(xs, ys):
+    """Merges two sorted linked lists into a sorted linked list.
 
-def merge(sublist_a, sublist_b):
-    """Merges two sorted sublists into a sorted list.
-
-    Returns the first and last cells of the list.
+    Returns the first and last cells of the resulting linked list.
     """
     # Helper function: yields the cells in sorted order.
-    def merge_sequence(cell_a, cell_b):
-        while cell_a is not sublist_a.end or cell_b is not sublist_b.end:
-            if cell_b is sublist_b.end or (cell_a is not sublist_a.end
-                                           and cell_a.value < cell_b.value):
-                yield cell_a
-                cell_a = cell_a.tail
+    def merge_sequence(xs, ys):
+        while xs or ys:
+            if not ys or (xs and xs.value < ys.value):
+                yield xs
+                xs = xs.tail
             else:
-                yield cell_b
-                cell_b = cell_b.tail
+                yield ys
+                ys = ys.tail
     # String the ordered cells into a list.
     first_cell = last_cell = None
-    for cell in merge_sequence(sublist_a.start, sublist_b.start):
+    for cell in merge_sequence(xs, ys):
         if first_cell is None:
             first_cell = cell
         if last_cell:
@@ -103,13 +95,15 @@ def merge(sublist_a, sublist_b):
     return first_cell, last_cell
 
 def take(llist, n):
-    """Take n cells from llist. Returns a Sublist."""
-    sublist = Sublist(llist)
+    """Take n cells from a linked list. Returns (taken, remaining) lists."""
+    taken_cells = llist
     while n and llist:
         n -= 1
-        llist = llist.tail
-    sublist.end = llist
-    return sublist
+        next_llist = llist.tail
+        if n == 0:
+            llist.tail = None
+        llist = next_llist
+    return taken_cells, llist
 
 def llist_len(llist):
     """Returns the length of a linked list."""
@@ -134,10 +128,9 @@ def sort_linked_list(llist):
         next_unmerged_cell = llist
         last_cell = llist = None
         while next_unmerged_cell:
-            sublist_a = take(next_unmerged_cell, merge_len)
-            sublist_b = take(sublist_a.end, merge_len)
-            next_unmerged_cell = sublist_b.end
-            merged_first_cell, merged_last_cell = merge(sublist_a, sublist_b)
+            xs, next_unmerged_cell = take(next_unmerged_cell, merge_len)
+            ys, next_unmerged_cell = take(next_unmerged_cell, merge_len)
+            merged_first_cell, merged_last_cell = merge(xs, ys)
             if llist is None:
                 llist = merged_first_cell
             else:
@@ -151,6 +144,9 @@ def sort_linked_list(llist):
 
 # Some helper functions to convert between linked and Python lists.
 # We use them only for testing.
+
+import math
+import random
 
 def to_linked_list(sequence):
     """Converts a Python list into a linked list."""
@@ -168,11 +164,16 @@ def from_linked_list(llist):
         llist = llist.tail
     return sequence
 
+# Test our solution using Python's `sorted` as an oracle. We are
+# testing this property: For all sequences of ints `xs`, the solution
+# must agree with `sorted`.
 def test():
-    for size in range(8):
-        for _ in range(math.factorial(size)):
-            sequence = [random.randint(-size, size) for _ in range(size)]
-            expected = sorted(sequence)
-            print '### trying {}'.format(sequence)
-            actual = from_linked_list(sort_linked_list(to_linked_list(sequence)))
+    # Start with small cases and work toward larger.
+    for size in range(20):
+        # For each size, generate a good number of random sequences `xs`.
+        for _ in range(min(120, math.factorial(size))):
+            xs = [random.randint(-size, size) for _ in range(size)]
+            expected = sorted(xs)
+            print '### trying {}'.format(xs)
+            actual = from_linked_list(sort_linked_list(to_linked_list(xs)))
             assert actual == expected
