@@ -73,25 +73,24 @@ def merge(xs, ys):
 
     Returns the first and last cells of the resulting linked list.
     """
-    # Helper function: yields the cells in sorted order.
-    def merge_sequence(xs, ys):
-        while xs or ys:
-            if not ys or (xs and xs.value < ys.value):
-                yield xs
-                xs = xs.tail
-            else:
-                yield ys
-                ys = ys.tail
-    # String the ordered cells into a list.
-    first_cell = last_cell = None
-    for cell in merge_sequence(xs, ys):
+    cell = first_cell = last_cell = None
+    while xs or ys:
+        # Select the next cell in the sorted sequence.
+        if not ys or (xs and xs.value < ys.value):
+            cell = xs
+            xs = xs.tail
+        else:
+            cell = ys
+            ys = ys.tail
+        # Append the cell to the sorted list we're building.
         if first_cell is None:
             first_cell = cell
         if last_cell:
             last_cell.tail = cell
         last_cell = cell
-    if last_cell:
-        last_cell.tail = None
+    # Terminate the sorted list (unless it's empty).
+    if cell:
+        cell.tail = None
     return first_cell, last_cell
 
 def take(llist, n):
