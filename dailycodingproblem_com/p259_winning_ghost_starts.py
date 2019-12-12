@@ -50,18 +50,20 @@ dictionary as a prefix tree. A game of Ghost can be seen as a path
 from the root of the tree (^) to a word end ($), with Player 1
 choosing the nodes at odd depths, and Player 2 at even depths.
 
-     1  2  3  4  5
-  ^--b--e--a--r--$
-  |--c--a--l--f--$
-  |     `--t--$
-  `--d--o--g--$
+      1   2   3   4   5
+
+  ^---b---e---a---r---$
+    |-c---a---l---f---$
+    |       `-t---$
+    `-d---o---g---$
 
 Player 1 goes first. Assume that Player 1 chooses a node x that
 guarantees a win. This implies that x has no child y that Player 2 can
 choose to prevent Player 1 from winning. Thus, ALL of x's children
 must be guaranteed wins for Player 1. Now assume that Player 2 has
 chosen node y. Since we know that Player 1 must win, we know that
-least one of y's children must lead to a guaranteed win for Player 1.
+least one of y's children must lead to a guaranteed win for Player 1
+(and Player 1 will choose just such a child).
 
 Let's formalize this logic by introducing some notation. Let W(x) be a
 predicate that indicates whether Player 1 wins when x is chosen by
@@ -80,54 +82,30 @@ final letter of a word and lost.
 
   W($) = True if P1's turn; False otherwise.
 
-This recursive forumla is all we need to solve the problem.
+This recursive formula is all we need to solve the problem.
 
-For a dictionary of N letters, we can build the prefix tree is O(N)
+For a dictionary of N letters, we can build the prefix tree in O(N)
 time and space, and we can process the tree to arrive at a solution in
 O(N) time and space in the worst case.
 
 """
 
-# Unique values to indicate word starts and ends. We use these instead
-# of the literal characters '^' and '$' to allow those characters to
-# be used in the words we're given.
-
-class WORD_START:
-    def __repr__(self):
-        return '^'
-WORD_START = WORD_START()
-
-
+# We create a unique value, rather than the literal '$', to represent
+# word ends. This lets us use '$' in dictionary words.
 class WORD_END:
     def __repr__(self):
         return '$'
 WORD_END = WORD_END()
 
 
-# Prefix-tree logic.
-
-class Node(object):
-    """A node in a prefix tree."""
-
-    def __init__(self, value):
-        self.value = value
-        self.child_map = {}
-
-    def children(self):
-        return self.child_map.values()
-
-    def __repr__(self):
-        return '{} -> {}'.format(self.value, self.children())
-
-
 def prefix_tree(words):
     """Creates a prefix tree from the given words."""
-    root = Node(WORD_START)
+    root = {}
     for word in words:
         node = root
         for char in word:
-            node = node.child_map.setdefault(char, Node(char))
-        node.child_map.setdefault(WORD_END, Node(WORD_END))
+            node = node.setdefault(char, {})
+        node.setdefault(WORD_END, {})
     return root
 
 
@@ -135,21 +113,30 @@ def prefix_tree(words):
 
 def winning_starts(words):
     """Returns the starting letters that guarantee Ghost wins for Player 1."""
-    initial_choices = prefix_tree(words).children()
-    return sorted(child.value for child in initial_choices if is_win(child, 1))
+    initial_choices = prefix_tree(words).items()
+    return sorted(child[0] for child in initial_choices if is_win(child, 1))
 
 def is_win(node, depth):
     """Returns true iff P1 wins when `node` is on the game path at `depth`."""
     is_p1_turn = bool(depth % 2)
-    if node.value is WORD_END:
+    value, children = node
+    if value is WORD_END:
         return is_p1_turn
     rule = all if is_p1_turn else any
-    return rule(is_win(child, depth + 1) for child in node.children())
+    return rule(is_win(child, depth + 1) for child in children.items())
 
 
 # Tests.
 
-def test():
+def test_empty_dict_must_give_empty_winning_starts():
+    soln = winning_starts([])
+    assert soln == []
+
+def test_dict_with_empty_word_must_give_word_end_as_sole_winning_start():
+    soln = winning_starts([''])
+    assert soln == [WORD_END]
+
+def test_example_soln_must_be_correct():
     d = 'cat calf dog bear'.split()
     soln = winning_starts(d)
     assert soln == ['b', 'c']
