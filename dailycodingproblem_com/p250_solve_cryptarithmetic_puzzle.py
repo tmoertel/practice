@@ -57,10 +57,7 @@ def cryptarithmetic_solutions(first, second, total):
                 value += place * bindings[variable]
                 place *= 10
             return value
-        try:
-            return to_num(first) + to_num(second) == to_num(total)
-        except KeyError:
-            return False
+        return to_num(first) + to_num(second) == to_num(total)
 
     # Brute force: try all assignments of digits to variables.
     digits = list(range(10))
