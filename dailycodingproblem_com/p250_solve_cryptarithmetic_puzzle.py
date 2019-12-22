@@ -34,13 +34,13 @@ This problem comes from https://www.dailycodingproblem.com/ on
 A cryptarithmetic puzzle asks us to find a mapping from the variables
 (letters) in the puzzle to the digits 0-9, such that the equation
 implied by the puzzle holds. The problem definition says that "each
-letter represents a unique digit," so the mapping must be a bijection.
+letter represents a unique digit," so the mapping must be injective.
 Therefore, since there only 10 decimal digits, the largest problems
 can have no more than 10 variables.
 
 How many ways are there to map 10 variables to 10 digits? Line up the
-variables and then write a digit beneath each variable. That's one
-mapping. Each possible way to order the digits -- each permutation --
+variables and then write a distinct digit beneath each variable. That's
+one mapping. Each possible way to order the digits -- each permutation --
 gives another mapping. Since there are 10! = 3,628,800 possible
 permutations, that's how many possible mappings there are.
 
@@ -252,7 +252,7 @@ def test_puzzle_with_more_than_ten_variables_must_have_no_solutions():
     solns = list(cryptarithmetic_solutions('ABCD', 'GHIJ', 'KLMN'))
     assert not solns
 
-def test_empty_puzzle_must_have_only_the_empty_solutios():
+def test_empty_puzzle_must_have_only_the_empty_solution():
     solns = list(cryptarithmetic_solutions('', '', ''))
     assert solns == [{}]
 
