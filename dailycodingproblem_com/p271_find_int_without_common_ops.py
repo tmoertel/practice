@@ -171,7 +171,7 @@ def test():
             assert find([x] * n, x) in range(0, n)
 
         # For all x and natural numbers n > 0, x's indicies in
-        # sorted(ℕ*i) are in the semi-closed range [x*n, (x+1) * i),
+        # sorted(ℕ*i) are in the semi-closed range [x*n, (x+1)*n),
         # where ℕ is a list of the natural numbers 0, 1, 2, ....
         natural_numbers = list(range(10))  # Approximate :-)
         for n in range(1, 10):
