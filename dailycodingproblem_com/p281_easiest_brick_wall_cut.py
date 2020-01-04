@@ -99,7 +99,6 @@ def minimal_vertical_cut_through_brick_wall(rows):
         # We must cut all bricks, and we do so in the middle.
         return rows[0][0] / 2, len(rows)
 
-
     # Cut the wall at the least distance having a maximal number of edges.
     edge_count, negative_distance = max((edges[i], -i) for i in edges)
     wall_height = len(rows)
