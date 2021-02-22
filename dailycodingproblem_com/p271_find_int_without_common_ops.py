@@ -50,7 +50,9 @@ in the range 0 through n, inclusive:
 
 A binary search using this method of finding the midpoint still runs
 in O(lg N) expected time because, on average, we'll be able to discard
-half of the active range on each iteration.
+a quarter of the active range in at most two iterations, limiting the
+number of iterations to O(log(n)/log(4/3)) = O(log n), just as in the
+quickselect algorithm with random pivots.
 
 3. Probable midpoint. Improving on the random guess, we could take several
 guesses and return the one that is the most central:
