@@ -45,15 +45,45 @@ altogether and *randomly* choose where to split the search space. It's
 less obvious that this strategy preserves the low O(lg n) time cost,
 but it does (in expectation). Proving it is a little tricky, however.
 
-For intuition, we can look to the classical quickselect algorithm with
-random pivots, which runs in O(n) expected time. We know that it does
-work that costs O(n) time on each iteration, but our pseudobinary
-search has the same random recursive structure but only does O(1) work
-on each iteration (since it doesn't need to partition elements by
-actually moving them around), hence the lower expected run time of
-O(lg n).
+My proof will follow Kleinberg and Tardos's analysis of quickselect
+in their book _Algorithmn Design_. The basic idea is to express the
+overall runtime in phases. We start in phase 0 and enter phase 1 as
+soon as the algorithm has reduced the search space by 25%. We enter
+phase 2 as soon as we've reduced it by another 25%, and so on. Thus in
+phase j, the active range of the array will between (3/4)^j and
+(3/4)^(j+1) of its original size. For an array of size n, there can be
+at most k = ceil(log(n)/log(4/3)) phases. So, if we let X[j] denote the
+time the algorithmn spends in phase j, then the expected overall
+running time is given by
 
-TODO: Provide detailed proof here.
+  T = E[ X[0] + X[1] + ... X[k-1] ]
+
+which, because expectation is linear, is equal to
+
+  T = E[X[0]] + E[X[1]] + ... E[X[k-1]].
+
+Since the algorithmn doesn't care what phase it's in, all of the X[j]
+terms have the same expectation. We can estimate the expected run time
+of one X[j] by observing that if the algorithm chooses a random pivot
+within the middle 50% of elements, which occurs with probability 1/2,
+then even if the algorithm ends up discarding the smaller "half" of
+the active range, the range will have been reduced by 25%. If we let
+E be the expected number of iterations before we randomly select a
+middle-50% pivot, we have
+
+   E = 1  + (1/2) * 0 + (1/2) * E
+ 
+Solving the equation gives us E = 2. Hence, the expected number of
+iterations in each phase is at most 2. And since the work done in each
+iteration is constant time, X[j] ≤ 2 * c for some constant c. Thus the
+overall running time is given by
+ 
+  T = E[X[0]] + E[X[1]] + ... E[X[k-1]]
+    ≤ 2 * c * k
+    = 2 * c * log(n) / log(4/3),
+    
+which is in O(log n). QED.
+
 
 """
 
