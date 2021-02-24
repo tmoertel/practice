@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Soln to problem: Find the winning starts for a game of Ghost.
+"""Soln to problem: Count the ways to roll a dice total.
 
 * Problem
 
