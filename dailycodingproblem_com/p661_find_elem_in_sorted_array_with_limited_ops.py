@@ -49,12 +49,12 @@ My proof will follow Kleinberg and Tardos's analysis of quickselect
 in their book _Algorithmn Design_. The basic idea is to express the
 overall runtime in phases. We start in phase 0 and enter phase 1 as
 soon as the algorithm has reduced the search space by 25%. We enter
-phase 2 as soon as we've reduced it by another 25%, and so on. Thus in
-phase j, the active range of the array will between (3/4)^j and
-(3/4)^(j+1) of its original size. For an array of size n, there can be
-at most k = ceil(log(n)/log(4/3)) phases. So, if we let X[j] denote the
-time the algorithmn spends in phase j, then the expected overall
-running time is given by
+phase 2 as soon as we've reduced this smaller search space by another
+25%, and so on. Thus in phase j, the active range of the array will
+be between (3/4)^j and (3/4)^(j+1) of its original size. For an array
+of size n, there can be at most k = ceil(log(n)/log(4/3)) phases. So,
+if we let X[j] denote the time the algorithmn spends in phase j, then
+the expected overall running time is given by
 
   T = E[ X[0] + X[1] + ... X[k-1] ]
 
@@ -71,9 +71,9 @@ the active range, the range will have been reduced by 25%. If we let
 E be the expected number of iterations before we randomly select a
 middle-50% pivot, we have
 
-   E = 1  + (1/2) * 0 + (1/2) * E
+   E = 1 + (1/2) * 0 + (1/2) * E
  
-Solving the equation gives us E = 2. Hence, the expected number of
+Solving for E gives us E = 2. Hence, the expected number of
 iterations in each phase is at most 2. And since the work done in each
 iteration is constant time, X[j] ≤ 2 * c for some constant c. Thus the
 overall running time is given by
