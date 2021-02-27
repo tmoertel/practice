@@ -30,7 +30,16 @@ no memory but a bounded number of O(1)-sized stack frames (we don't
 recurse).
 
 We can compute the expected runtime cost of rand7, in terms of calls
-to rand5, by starting with rand4 and working to rand7:
+to rand5, by starting with rand4 and working to rand7. Let E be the
+expected number of times rand4 calls rand5. We can solve for E by
+using the law of total expectation on the outcome of the first call:
+
+  Cost(rand4)
+    = E
+    = 1 + (4/5)(0)  + (1/5)(E)   { by law of total expectation }
+    = 5/4.                       { solve for E }
+
+Or we can do it the hard way:
 
   Cost(rand4)
     = E[# of calls to rand5 for each call to rand4]
@@ -42,9 +51,25 @@ to rand5, by starting with rand4 and working to rand7:
     = 4 * (1/5) / (4/5)^2
     = 5/4.
 
+So rand4 costs, on average, 5/4 calls to rand5.
+
+The cost of rand8 is straightforward:
+
   Cost(rand8)
     = 2 * Cost(rand4)
     = 5/2.
+
+And, finally, the cost of rand7 can be solved just like for rand4.
+First, the easy way, letting F be the expected number of times
+that rand7 calls rand8:
+
+  Cost(rand7)
+    = F
+    = 1 + (7/8)(0) + (1/8)(F)
+    = 8/7.
+
+And 8/7 calls to rand8 is (8/7)(5/2) = 20/14 calls to rand5. As a
+double-check, lets do it the hard way:
 
   Cost(rand7)
     = Cost(rand8) * E[# of calls to rand8 for each call to rand7]
@@ -56,8 +81,9 @@ to rand5, by starting with rand4 and working to rand7:
     = (5/2) * (8/7)
     = 20/7 =~ 2.9.
 
-Therefore, the amortized cost of rand7 is < 3 calls to rand5.
+Therefore, the expected cost of rand7 is less than 3 calls to rand5.
 
+--
 
 Proof that sum(i * a^i for i = 1..infinity) = a / (1 - a)^2 for a < 1.
 
@@ -66,7 +92,7 @@ each term, our S summation is similar to a the sum of a geometric
 series starting at term 1 instead of 0:
 
   G = sum(a^i for i = 1..infinity).
-  
+
 Since sum(a^i for i = 0..infinity) has the well-known closed-form
 solution 1 / (1 - a) for a < 1, and G is the same summation less
 term 0, we have G = 1 / (1 - a) - 1 = a / (1 - a).
