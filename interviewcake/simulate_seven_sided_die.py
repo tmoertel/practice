@@ -68,7 +68,7 @@ that rand7 calls rand8:
     = 1 + (7/8)(0) + (1/8)(F)
     = 8/7.
 
-And 8/7 calls to rand8 is (8/7)(5/2) = 20/14 calls to rand5. As a
+And 8/7 calls to rand8 is (8/7)(5/2) = 20/7 calls to rand5. As a
 double-check, lets do it the hard way:
 
   Cost(rand7)
