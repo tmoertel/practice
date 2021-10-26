@@ -68,20 +68,20 @@ of one X[j] by observing that if the algorithm chooses a random pivot
 within the middle 50% of elements, which occurs with probability 1/2,
 then even if the algorithm ends up discarding the smaller "half" of
 the active range, the range will have been reduced by 25%. If we let
-E be the expected number of iterations before we randomly select a
+Y be the expected number of iterations before we randomly select a
 middle-50% pivot, we have
 
-   E = 1 + (1/2) * 0 + (1/2) * E
- 
-Solving for E gives us E = 2. Hence, the expected number of
+   Y = 1 + (1/2) * 0 + (1/2) * Y
+
+Solving for Y gives us Y = 2. Hence, the expected number of
 iterations in each phase is at most 2. And since the work done in each
 iteration is constant time, X[j] ≤ 2 * c for some constant c. Thus the
 overall running time is given by
- 
+
   T = E[X[0]] + E[X[1]] + ... E[X[k-1]]
     ≤ 2 * c * k
     = 2 * c * log(n) / log(4/3),
-    
+
 which is in O(log n). QED.
 
 
