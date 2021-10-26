@@ -17,6 +17,16 @@ This problem comes from https://www.dailycodingproblem.com/ on
   Do this in O(log N) time.
 
 
+* Note on alternative explanations
+
+  Months after I solved this problem, I noticed that it had appeared
+  over a year ago as DCP #271, and I had solved it back then.
+  Unsurprisingly, my solutions back then are similar to my solutions
+  now. I explained them differently, however, so you might want to
+  give those explanations a look if my explanations here don't click
+  for you.
+
+
 * Solution
 
 The obvious solution to this problem would be a binary search, were
@@ -83,7 +93,6 @@ overall running time is given by
     = 2 * c * log(n) / log(4/3),
 
 which is in O(log n). QED.
-
 
 """
 

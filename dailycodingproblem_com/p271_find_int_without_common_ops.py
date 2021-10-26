@@ -17,6 +17,16 @@ This problem comes from https://www.dailycodingproblem.com/ on
   Do this in O(log N) time.
 
 
+* Note on alternative explanations
+
+  Over a year after I solved this problem, it reappeared again as DCP
+  #661, and solved it again, without realizing I had already solved
+  it. Unsurprisingly, my new solutions were similar to my solutions
+  here. I explained them differently, however, so you might want to
+  give those explanations a look if my explanations here don't fully
+  click for you.
+
+
 * Solution
 
 A binary search finds the element in O(log N) time, but the standard
