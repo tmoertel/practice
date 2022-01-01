@@ -8,17 +8,17 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-03-26 and was classified as Hard.
 
-  This problem was asked by Uber.
+  Reported source: Uber.
 
-  Given an array of integers, return a new array such that each
-  element at index i of the new array is the product of all the
-  numbers in the original array except the one at i.
+  You are given an array X of integers. Your must return a new
+  array Y such that Y[i] is the product of all elements in X
+  except for X[i]. For example:
 
-  For example, if our input was [1, 2, 3, 4, 5], the expected output
-  would be [120, 60, 40, 30, 24]. If our input was [3, 2, 1], the
-  expected output would be [2, 3, 6].
+  If X = [10, 4, 3, 2, 1], then Y would be [24, 60, 80, 120, 240].
 
-  Follow-up: what if you can't use division?
+  If X = [2, 1, 3], then Y would be [3, 6, 2].
+
+  For an added challenge, solve the problem without using division.
 
 
 * Solutions
@@ -164,9 +164,9 @@ as the input array.
 
 (In truth, a strict reading of the problem statement allows us to
 always return an empty array as the solution, as an empty array
-trivially satisfies the requirement that "each element at index i of
-the new array is the product of all the numbers in the original array
-except the one at i." That is, there is no explicitly stated
+trivially satisfies the requirement that each element at index i of
+the new array B is the product of all the numbers in the original
+array A except the one at i. That is, there is no explicitly stated
 requirement that the set of indicies i for the output array must be
 the same as for the input array. Thus, any output length from 0 to the
 length of the input array is technically capable of satisfying the
@@ -229,7 +229,7 @@ def array_of_products_4(X):
 # Helpers.
 
 def lagged_running_products(X):
-    """Returns a list Y in which Y[i] is the product of all elems in X[:i].""" 
+    """Returns a list Y in which Y[i] is the product of all elems in X[:i]."""
     products = []
     running_product = 1
     for x in X:
@@ -256,7 +256,7 @@ def test():
         assert soln([1, 0, 2, 0]) == [0, 0, 0, 0]
         # Example cases from the problem statement.
         assert soln([3, 2, 1]) == [2, 3, 6]
-        assert soln([1, 2, 3, 4, 5]) == [120, 60, 40, 30, 24]
+        assert soln([10, 4, 3, 2, 1]) == [24, 60, 80, 120, 240]
         # Property: For all integer sequences X, if Y = soln(X), then
         # Y[i] * X[i] should equal the product of all elements in X.
         for size in range(7):
@@ -265,4 +265,3 @@ def test():
                 all_X_product = product_of_all_elems(X)
                 Y = soln(X)
                 assert all(x * y == all_X_product for x, y in zip(X, Y))
-                

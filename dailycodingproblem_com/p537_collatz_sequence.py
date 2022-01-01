@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-09-15 (#537) and was classified as Easy:
 
-  This problem was asked by Apple.
+  Reported source: Apple.
 
   A Collatz sequence in mathematics can be defined as
   follows. Starting with any positive integer:

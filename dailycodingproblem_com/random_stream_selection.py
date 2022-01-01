@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-04-08 and was classified as Medium.
 
-  This problem was asked by Facebook.
+  Reported source: Facebook.
 
   Given a stream of elements too large to store in memory, pick a
   random element from the stream with uniform probability.

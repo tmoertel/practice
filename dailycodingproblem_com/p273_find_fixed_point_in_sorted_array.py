@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-12-22 (#273) and was classified as Easy.
 
-  This problem was asked by Apple.
+  Reported source: Apple.
 
   A fixed point in an array is an element whose value is equal to its
   index. Given a sorted array of distinct elements, return a fixed

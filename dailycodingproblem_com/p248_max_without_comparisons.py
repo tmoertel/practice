@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-11-27 (#248) and was classified as Hard.
 
-  This problem was asked by Nvidia.
+  Reported source: Nvidia.
 
   Find the maximum of two numbers without using any if-else
   statements, branching, or direct comparisons.

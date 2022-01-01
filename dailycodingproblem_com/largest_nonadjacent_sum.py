@@ -8,13 +8,14 @@
 This problem comes from Daily Coding Problem on 2019-04-02 and was
 classified as Hard difficulty:
 
-  This problem was asked by Airbnb.
+  Reported source: Airbnb.
 
-  Given a list of integers, write a function that returns the largest
-  sum of non-adjacent numbers. Numbers can be 0 or negative.
+  Write a function that, given a sequence of integers, returns the
+  greatest sum of non-adjacent values. Values can be 0 or negative.
 
-  For example, [2, 4, 6, 2, 5] should return 13, since we pick 2, 6,
-  and 5. [5, 1, 1, 5] should return 10, since we pick 5 and 5.
+  For example, given [2, 3, 7, 1, 5], the function should return 14,
+  since the best it can pick is 2, 7, and 5. Given [6, 2, 3, 5], the
+  function should return 11, since it can pick no better than 6 and 5.
 
   Follow-up: Can you do this in O(N) time and constant space?
 
@@ -22,7 +23,7 @@ classified as Hard difficulty:
 * Solution
 
 It helps to consider small cases in order to build intuition about
-the problem. 
+the problem.
 
 If soln(X) is the solution for the sequence of numbers X, what should
 it give us when X = [] (the empty sequence)? Although the problem

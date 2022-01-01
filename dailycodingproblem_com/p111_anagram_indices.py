@@ -8,14 +8,13 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-75-13 (#111) and was classified as Hard.
 
-  This problem was asked by Google.
+  Reported source: Google.
 
-  Given a word W and a string S, find all starting indices in S which
-  are anagrams of W.
+  Given a string S and a word W, find all anagrams of W in S and return
+  their starting indices in order.
 
-  For example, given that W is "ab", and S is "abxaba", return 0, 3,
-  and 4.
-
+  For example, given that S = "qxiqxq" and W = "qx", return [0, 3, 4].
+                               ^  ^^
 """
 
 import collections

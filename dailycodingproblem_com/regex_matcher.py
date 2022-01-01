@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-04-18 (#24) and was classified as Hard.
 
-  This problem was asked by Facebook.
+  Reported source: Facebook.
 
   Implement regular expression matching with the following special
   characters:

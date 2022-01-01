@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-05-23 (#60) and was classified as Medium.
 
-  This problem was asked by Facebook.
+  Reported source: Facebook.
 
   Given a multiset of integers, return whether it can be partitioned
   into two subsets whose sums are the same.

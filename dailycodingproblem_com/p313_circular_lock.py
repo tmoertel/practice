@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-01-31 (#313) and was classified as Hard:
 
-  This problem was asked by Citrix.
+  Reported source: Citrix.
 
   You are given a circular lock with three wheels, each of which
   display the numbers 0 through 9 in order. Each of these wheels

@@ -6,22 +6,21 @@
 This problem comes from Daily Coding Problem on 2019-04-01 and was
 classified as Easy difficulty:
 
-This problem was asked by Google.
+Reported source: Google.
 
-  A unival tree (which stands for "universal value") is a tree where
-  all nodes under it have the same value.
+  In a "unival" tree, all nodes share the same value.
 
-  Given the root to a binary tree, count the number of unival subtrees.
+  Given a binary tree, count the number of unival subtrees within it.
 
   For example, the following tree has 5 unival subtrees:
 
-     0
+     1
     / \
-   1   0
+   3   1
       / \
-     1   0
-    / \
-   1   1
+     3   1
+    / \   \
+   3   3   0
 
 """
 
@@ -37,10 +36,10 @@ class Node:
 
 def count_unival_subtrees(tree):
     def process(tree):
-        # Base case: empty tree.
+        # Base case: an empty tree is not unival.
         if tree is None:
             return False, None, 0
-        # Base case: singleton tree.
+        # Base case: a singleton tree is trivially unival.
         if tree.left is None and tree.right is None:
             return True, tree.val, 1
         # General case. We divide and conquer using recursion.
@@ -87,7 +86,7 @@ def count_nodes(tree):
 
 def count_unival_subtrees_algebra(tree):
     """Reduces a tree term to a value indicating its unival status.
-    
+
     None, None, 0  = The tree is empty.
     True, v, c     = The tree is unival with value v and count of c.
     False, None, c = The tree is not unival but has a count of c.

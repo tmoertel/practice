@@ -6,7 +6,7 @@
 This problem comes from Daily Coding Problem on 2019-03-27 and was
 classified as Medium difficulty:
 
-  This problem was asked by Google.
+  Reported source: Google.
 
   Given the root to a binary tree, implement serialize(root), which
   serializes the tree into a string, and deserialize(s), which

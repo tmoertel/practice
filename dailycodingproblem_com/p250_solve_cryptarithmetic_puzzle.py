@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-11-29 (#250) and was classified as Medium.
 
-  This problem was asked by Google.
+  Reported source: Google.
 
   A cryptarithmetic puzzle is a mathematical game where the digits of
   some numbers are represented by letters. Each letter represents a

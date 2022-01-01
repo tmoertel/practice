@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-08-30 (#520) and was classified as Hard:
 
-  This problem was asked by LinkedIn.
+  Reported source: LinkedIn.
 
   You are given a binary tree in a peculiar string representation. Each node
   is written in the form (lr), where l corresponds to the left child and r

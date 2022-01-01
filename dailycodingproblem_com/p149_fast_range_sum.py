@@ -8,16 +8,16 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-08-20 (#149) and was classified as Hard.
 
-  This problem was asked by Goldman Sachs.
+  Reported source: Goldman Sachs.
 
-  Given a list of numbers L, implement a method sum(i, j) which
-  returns the sum from the sublist L[i:j] (including i, excluding j).
+  Given a list of numbers, implement a method sum(i, j) that returns
+  the sum of elements starting at index i and running up to, but not
+  including, index j.
 
-  For example, given L = [1, 2, 3, 4, 5], sum(1, 3) should return
-  sum([2, 3]), which is 5.
+  For example, for [1, 2, 3, 4, 5], sum(1, 3) should return 2 + 3 = 5.
 
-  You can assume that you can do some pre-processing. sum() should be
-  optimized over the pre-processing step.
+  Assume that sum may be called many times for a given list and that
+  doing some quick pre-processing is allowed.
 
 * Solution
 
@@ -62,4 +62,3 @@ def test():
         assert f(i, i) == 0
         assert f(i, i + 1) == L[i]
     assert f(1, 3) == 5
-

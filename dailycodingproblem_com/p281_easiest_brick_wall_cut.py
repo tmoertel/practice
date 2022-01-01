@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-12-30 (#281) and was classified as Medium:
 
-  This problem was asked by LinkedIn.
+  Reported source: LinkedIn.
 
   A wall consists of several rows of bricks of various integer lengths
   and uniform height. Your goal is to find a vertical line going from

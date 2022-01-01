@@ -8,10 +8,10 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-04-07 and was classified as Medium.
 
-  This problem was asked by Google.
+  Reported source: Google.
 
-  The area of a circle is defined as πr^2. Estimate π to 3 decimal
-  places using a Monte Carlo method.
+  The area of a circle with radius r is defined to be πr^2.
+  Use a Monte Carlo method to Estimate π to 3 decimal places.
 
 * Solution
 
@@ -31,7 +31,8 @@ that square is within the circle with probability
 
 We can estimate p by throwing n random darts uniformly at the square
 and counting the number of darts that landed within the circle. If m
-darts land within the circle, then p ~ m/n, and
+darts land within the circle, then m/n is an estimate for p that gets
+better as we throw more darts.
 
   pi = (area of circle) = (area of sqare) * p = 4 * p.
 

@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-05-25 (#62) and was classified as Medium.
 
-  This problem was asked by Facebook.
+  Reported source: Facebook.
 
   There is an N by M matrix of zeroes. Given N and M, write a function
   to count the number of ways of starting at the top-left corner and

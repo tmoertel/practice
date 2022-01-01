@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-12-21 (#272) and was classified as Medium.
 
-  This problem was asked by Spotify.
+  Reported source: Spotify.
 
   Write a function, throw_dice(N, faces, total), that determines how
   many ways it is possible to throw N dice with some number of faces

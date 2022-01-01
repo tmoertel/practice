@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-12-28 (#636) and was classified as Medium:
 
-  This problem was asked by Uber.
+  Reported source: Uber.
 
   Suppose an array sorted in ascending order is rotated at some pivot
   unknown to you beforehand. Find the minimum element in O(log N)

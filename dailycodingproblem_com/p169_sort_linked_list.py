@@ -8,12 +8,17 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-09-09 (#169) and was classified as Medium.
 
-  This problem was asked by Google.
+  Reported source: Google.
 
-  Given a linked list, sort it in O(n log n) time and constant space.
+  Sort a linked list in O(n log n) time and constant space.
 
-  For example, the linked list 4 -> 1 -> -3 -> 99 should become
-  -3 -> 1 -> 4 -> 99.
+  For example, the linked list
+
+    7 -> -3 -> 0 -> 99
+
+  sorts to
+
+    -3 -> 0 -> 7 -> 99.
 
 * Solution
 

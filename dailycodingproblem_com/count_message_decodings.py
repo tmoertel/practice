@@ -8,15 +8,15 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-03-26 and was classified as Medium.
 
-  This problem was asked by Facebook.
+  Reported source: Facebook.
 
-  Given the mapping a = 1, b = 2, ... z = 26, and an encoded message,
-  count the number of ways it can be decoded.
+  Given the mapping a = 1, b = 2, ..., v = 22, ... z = 26, and an
+  encoded message, count the number of ways it can be decoded.
 
-  For example, the message '111' would give 3, since it could be
-  decoded as 'aaa', 'ka', and 'ak'.
+  For example, the message '222' would give 3, since it could be
+  decoded as 'bbb', 'vb', and 'bv'.
 
-  You can assume that the messages are decodable. For example, '001'
+  You can assume that the messages are decodable. For example, '002'
   is not allowed.
 
 
@@ -272,4 +272,3 @@ def test():
         assert soln('28') == 1
         # Examples from the problem statement.
         assert soln('111') == 3
-    

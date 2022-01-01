@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-04-23 (#396) and was classified as Hard:
 
-  This problem was asked by Google.
+  Reported source: Google.
 
   Given a string, return the length of the longest palindromic
   subsequence in the string.

@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-04-19 (#392) and was classified as Hard:
 
-  This problem was asked by Google.
+  Reported source: Google.
 
   You are given a 2D matrix of 1s and 0s where 1 represents land and 0
   represents water.

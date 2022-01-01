@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-01-22 (#281) and was classified as Hard:
 
-  This problem was asked by Two Sigma.
+  Reported source: Two Sigma.
 
   A knight is placed on a given square on an 8 x 8 chessboard. It is
   then moved randomly several times, where each move is a standard

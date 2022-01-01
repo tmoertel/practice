@@ -8,14 +8,13 @@
 This problem comes from Daily Coding Problem on 2019-03-28 and was
 classified as Hard difficulty:
 
-  This problem was asked by Stripe.
+  Reported source: Stripe.
 
-  Given an array of integers, find the first missing positive integer
-  in linear time and constant space. In other words, find the lowest
-  positive integer that does not exist in the array. The array can
-  contain duplicates and negative numbers as well.
+  Find the smallest missing positive integer in a given array.
+  The array may contain arbitrary integers, including negatives
+  and duplicates.
 
-  For example, the input [3, 4, -1, 1] should give 2. The input [1, 2,
+  For example, the input [3, 6, -3, 1] should give 2. The input [2, 1,
   0] should give 3.
 
   You can modify the input array in-place.

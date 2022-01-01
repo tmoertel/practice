@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-12-20 (#271) and was classified as Hard.
 
-  This problem was asked by Netflix.
+  Reported source: Netflix.
 
   Given a sorted list of integers of length N, determine if an element
   x is in the list without performing any multiplication, division, or

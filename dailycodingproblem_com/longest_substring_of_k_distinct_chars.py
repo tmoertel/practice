@@ -8,18 +8,21 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-04-06 and was classified as Hard.
 
-  This problem was asked by Amazon.
+  Reported source: Amazon.
 
-  Given an integer k and a string s, find the length of the longest
-  substring that contains at most k distinct characters.
+  Given a string and an integer k, find the length of the longest
+  substring that contains no more than k distinct characters.
 
-  For example, given s = "abcba" and k = 2, the longest substring with
-  k distinct characters is "bcb".
+  For example, consider the string "xyzyx". If k = 2, the longest
+  substring with k distinct characters is "yzy", and the answer is
+  therefore 3. If k = 3, however, the longest substring would be
+  "xyzyx", and the answer would be 5.
 
 
 * Solution
 
-This solution runs in O(n) time and uses O(k) space, where n = len(s).
+This solution runs in O(n) time and uses O(k) space, where n is the
+string's length.
 
 """
 

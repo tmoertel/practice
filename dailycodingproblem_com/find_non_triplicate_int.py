@@ -8,14 +8,14 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-05-03 (#40) and was classified as Hard.
 
-  This problem was asked by Google.
+  Reported source: Google.
 
-  Given an array of integers where every integer occurs three times
-  except for one integer, which only occurs once, find and return the
-  non-duplicated integer.
+  You are given an array of integers in which each distinct integer
+  occurs three times except for a lone integer which occurs only once.
+  Return the lone integer.
 
-  For example, given [6, 1, 3, 3, 3, 6, 6], return 1. Given [13, 19,
-  13, 13], return 19.
+  For example, given [2, 4, 1, 3, 3, 3, 4, 2, 2, 4], return 1.
+  Given [13, 23, 13, 13], return 23.
 
   Do this in O(N) time and O(1) space.
 

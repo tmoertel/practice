@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2020-09-22 (#544) and was classified as Hard:
 
-  This problem was asked by Google.
+  Reported source: Google.
 
   Given a list of integers S and a target number k, write a function
   that returns a subset of S that adds up to k. If such a subset

@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-12-08 (#259) and was classified as Hard.
 
-  This problem was asked by Two Sigma.
+  Reported source: Two Sigma.
 
   Ghost is a two-person word game where players alternate appending
   letters to a word. The first person who spells out a word, or

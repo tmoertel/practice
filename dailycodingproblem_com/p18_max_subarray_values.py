@@ -8,7 +8,7 @@
 This problem comes from https://www.dailycodingproblem.com/ on
 2019-04-11 (#18) and was classified as Hard.
 
-  This problem was asked by Google.
+  Reported source: Google.
 
   Given an array of integers and a number k, where 1 <= k <= length of
   the array, compute the maximum values of each subarray of length k.
