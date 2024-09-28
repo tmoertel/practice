@@ -135,7 +135,7 @@ from collections import Counter
 def is_subdocument(L, M):
     counts_L = Counter(L)
     counts_M = Counter(M)
-    return all(n <= counts_M[x] for x, n in counts_L.iteritems())
+    return all(n <= counts_M[x] for x, n in counts_L.items())
 
 def test():
     for xs in "", "x", "xx", "xyx", "xyyx":

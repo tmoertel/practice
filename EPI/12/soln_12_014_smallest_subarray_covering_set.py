@@ -129,7 +129,7 @@ def smallest_subarray_covering_set(A, Q):
 
         # if the new candidate is legal and better, make it the current best
         if len(cand_locs) == len(Q):
-            i = cand_locs.itervalues().next()  # get front position, O(1) time
+            i = next(iter(cand_locs.values()))  # get front position, O(1) time
             if min_size is None or j - i < min_size:
                 min_size = j - i
                 min_covering_range = i, j

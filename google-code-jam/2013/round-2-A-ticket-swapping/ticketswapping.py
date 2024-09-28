@@ -37,7 +37,7 @@ from heapq import heappush, heappop
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %d' % (i, s)
+        print('Case #%r: %d' % (i, s))
 
 def solve(problem):
     N, journeys = problem
@@ -78,13 +78,13 @@ def solve(problem):
     return loss
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
     N, M = read_ints(lines)
-    journeys = [read_ints(lines) for _ in xrange(M)]
+    journeys = [read_ints(lines) for _ in range(M)]
     return N, journeys
 
 def read_ints(lines):

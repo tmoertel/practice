@@ -124,7 +124,7 @@ from scipy.stats import binom
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem):
     N, X, Y = problem
@@ -160,8 +160,8 @@ def b(i):
     return 2 * i - 1
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

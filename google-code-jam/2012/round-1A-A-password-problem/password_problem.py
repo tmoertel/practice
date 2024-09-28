@@ -15,7 +15,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem):
     A, B, ps = problem
@@ -31,12 +31,12 @@ def solve(problem):
 
     # find the best strategy
     min_e_press_enter = 1 + B + 1
-    min_e_backspace = min(e_keep_going(i) + A - i for i in xrange(A))
+    min_e_backspace = min(e_keep_going(i) + A - i for i in range(A))
     return min(e_keep_going(A), min_e_press_enter, min_e_backspace)
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

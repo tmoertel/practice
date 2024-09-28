@@ -22,7 +22,7 @@ def main():
     sys.setrecursionlimit(30 * 500)
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         n = solve(TARGET, p)
-        print 'Case #%r: %s' % (i, ('%04d' % n)[-4:])
+        print('Case #%r: %s' % (i, ('%04d' % n)[-4:]))
 
 
 def solve(t, s, i=0, j=0):
@@ -53,8 +53,8 @@ def memoize(f):
 
 
 def read_problems(lines):
-    N = int(lines.next())
-    for _ in xrange(N):
+    N = int(next(lines))
+    for _ in range(N):
         yield read_problem(lines)
 
 

@@ -16,7 +16,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(problem):
     K, n, ds = problem
@@ -85,8 +85,8 @@ def get_card(tree, size, index):
             (i, size, index) = (2 * i + 1, size - mid - 1, index - mid - 1)
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

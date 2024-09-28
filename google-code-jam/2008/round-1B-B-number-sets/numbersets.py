@@ -32,23 +32,23 @@ def main():
     primes = prime_sieve(10**6)
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p, primes)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem, primes):
     A, B, P = problem
-    union, find = mk_union_find_domain(xrange(A, B + 1))
-    for i in xrange(bisect_left(primes, P), bisect_right(primes, B - A + 1)):
+    union, find = mk_union_find_domain(range(A, B + 1))
+    for i in range(bisect_left(primes, P), bisect_right(primes, B - A + 1)):
         p = primes[i]
         start = (A // p) * p
         if start < A:
             start += p
-        for i in xrange(start + p, B + 1, p):
+        for i in range(start + p, B + 1, p):
             union(i, start)
-    return len(set(find(i) for i in xrange(A, B + 1)))
+    return len(set(find(i) for i in range(A, B + 1)))
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
@@ -64,10 +64,10 @@ def prime_sieve(n):
     """Get an increasing list of all primes <= n."""
     candidates = [True] * (n + 1)
     primes = []
-    for i in xrange(2, n + 1):
+    for i in range(2, n + 1):
         if candidates[i]:
             primes.append(i)
-            for j in xrange(i + i, n + 1, i):
+            for j in range(i + i, n + 1, i):
                 candidates[j] = False
     return primes
 

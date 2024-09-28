@@ -105,7 +105,7 @@ from string import maketrans
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(problem):
     X, Y = problem
@@ -133,12 +133,12 @@ def forward_path_with_optional_reversal(x, n, reversal_size=0):
     reversals = set()
     if reversal_size:
         assert reversal_size <= x
-        for i in xrange(n, 0, -1):
+        for i in range(n, 0, -1):
             if i <= reversal_size:
                 reversals.add(i)
                 x -= i
                 reversal_size -= i
-    for i in xrange(n, 0, -1):
+    for i in range(n, 0, -1):
         if i <= x and i not in reversals:
             x_steps.add(i)
             x -= i
@@ -147,7 +147,7 @@ def forward_path_with_optional_reversal(x, n, reversal_size=0):
         if i in reversals:
             return 'W'
         return 'E' if i in x_steps else 'N'
-    return ''.join(step(i) for i in xrange(1, n + 1))
+    return ''.join(step(i) for i in range(1, n + 1))
 
 def normalize(x, y):
     denormalizers = []
@@ -171,8 +171,8 @@ def S(n):
     return n * (n + 1) // 2  # Gauss's formula
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

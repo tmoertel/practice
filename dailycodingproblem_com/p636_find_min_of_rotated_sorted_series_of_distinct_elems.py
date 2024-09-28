@@ -61,7 +61,7 @@ constant number of O(1)-size variables to do its work.
 def find_min_of_rotated_sorted_distinct_elements_recursive(xs):
     """Finds the min element in a rotated sorted array of distinct values."""
     if not xs:
-        raise(ValueError('An empty series has no minimum.'))
+        raise ValueError
     # Use a recursive binary search for the minimum element.
     def search(start, end):
         # If the series is nondecreasing, its first element is its minimum.
@@ -96,7 +96,7 @@ def find_min_of_rotated_sorted_distinct_elements_recursive(xs):
 def find_min_of_rotated_sorted_distinct_elements(xs):
     """Finds the min element in a rotated sorted array of distinct values."""
     if not xs:
-        raise(ValueError('An empty series has no minumum.'))
+        raise ValueError
     start = 0
     end = len(xs) - 1
     while start <= end and xs[start] > xs[end]:

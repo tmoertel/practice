@@ -176,10 +176,10 @@ def test_rand7():
     N = 10000
     counts = collections.Counter(rand7() for _ in range(N))
     # All value counts must be in the range 1 to 7.
-    assert sorted(counts) == range(1, 8)
+    assert sorted(counts) == list(range(1, 8))
     # The counts must be approximately equally distributed.
     expected_mean_count = N / 7
-    for count in counts.values():
+    for count in list(counts.values()):
         assert 0.9 * expected_mean_count < count < 1.1 * expected_mean_count
     print('All tests pass.')
 

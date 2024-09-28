@@ -17,7 +17,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 
 def solve(wires):
@@ -25,13 +25,13 @@ def solve(wires):
     if not wires:
         return 0
     N = len(wires)
-    (lri, lir), (rri, rir) = map(ranks, zip(*wires))
+    (lri, lir), (rri, rir) = list(map(ranks, list(zip(*wires))))
     # the following brute-force solution runs in O(N^2) time for N wires
     return sum(len(set(lri[:lir[i]]) & set(rri[rir[i]+1:]))
-               for i in xrange(N))
+               for i in range(N))
 
 def ranks(xs):
-    rank_to_index = sorted(xrange(len(xs)), key=xs.__getitem__)
+    rank_to_index = sorted(range(len(xs)), key=xs.__getitem__)
     index_to_rank = [0] * len(xs)
     for rank, i in enumerate(rank_to_index):
         index_to_rank[i] = rank
@@ -43,8 +43,8 @@ def solve1(wires):
     N = len(wires)
     # the following brute-force solution runs in O(N^2) time for N wires
     return sum(cmp(wires[i][0], wires[j][0]) != cmp(wires[i][1], wires[j][1])
-               for i in xrange(N)
-               for j in xrange(i))
+               for i in range(N)
+               for j in range(i))
 
 
 def solve2(wires):
@@ -52,19 +52,19 @@ def solve2(wires):
     N = len(wires)
     # the following brute-force solution runs in O(N^2) time for N wires
     return sum(wires[i][0] < wires[j][0] and wires[i][1] > wires[j][1]
-               for i in xrange(N)
-               for j in xrange(N))
+               for i in range(N)
+               for j in range(N))
 
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 
 def read_problem(lines):
-    N = int(lines.next())
-    return [tuple(map(int, lines.next().split())) for _ in xrange(N)]
+    N = int(next(lines))
+    return [tuple(map(int, lines.next().split())) for _ in range(N)]
 
 if __name__ == '__main__':
     main()

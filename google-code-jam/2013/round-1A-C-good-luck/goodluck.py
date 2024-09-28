@@ -13,6 +13,7 @@ import fileinput
 import functools
 import itertools
 import operator
+from functools import reduce
 
 def memoize(fn):
     cache = dict()
@@ -30,7 +31,7 @@ def trace(fn):
             res = fn(*args)
         except Exception as e:
             res = e
-        print '%s%r => %r' % (fn.__name__, args, res)
+        print('%s%r => %r' % (fn.__name__, args, res))
         return res
     return traced_fn
 
@@ -38,7 +39,7 @@ def trace(fn):
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r:\n%s' % (i, '\n'.join(s))
+        print('Case #%r:\n%s' % (i, '\n'.join(s)))
 
 def solve(problem):
     _, N, M, K, prodss = problem
@@ -62,7 +63,7 @@ def solve(problem):
         return s
 
     for prods in prodss:
-        candidates = filter(None, map(candiate_factors, prods))
+        candidates = [_f for _f in map(candiate_factors, prods) if _f]
         winner = None
         if candidates:
             winners = reduce(set.__rand__, candidates)
@@ -74,13 +75,13 @@ def solve(problem):
 
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
     r, n, m, k = read_ints(lines)
-    prodss = [read_ints(lines) for _ in xrange(r)]
+    prodss = [read_ints(lines) for _ in range(r)]
     return r, n, m, k, prodss
 
 def read_ints(lines):

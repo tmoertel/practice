@@ -117,4 +117,4 @@ def test():
         assert soln([3, 4, -1, 1]) == 2
         assert soln([1, 2,  0]) == 3
         for x in range(1, 10):
-            assert soln(range(1, x)) == x
+            assert soln(list(range(1, x))) == x

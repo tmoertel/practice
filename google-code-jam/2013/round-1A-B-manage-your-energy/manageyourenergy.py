@@ -28,7 +28,7 @@ import heapq
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem):
     E, R, _N, vs = problem
@@ -49,7 +49,7 @@ def solve(problem):
             e_transferred = min(E - e, e1, slack)
             e += e_transferred
             gain -= v1 * e_transferred
-            for j in xrange(i1 + 1, i + 1):
+            for j in range(i1 + 1, i + 1):
                 slacks[j] -= e_transferred
                 if slacks[j] == 0:
                     earliest_slack = j + 1
@@ -61,8 +61,8 @@ def solve(problem):
     return gain
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

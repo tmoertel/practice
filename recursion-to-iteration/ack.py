@@ -23,8 +23,8 @@ def memo_ack(n, m):
         ret = cache[args] = ack_(*args)
         return ret
     ret = ack(n, m)
-    print 'memo table has {} entries: {}'.format(len(cache), cache)
-    print ret
+    print('memo table has {} entries: {}'.format(len(cache), cache))
+    print(ret)
 
 import functools
 def cps(f):
@@ -39,7 +39,7 @@ def cps(f):
             if fun is None:
                 if cont is None:
                     if not stack:
-                        print 'maxdepth = %r' %1 (maxdepth, )
+                        print('maxdepth = %r' %1 (maxdepth, ))
                         return args
                     cont, cargs = stack.pop()
                 # print 'invoking cont=%r(arg=%r, cargs=%r); stack=%r' % (cont, args, cargs, stack)
@@ -112,13 +112,13 @@ def ack(n, m):
 
 
 def test_ack():
-    for m in xrange(10):
+    for m in range(10):
         assert ack(0, m) == m + 1
     assert ack(1, 2) == 4
     assert ack(2, 2) == 7
     assert ack(3, 1) == 13
     assert ack(3, 4) == 125
-    print 'all tests pass'
+    print('all tests pass')
 
 def main():
     test_ack()

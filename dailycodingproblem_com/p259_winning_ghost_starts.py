@@ -113,7 +113,7 @@ def prefix_tree(words):
 
 def winning_starts(words):
     """Returns the starting letters that guarantee Ghost wins for Player 1."""
-    initial_choices = prefix_tree(words).items()
+    initial_choices = list(prefix_tree(words).items())
     return sorted(child[0] for child in initial_choices if is_win(child, 1))
 
 def is_win(node, depth):
@@ -123,7 +123,7 @@ def is_win(node, depth):
     if value is WORD_END:
         return is_p1_turn
     rule = all if is_p1_turn else any
-    return rule(is_win(child, depth + 1) for child in children.items())
+    return rule(is_win(child, depth + 1) for child in list(children.items()))
 
 
 # Tests.

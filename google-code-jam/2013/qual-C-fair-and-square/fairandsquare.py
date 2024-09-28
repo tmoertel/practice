@@ -14,7 +14,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem):
     A, B = problem
@@ -22,7 +22,7 @@ def solve(problem):
     ndigits_a, ndigits_b = len(str(a)), len(str(b))
     digit1_a = int(str(a)[0])
     count = 0
-    for ndigits in xrange(ndigits_a, ndigits_b + 1):
+    for ndigits in range(ndigits_a, ndigits_b + 1):
         min_leading_digit = digit1_a if ndigits == ndigits_a else 1
         for i in palindromes(ndigits, min_leading_digit):
             ii = i * i
@@ -35,8 +35,8 @@ def solve(problem):
                 count += 1
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
@@ -60,19 +60,19 @@ def isqrt(x, want_upper_bound=False):
 def palindromes(ndigits, min_leading_digit=1):
     if ndigits == 0:
         return [0]
-    digits = range(min_leading_digit, 10)
+    digits = list(range(min_leading_digit, 10))
     if ndigits == 1:
         return digits
     def pals2(ndigits):
         if ndigits == 0:
             return 1, [0]
         if ndigits == 1:
-            return 10, range(10)
+            return 10, list(range(10))
         mul, ps = pals2(ndigits - 2)
         def gen():
             for p in ps:
                 yield 10*p
-            for i in xrange(1, 10):
+            for i in range(1, 10):
                 for p in pals2(ndigits - 2)[1]:
                     yield 10*mul*i + 10*p + i
         return 100 * mul, gen()

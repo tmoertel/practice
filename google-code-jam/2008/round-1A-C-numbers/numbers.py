@@ -169,7 +169,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(n):
     return '%03d' % ((X(n) + 999) % 1000, )
@@ -184,12 +184,12 @@ def X(n):
     return Y[1][0]
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
-    return int(lines.next())
+    return int(next(lines))
 
 def gpow(x, n, mult):
     def go(x, n):
@@ -201,13 +201,13 @@ def gpow(x, n, mult):
     return go(x, n)
 
 def test_gpow():
-    for x in xrange(10):
-        for n in xrange(1, 10):
+    for x in range(10):
+        for n in range(1, 10):
             assert x**n == gpow(x, n, type(x).__mul__)
 
 def mmul(A, B, modulus):
     assert len(A[0]) == len(B)
-    Bt = zip(*B)  # transpose B to get column order
+    Bt = list(zip(*B))  # transpose B to get column order
     return [[sum(a * b for a, b in zip(row, col)) % modulus
              for col in Bt] for row in A]
 

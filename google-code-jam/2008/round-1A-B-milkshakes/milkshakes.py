@@ -37,13 +37,13 @@ def main():
     sys.setrecursionlimit(2000)
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(problem):
     N, _M, likes_by_cust = problem
     likes_by_flavor = collections.defaultdict(set)
     customers_liking_only_a_malt = []
-    for cust, likes in likes_by_cust.iteritems():
+    for cust, likes in likes_by_cust.items():
         for flavor, is_malted in likes:
             likes_by_flavor[flavor].add((cust, is_malted))
         if len(likes) == 1:
@@ -69,27 +69,27 @@ def solve(problem):
                         if is_malted0:
                             customers_liking_only_a_malt.append((cust, flavor0))
     return ' '.join(('1' if flavor in malts else '0')
-                    for flavor in xrange(1, N + 1))
+                    for flavor in range(1, N + 1))
 
 def read_problems(lines):
-    C = int(lines.next())
-    for _ in xrange(C):
+    C = int(next(lines))
+    for _ in range(C):
         yield read_problem(lines)
 
 def read_problem(lines):
-    N = int(lines.next())  # flavor count
-    M = int(lines.next())  # customer count
+    N = int(next(lines))  # flavor count
+    M = int(next(lines))  # customer count
     cust_likes = read_cust_likes(M, lines)
     return N, M, cust_likes
 
 def read_cust_likes(M, lines):
     likes = collections.defaultdict(set)
-    for cust in xrange(M):
-        like_spec = map(int, lines.next().split())
+    for cust in range(M):
+        like_spec = list(map(int, lines.next().split()))
         T = like_spec.pop(0)
         spec_items = iter(like_spec)
-        for _ in xrange(T):
-            likes[cust].add((spec_items.next(), bool(spec_items.next())))
+        for _ in range(T):
+            likes[cust].add((next(spec_items), bool(next(spec_items))))
     return likes
 
 if __name__ == '__main__':

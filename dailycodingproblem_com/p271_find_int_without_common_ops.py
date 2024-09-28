@@ -150,7 +150,7 @@ MIDPOINT_IMPLEMENTATIONS = (
 
 def test():
     for find_midpoint in MIDPOINT_IMPLEMENTATIONS:
-        print 'testing half={}'.format(find_midpoint.__name__)
+        print('testing half={}'.format(find_midpoint.__name__))
 
         # Create a binary search using our midpoint method.
         def find(xs, x):

@@ -14,7 +14,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(problem):
     N, M, heights = problem
@@ -23,24 +23,24 @@ def solve(problem):
 def is_mowable_pattern(N, M, heights):
     while True:
         lowest = min(min(row) for row in heights)
-        for _ in xrange(2):
+        for _ in range(2):
             heights = [row for row in heights if max(row) != lowest]
             if len(heights) == 0:
                 return True
-            heights = zip(*heights)  # transpose
+            heights = list(zip(*heights))  # transpose
         N1, M1 = len(heights), len(heights[0])
         if (N1, M1) == (N, M):
             return False
         N, M = N1, M1
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
     N, M = read_ints(lines)
-    heights = [read_ints(lines) for _ in xrange(N)]
+    heights = [read_ints(lines) for _ in range(N)]
     return N, M, heights
 
 def read_ints(lines):

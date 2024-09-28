@@ -12,7 +12,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 
 def solve(problem):
@@ -21,13 +21,13 @@ def solve(problem):
 
 
 def read_problems(lines):
-    N = int(lines.next())
-    for _ in xrange(N):
+    N = int(next(lines))
+    for _ in range(N):
         yield read_problem(lines)
 
 
 def read_problem(lines):
-    spec = lines.next()
+    spec = next(lines)
     return spec.split()
 
 

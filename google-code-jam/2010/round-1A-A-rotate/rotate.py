@@ -14,7 +14,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(problem):
     _, K, board = problem
@@ -38,8 +38,8 @@ def find_winners(board, K):
     # brute-force search (w/o duplicate removal)
     N = len(board)
     winners = set()
-    for row in xrange(N):
-        for col in xrange(N):
+    for row in range(N):
+        for col in range(N):
             for color in 'Red', 'Blue':
                 for rdir in -1, 0, 1:
                     for cdir in -1, 0, 1:
@@ -61,13 +61,13 @@ def is_winner(board, row, col, color_code, rdir, cdir, k):
     return k == 0
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
-    N, K = map(int, lines.next().split())
-    board = [lines.next().replace('\n', '') for _ in xrange(N)]
+    N, K = list(map(int, lines.next().split()))
+    board = [lines.next().replace('\n', '') for _ in range(N)]
     return N, K, board
 
 if __name__ == '__main__':

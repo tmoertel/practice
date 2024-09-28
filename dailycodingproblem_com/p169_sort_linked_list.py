@@ -154,7 +154,7 @@ import random
 
 def to_linked_list(sequence):
     """Converts a Python list into a linked list."""
-    cells = map(Cons, sequence)
+    cells = list(map(Cons, sequence))
     cells.append(None)
     for i in range(len(cells) - 1):
         cells[i].tail = cells[i + 1]
@@ -178,6 +178,6 @@ def test():
         for _ in range(min(120, math.factorial(size))):
             xs = [random.randint(-size, size) for _ in range(size)]
             expected = sorted(xs)
-            print '### trying {}'.format(xs)
+            print('### trying {}'.format(xs))
             actual = from_linked_list(sort_linked_list(to_linked_list(xs)))
             assert actual == expected

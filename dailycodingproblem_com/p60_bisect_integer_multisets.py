@@ -76,7 +76,7 @@ def test():
     # multiset formed by n copies of xs is bisectable.
     for size in range(7):
         for n in range(0, 7, 2):
-            xs = random.sample(range(-10, 11), size)
+            xs = random.sample(list(range(-10, 11)), size)
             assert is_bisectable(xs * n)
     # Some non-bisectable cases.
     assert not is_bisectable([1])

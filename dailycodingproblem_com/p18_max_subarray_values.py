@@ -137,10 +137,10 @@ def test():
         return [max(xs[i:i+k]) for i in range(len(xs) - k + 1)]
     for soln in max_subarray_values, :
         for i in range(7):
-            for xs in itertools.permutations(range(i)):
+            for xs in itertools.permutations(list(range(i))):
                 for k in range(1, i + 1):
                     xs = list(xs)
                     expected = oracle(xs, k)
-                    print '\nsoln(xs={}, k={}) => {}'.format(xs, k, expected)
+                    print('\nsoln(xs={}, k={}) => {}'.format(xs, k, expected))
                     observed = list(soln(xs, k))
                     assert observed == expected

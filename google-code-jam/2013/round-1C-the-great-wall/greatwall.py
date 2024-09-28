@@ -20,11 +20,11 @@ Attack = namedtuple('Attack', 'd, w, e, s')
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem):
     tribes = problem
-    daily_attacks = groupby(merge(map(tribe_attacks, tribes)), lambda a: a.d)
+    daily_attacks = groupby(merge(list(map(tribe_attacks, tribes))), lambda a: a.d)
     successful_attacks = 0
     wall = HeightIntervalSet()
     for _day, attacks in daily_attacks:
@@ -40,7 +40,7 @@ def solve(problem):
 def tribe_attacks(tribe):
     """Yield a tribe's attacks."""
     d, n, w, e, s, delta_d, delta_p, delta_s = tribe
-    for _ in xrange(n):
+    for _ in range(n):
         yield Attack(d, w, e, s)
         d += delta_d
         w += delta_p
@@ -49,7 +49,7 @@ def tribe_attacks(tribe):
 
 def merge(iterators):
     """Make a lazy sorted iterator that merges lazy sorted iterators."""
-    streams = map(iterator_to_stream, iterators)
+    streams = list(map(iterator_to_stream, iterators))
     heapq.heapify(streams)
     while streams:
         stream = heapq.heappop(streams)
@@ -61,7 +61,7 @@ def merge(iterators):
 def iterator_to_stream(iterator):
     """Convert an iterator into a stream (None if the iterator is empty)."""
     try:
-        return iterator.next(), iterator
+        return next(iterator), iterator
     except StopIteration:
         return None
 
@@ -76,8 +76,8 @@ from blist import sorteddict  # http://stutzbachenterprises.com/blist/
 class HeightIntervalSet(object):
 
     def __init__(self, initial_height=0):
-        self.heights = sorteddict([(-sys.maxint - 1, initial_height),
-                                   (sys.maxint, initial_height)])
+        self.heights = sorteddict([(-sys.maxsize - 1, initial_height),
+                                   (sys.maxsize, initial_height)])
 
     def is_vulnerable_over_interval(self, start, end, min_val):
         start *= 2
@@ -85,7 +85,7 @@ class HeightIntervalSet(object):
         ks = self.heights._sortedkeys
         i = ks.bisect_right(start) - 1
         j = ks.bisect_right(end)
-        return any(self.heights[ks[k]] < min_val for k in xrange(i, j))
+        return any(self.heights[ks[k]] < min_val for k in range(i, j))
 
     def set_min_height_for_interval(self, start, end, min_height):
         start *= 2
@@ -119,14 +119,14 @@ class HeightIntervalSet(object):
                 current_height = height
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
     N, = read_ints(lines)
     tribes = []
-    for _ in xrange(N):
+    for _ in range(N):
         tribe = Tribe(*read_ints(lines))
         tribes.append(tribe)
     return tribes

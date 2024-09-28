@@ -165,7 +165,7 @@ inner logic, so I opted for clarity instead.)
 
 """
 
-from __future__ import print_function
+
 
 import fileinput
 
@@ -202,7 +202,7 @@ def solve(problem):
 
 
 def read_problems(lines):
-    T = int(lines.next())
+    T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 

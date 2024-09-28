@@ -101,7 +101,7 @@ def test_grabbag():
 
     b = GrabBag()
 
-    for x in xrange(5):
+    for x in range(5):
 
         # at this point, b has no x values and one y value for 0 <= y < x
         assert x not in b
@@ -111,7 +111,7 @@ def test_grabbag():
         if x == 0:
             assert_raises(ValueError, b.random_val)  # b is empty
         else:
-            for _ in xrange(1000):
+            for _ in range(1000):
                 if b.random_val() == x:
                     raise Exception('got {} as random value'.format(x))
 
@@ -125,7 +125,7 @@ def test_grabbag():
         assert x in b
 
         # when x is in b, x must be one of the random possibilities
-        for _ in xrange(1000):
+        for _ in range(1000):
             if b.random_val() == x:
                 break
         else:

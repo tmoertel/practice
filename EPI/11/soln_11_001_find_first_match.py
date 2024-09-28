@@ -76,14 +76,14 @@ def check_function(find_first):
     # for all sorted series ys such that all(y > k for y in ys),
     # find_first(xs + [k]*n + ys) == -1        if n == 0
     #                             == len(xs)   otherwise
-    for k in xrange(-2, 3):
+    for k in range(-2, 3):
         eq(find_first([], k), -1)
-        for n in xrange(1, 5):
+        for n in range(1, 5):
             eq(find_first([k] * n, k), 0)
-        for _ in xrange(1000):
-            before = sorted(sample(xrange(-100, -2), randrange(5)))
-            after = sorted(sample(xrange(3, 100), randrange(5)))
+        for _ in range(1000):
+            before = sorted(sample(range(-100, -2), randrange(5)))
+            after = sorted(sample(range(3, 100), randrange(5)))
             eq(find_first(before + after, k), -1)
-            for n in xrange(1, 5):
+            for n in range(1, 5):
                 xs = [k] * n
                 eq(find_first(before + xs + after, k), len(before))

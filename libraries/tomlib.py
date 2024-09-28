@@ -11,6 +11,7 @@ Tom Moertel <tom@moertel.com>
 
 import functools
 import sys
+from functools import reduce
 
 def memoize(f):
     """Make a memoized version of f that returns cached results."""
@@ -28,7 +29,7 @@ def trace(f, printer=None):
     fnm = f.__name__
     depth = [0]
     def default_printer(depth, fnm, args, ret):
-        print '%s%s%r => %r' % ('  ' * depth, fnm, args, ret)
+        print('%s%s%r => %r' % ('  ' * depth, fnm, args, ret))
     printer = printer or default_printer
     @functools.wraps(f)
     def g(*args):
@@ -181,12 +182,12 @@ def fast_gpow(x, n, mul, mul_identity):
 
 def dot_product(u, v):
     """Compute dot product of equal-length vectors u and v."""
-    return sum(u[i] * v[i] for i in xrange(len(u)))
+    return sum(u[i] * v[i] for i in range(len(u)))
 
 def mk_dot_product_mod(m):
     """Make a dot-product function that computes mod m."""
     def dot_product_mod(u, v):
-        return sum((u[i] * v[i]) % m for i in xrange(len(u))) % m
+        return sum((u[i] * v[i]) % m for i in range(len(u))) % m
     return dot_product_mod
 
 def dot_product_mod(u, v, m):
@@ -202,7 +203,7 @@ def mk_matrix_mul(dot=dot_product):
         """Compute product of matrices A and B."""
         if not len(A[0]) == len(B) > 0:
             raise ValueError('matrices are mismatched for multiplication')
-        Bt = zip(*B)  # transpose B to get column order
+        Bt = list(zip(*B))  # transpose B to get column order
         return [[dot(row, col) for col in Bt] for row in A]
     return matrix_mul
 
@@ -214,8 +215,8 @@ def matrix_mul_mod(A, B, m):
 
 def identity_matrix(n):
     """Make n*n identity matrix."""
-    A = [[0] * n for _ in xrange(n)]
-    for i in xrange(n):
+    A = [[0] * n for _ in range(n)]
+    for i in range(n):
         A[i][i] = 1
     return A
 
@@ -240,7 +241,7 @@ def binomial(n, k):
         return 0
     p = 1
     n = n - k + 1
-    for k in xrange(1, k + 1):
+    for k in range(1, k + 1):
         p = p * n // k
         n += 1
     return p
@@ -252,7 +253,7 @@ def real_binomial(r, k):
         return 0
     p = 1.0
     r = r - k + 1
-    for k in xrange(1, k + 1):
+    for k in range(1, k + 1):
         p = p * r / k
         r += 1
     return p
@@ -282,10 +283,10 @@ def _prime_sieve(n):
     """Get an increasing list of all primes <= n."""
     candidates = [True] * (n + 1)
     primes = []
-    for i in xrange(2, n + 1):
+    for i in range(2, n + 1):
         if candidates[i]:
             primes.append(i)
-            for j in xrange(i + i, n + 1, i):
+            for j in range(i + i, n + 1, i):
                 candidates[j] = False
     return primes
 
@@ -349,10 +350,10 @@ def test_memoize():
     def f(i):
         counters[i] += 1
         return counters[i]
-    for i in xrange(5):
+    for i in range(5):
         assert f(i) != f(i)  # un-memoized f returns changing values
     f = memoize(f)
-    for i in xrange(5):
+    for i in range(5):
         assert f(i) == f(i)  # memoized f must return cached values
 
 def test_trace():
@@ -380,8 +381,8 @@ def test_trace():
 def test_isqrt():
     """isqrt(y) must return maximal x such that 0 <= x*x <= y."""
     # normal cases
-    for base in xrange(32):
-        for frac in xrange(-base, base):
+    for base in range(32):
+        for frac in range(-base, base):
             y = base * base + frac
             x = isqrt(y)
             assert x * x <= y             # must not exceed y
@@ -404,12 +405,12 @@ def test_find_minimum_by_newtons_method():
         def f2(x):
             return 2 * a**2
         return f, f1, f2
-    for X in xrange(-10, 11):
-        for Y in xrange(-10, 11):
-            for a in xrange(1, 6):
-                for b in xrange(1, 6):
+    for X in range(-10, 11):
+        for Y in range(-10, 11):
+            for a in range(1, 6):
+                for b in range(1, 6):
                     f, f1, f2 = make_objective_for_parabola(X, Y, a, b)
-                    for guess in xrange(-5, 6):
+                    for guess in range(-5, 6):
                         x = find_minimum_by_newtons_method(f, f1, f2, guess)
                         assert approx_eq(x, b * X)
 
@@ -453,14 +454,14 @@ def test_find_int_by_bisection_exc():
     raises(ValueError)(find_int_by_bisection)(identity, 1, 2, 3)  # f(hi) < y
 
 def test_fast_pow():
-    for x in xrange(10):
-        for n in xrange(10):
+    for x in range(10):
+        for n in range(10):
             assert x**n == fast_pow(x, n)
 
 def test_fast_gpow():
     from operator import mul
-    for x in xrange(10):
-        for n in xrange(10):
+    for x in range(10):
+        for n in range(10):
             assert x**n == fast_gpow(x, n, mul, 1)
 
 def test_matrix_pow_():
@@ -479,12 +480,12 @@ def test_matrix_pow_mod():
 def test_prime_factors():
     assert prime_factors(1) == [1]
     for m in PRIMES[:5]:
-        for n in xrange(1, 10):
+        for n in range(1, 10):
             factors = prime_factors(m**n)
             assert all(f == m for f in factors)
             assert len(factors) == n
     from operator import mul
-    for n in xrange(2, 1000):
+    for n in range(2, 1000):
         assert reduce(mul, prime_factors(n)) == n
     from nose.tools import raises
     raises(ValueError)(prime_factors)(-1)
@@ -510,26 +511,26 @@ def test_primes_upto_at_least():
 
 def test_mk_union_find_domain():
     from random import randint, sample, shuffle
-    xs = range(100)
-    for _ in xrange(100):
+    xs = list(range(100))
+    for _ in range(100):
         # use a newly shuffled set of elements
         shuffle(xs)
         union, find = mk_union_find_domain(xs)
         # break it into desired subsets
         n_cuts = randint(1, len(xs))
-        cuts = sorted(sample(xrange(len(xs)), n_cuts)) + [len(xs)]
-        subsets = [xs[cuts[i - 1]:cuts[i]] for i in xrange(1, len(cuts))]
-        subsets = filter(None, subsets)
+        cuts = sorted(sample(range(len(xs)), n_cuts)) + [len(xs)]
+        subsets = [xs[cuts[i - 1]:cuts[i]] for i in range(1, len(cuts))]
+        subsets = [_f for _f in subsets if _f]
         # join the elements of each subset
         for subset in subsets:
             subset = list(subset)
             shuffle(subset)
-            for i in xrange(1, len(subset)):
+            for i in range(1, len(subset)):
                 union(subset[i - 1], subset[i])
         # now verify:
         def rep_elem_set(subset):
             return set(find(e) for e in subset)
-        rep_elem_sets = map(rep_elem_set, subsets)
+        rep_elem_sets = list(map(rep_elem_set, subsets))
         # for each subset, all elems must have the same representative elem
         for res in rep_elem_sets:
             assert len(res) == 1
@@ -541,8 +542,8 @@ def test_binomial():
     from math import factorial as fact
     assert isinstance(real_binomial(1, 1), float)
     for f, eq in ((binomial, __eq__), (real_binomial, approx_eq)):
-        for n in xrange(20):
-            for k in xrange(n + 10):
+        for n in range(20):
+            for k in range(n + 10):
                 if k > n:
                     assert eq(f(n, k), 0)
                 else:

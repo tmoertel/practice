@@ -43,7 +43,7 @@ def anagram_indices(string, word):
     if word == '':
         if string == '':
             return [0]
-        return range(len(string))
+        return list(range(len(string)))
     # Handle the general case -- searching for matches -- knowing that
     # the corner cases have been excluded.
     matches = []

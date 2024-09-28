@@ -62,7 +62,7 @@ def max_collatz_sequence_length(max_seed, max_iterations=10000):
     """Returns the least i <= max_seed having the longest Collatz sequence."""
     collatz_sequence_lengths = collatz_search(max_seed)
     return -max((length, -seed)
-                for seed, length in collatz_sequence_lengths.items()
+                for seed, length in list(collatz_sequence_lengths.items())
                 if seed <= max_seed)[1]
 
 

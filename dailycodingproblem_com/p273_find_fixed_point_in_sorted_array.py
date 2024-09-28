@@ -87,7 +87,7 @@ def fast_find_fixed_point(A):
 
 def test():
     for soln in find_fixed_point, fast_find_fixed_point:
-        print 'testing {}'.format(soln.__name__)
+        print('testing {}'.format(soln.__name__))
 
         # Cases from the problem statement.
         assert soln([-6, 0, 2, 40]) == 2
@@ -126,5 +126,5 @@ def test():
         # Monotonic sequences above and below the fixed-point line
         # have no fixed points.
         for i in range(10):
-            assert soln(range(i - 10, i)) is None
-            assert soln(range(i + 10, i + 20)) is None
+            assert soln(list(range(i - 10, i))) is None
+            assert soln(list(range(i + 10, i + 20))) is None

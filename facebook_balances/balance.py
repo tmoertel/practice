@@ -89,18 +89,18 @@ class Balance(object):
 
 def main():
     lines = fileinput.input()
-    N = int(lines.next())
+    N = int(next(lines))
     balances = []
-    for _ in xrange(N):
-        lspec = parse_arm_spec(lines.next())
-        rspec = parse_arm_spec(lines.next())
+    for _ in range(N):
+        lspec = parse_arm_spec(next(lines))
+        rspec = parse_arm_spec(next(lines))
         balances.append(Balance(*(lspec + rspec)))
     adjustments = compute_adjustments(balances)
     for (i, adjustment) in enumerate(adjustments):
-        print "%r: %r %r" % (i, max(0, -adjustment), max(0, adjustment))
+        print("%r: %r %r" % (i, max(0, -adjustment), max(0, adjustment)))
 
 def parse_arm_spec(s):
-    nums = map(int, s.split())
+    nums = list(map(int, s.split()))
     return nums[0], nums[1:]
 
 def compute_adjustments(balances):
@@ -126,7 +126,7 @@ def compute_adjustments(balances):
     def adjusted_weight(i):
         adjust(i)
         return cache[i][1]
-    return map(adjust, xrange(N))
+    return list(map(adjust, range(N)))
 
 if __name__ == '__main__':
     main()

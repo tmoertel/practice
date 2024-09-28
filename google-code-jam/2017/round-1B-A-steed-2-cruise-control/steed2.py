@@ -57,7 +57,7 @@ import functools
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print(('Case #%r: %r' % (i, s)))
 
 def solve(problem):
     D, horses = problem
@@ -76,7 +76,7 @@ def best_finish_time(D, horses):
     return functools.reduce(best_time, horses, 0)
 
 def read_problems(lines):
-    T = int(lines.next())
+    T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 

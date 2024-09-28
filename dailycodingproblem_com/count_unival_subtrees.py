@@ -124,7 +124,7 @@ def test():
     assert count_nodes(None) == 0
     assert count_nodes(Node(1)) == 1
     for soln in count_unival_subtrees, count_unival_subtrees_functional_style:
-        print soln.__name__
+        print(soln.__name__)
         assert soln(None) == 0
         assert soln(Node('foo')) == 1
         tree = Node(0, Node(1), Node(0, Node(1, Node(1), Node(1)), Node(0)))

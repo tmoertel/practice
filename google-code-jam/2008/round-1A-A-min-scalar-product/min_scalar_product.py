@@ -44,7 +44,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         y = solve(p)
-        print 'Case #%r: %r' % (i, y)
+        print('Case #%r: %r' % (i, y))
 
 
 def solve(problem):
@@ -53,15 +53,15 @@ def solve(problem):
 
 
 def read_problems(lines):
-    N = int(lines.next())
-    for _ in xrange(N):
+    N = int(next(lines))
+    for _ in range(N):
         yield read_problem(lines)
 
 
 def read_problem(lines):
-    lines.next()  # skip vector length; it's implicit in following lines
+    next(lines)  # skip vector length; it's implicit in following lines
     def read_two_vectors():
-        for _ in xrange(2):
+        for _ in range(2):
             yield [int(s) for s in lines.next().split()]
     return list(read_two_vectors())
 

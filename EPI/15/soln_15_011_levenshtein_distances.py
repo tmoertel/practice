@@ -113,17 +113,17 @@ def levenshtein_distance1(A, B):
 
 def levenshtein_distance2(A, B):
     # initialize memo table to all zeroes
-    memo = [[0] * (len(B) + 1) for _ in xrange(len(A) + 1)]
+    memo = [[0] * (len(B) + 1) for _ in range(len(A) + 1)]
 
     # fill in cells corresponding to base cases
-    for i in xrange(len(A)):
+    for i in range(len(A)):
         memo[i][-1] = len(A) - i
-    for j in xrange(len(B)):
+    for j in range(len(B)):
         memo[-1][j] = len(B) - j
 
     # fill in the remaining cells using recurrence, working bottom up
-    for i in xrange(len(A) - 1, -1, -1):
-        for j in xrange(len(B) - 1, -1, -1):
+    for i in range(len(A) - 1, -1, -1):
+        for j in range(len(B) - 1, -1, -1):
             if A[i] == B[j]:
                 memo[i][j] = memo[i + 1][j + 1]
             else:
@@ -143,15 +143,15 @@ def levenshtein_distance3(A, B):
     # cur = memo[i].
 
     # initialize bottom row of the memo table
-    prev = [len(B) - j for j in xrange(len(B) + 1)]
+    prev = [len(B) - j for j in range(len(B) + 1)]
 
     # allocate a scratch space for the current work row
     cur = [0 for _ in prev]
 
     # fill in the remaining cells using recurrence, working bottom up
-    for i in xrange(len(A) - 1, -1, -1):
+    for i in range(len(A) - 1, -1, -1):
         cur[-1] = len(A) - i  # initialize current row
-        for j in xrange(len(B) - 1, -1, -1):
+        for j in range(len(B) - 1, -1, -1):
             if A[i] == B[j]:
                 cur[j] = prev[j + 1]
             else:

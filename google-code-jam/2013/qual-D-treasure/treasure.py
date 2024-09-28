@@ -15,16 +15,16 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(problem):
     K, _N, starting_keys, chests = problem
 
-    keys_in_chest = dict((i, keys_i) for i, (_, keys_i) in chests.iteritems())
+    keys_in_chest = dict((i, keys_i) for i, (_, keys_i) in chests.items())
 
     chests_unlocked_by = defaultdict(set)
     key_debt = Counter()
-    for i, (T_i, _) in chests.iteritems():
+    for i, (T_i, _) in chests.items():
         chests_unlocked_by[T_i].add(i)
         key_debt[T_i] += 1
 
@@ -32,8 +32,8 @@ def solve(problem):
     keys = Counter(starting_keys)
 
     def search(keys, key_debt, chests, seq):
-        print '%ssearch(seq=%r, keys=%r, debt=%r, chests=%r)' % (
-            ' ' * len(seq), seq, keys, key_debt, chests)
+        print('%ssearch(seq=%r, keys=%r, debt=%r, chests=%r)' % (
+            ' ' * len(seq), seq, keys, key_debt, chests))
         if not chests:
             return seq
         for key in keys:
@@ -60,8 +60,8 @@ def selections(xs):
 
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
@@ -72,7 +72,7 @@ def read_problem(lines):
         T_i, _K_i = ints[:2]
         keys_i = Counter(ints[2:])
         return T_i, keys_i
-    chests = dict((i, read_chest()) for i in xrange(1, N + 1))
+    chests = dict((i, read_chest()) for i in range(1, N + 1))
     return K, N, starting_keys, chests
 
 def read_ints(lines):

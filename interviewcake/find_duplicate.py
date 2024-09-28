@@ -134,7 +134,7 @@ def _MakeRandomArrayWithDupes(array_size, num_dupes):
         del reps[j]
         num_dupes -= 1
     A = []
-    for i, count in reps.items():
+    for i, count in list(reps.items()):
         A.extend([i] * count)
     random.shuffle(A)
     assert len(A) == array_size
@@ -159,7 +159,7 @@ def _Test(f, only_strictly_legal_instances=False):
                     assert result in dupes
                 else:
                     assert result is None
-    print('All tests pass for {}.'.format(f.__name__))
+    print(('All tests pass for {}.'.format(f.__name__)))
 
 
 if __name__ == '__main__':

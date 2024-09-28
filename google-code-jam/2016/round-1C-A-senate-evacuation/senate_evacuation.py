@@ -71,7 +71,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %s' % (i, s))
+        print(('Case #%r: %s' % (i, s)))
 
 def solve(problem):
     # Parse the problem instance.
@@ -111,7 +111,7 @@ def solve(problem):
     return ' '.join(''.join(group) for group in groups)
 
 def read_problems(lines):
-    T = int(lines.next())
+    T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 

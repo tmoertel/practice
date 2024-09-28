@@ -1,6 +1,7 @@
 #!/usr/bin/evn python
 
 import operator
+from functools import reduce
 
 
 
@@ -13,7 +14,7 @@ def product(xs):
 
 def test_product_div_elems():
     a = [1,2,3,4,5,6,7,8,9,10]
-    print product_div_elems(a)
+    print(product_div_elems(a))
 
 
 
@@ -66,7 +67,7 @@ def find_closest_to_origin_old(points, n=5):
         return sum(x * x for x in point)
     def score(point):
         return (-sq_dist(point), point)
-    closest = map(score, points[:n])
+    closest = list(map(score, points[:n]))
     heapq.heapify(closest)
     for pt in points[n:]:
         heapq.heappushpop(closest, score(pt))
@@ -205,12 +206,12 @@ def div(x, y):
 
 
 def test_div():
-    for x in xrange(-100, 101):
-        for y in xrange(-100, 101):
+    for x in range(-100, 101):
+        for y in range(-100, 101):
             if y == 0:
                 continue
             if div(x, y) != x/y:
-                print('div(%r, %r) == %r != %r' % (x, y, div(x, y), x/y))
+                print(('div(%r, %r) == %r != %r' % (x, y, div(x, y), x/y)))
                 return
 
 
@@ -226,7 +227,7 @@ def find_bst_pairs_twice_root(bst):
             seen = dict()  # maintains counts of times we've seen values
             for x in elems:
                 y = target - x
-                for _ in xrange(seen.get(y, 0)):
+                for _ in range(seen.get(y, 0)):
                     yield (x, y)
                 seen.setdefault(x, 0)
                 seen[x] += 1

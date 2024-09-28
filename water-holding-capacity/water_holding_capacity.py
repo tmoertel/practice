@@ -305,9 +305,9 @@ def water_holding_capacity_iterative(A):
     return vol
 
 def test():
-    for name, f in globals().iteritems():
+    for name, f in globals().items():
         if name.startswith('water_'):
-            print 'testing {}'.format(name)
+            print('testing {}'.format(name))
             test_func(f)
 
 def test_func(f):
@@ -318,11 +318,11 @@ def test_func(f):
     assert f([]) == 0
 
     # all 1-segment strips above sea level must hold no water
-    for h in xrange(10):
+    for h in range(10):
         assert f([h]) == 0
 
     # all 1-segment strips below sea level must hold their depth in water
-    for h in xrange(10):
+    for h in range(10):
         assert f([-h]) == h
 
     # must solve example problem
@@ -330,7 +330,7 @@ def test_func(f):
     assert f(A) == 10
 
     # forall A. solution(A) must equal solution(reversed(A))
-    for N in xrange(8):
-        for _ in xrange(factorial(N)):  # use N! samples for coverage
-            A = [randrange(N) for _ in xrange(N)]
+    for N in range(8):
+        for _ in range(factorial(N)):  # use N! samples for coverage
+            A = [randrange(N) for _ in range(N)]
             assert f(list(reversed(A))) == f(A)

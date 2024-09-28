@@ -78,10 +78,10 @@ def test_zero_total_weight_must_raise_error():
     raises(ValueError)(select_weighted_value)([(0, 'value')])
 
 def test_singleton_value_must_always_be_selected():
-    for weight in xrange(1, 10):
+    for weight in range(1, 10):
         assert select_weighted_value([(weight, 'value')]) == 'value'
 
 def test_zero_weighted_value_must_never_be_selected():
-    for weight in xrange(1, 10):
+    for weight in range(1, 10):
         assert select_weighted_value([(0, 'x'), (weight, 'value')]) == 'value'
         assert select_weighted_value([(weight, 'value'), (0, 'x')]) == 'value'

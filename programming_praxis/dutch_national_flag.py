@@ -50,11 +50,11 @@ def dnf_sort(A):
 
 COLORS = 'rwb'
 VALUES = [0, 1, 2]
-cval = dict(zip(COLORS, VALUES)).get
-cvals = lambda cs: map(cval, cs)
+cval = dict(list(zip(COLORS, VALUES))).get
+cvals = lambda cs: list(map(cval, cs))
 
 def test_dnf_sort():
-    for l in xrange(8):
+    for l in range(8):
         for cs in combinations([COLORS] * l):
             assert_sorted(cs)
 

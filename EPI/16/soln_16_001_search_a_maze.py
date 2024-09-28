@@ -44,7 +44,8 @@ def find_maze_path(A, s, e):
         return None
 
     # define a helper to return the white neighbors of a cell
-    def neighbors((i, j)):
+    def neighbors(xxx_todo_changeme):
+        (i, j) = xxx_todo_changeme
         for i1, j1 in (i - 1, j), (i, j - 1), (i, j + 1), (i + 1, j):
             if 0 <= i1 < len(A) and 0 <= j1 < len(A[0]) and A[i1][j1]:
                 yield i1, j1
@@ -96,7 +97,7 @@ def test():
 
     # check fundamental properties of solutions for mazes having them
     A = [white_row] * N   # all white maze
-    for _ in xrange(factorial(N)):
+    for _ in range(factorial(N)):
         s = randcell()
         e = randcell()
         P = find_maze_path(A, s, e)
@@ -111,8 +112,8 @@ def test():
 
     # solution must be None for mazes without valid paths
     B = [white_row, black_row, white_row]  # top and bottom separated by black
-    for sj in xrange(N):
+    for sj in range(N):
         s = (0, sj)  # start in top row
-        for ej in xrange(N):
+        for ej in range(N):
             e = (2, ej)  # exit in bottom row
             assert find_maze_path(B, s, e) is None

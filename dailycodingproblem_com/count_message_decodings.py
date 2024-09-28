@@ -255,7 +255,7 @@ def count_decodings_dp2(encoded_message):
 
 def test():
     for soln in count_decodings, count_decodings_dp1, count_decodings_dp2:
-        print soln.__name__
+        print(soln.__name__)
         # Empty message has only one decoding: the empty message.
         assert soln('') == 1
         # Cases inolving zero.

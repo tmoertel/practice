@@ -124,8 +124,8 @@ class Matrix(object):
 
     def tolists(self):
         """Convert the matrix into its list of lists representation."""
-        return [[self.get(i, j) for j in xrange(self.dims[1])]
-                for i in xrange(self.dims[0])]
+        return [[self.get(i, j) for j in range(self.dims[1])]
+                for i in range(self.dims[0])]
 
     def rot_cw(self):
         """Rotate the matrix clockwise via O(1) coordinate change."""
@@ -151,7 +151,7 @@ class Matrix(object):
 
 def mmul(A, B):
     """Compute matrix product A*B."""
-    Bt = zip(*B)
+    Bt = list(zip(*B))
     return [[sum(map(int.__mul__, r, c)) for c in Bt] for r in A]
 
 

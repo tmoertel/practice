@@ -36,18 +36,18 @@ import itertools
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem):
     n, A, B, C, D, x0, y0, M = problem
     tree_counts_on_mod3_grid = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     x, y = x0, y0
-    for _ in xrange(n):
+    for _ in range(n):
         tree_counts_on_mod3_grid[x % 3][y % 3] += 1
         x = (A * x + B) % M
         y = (C * y + D) % M
     count = 0
-    for x1, x2, x3, y1, y2, y3 in itertools.product(range(3), repeat=6):
+    for x1, x2, x3, y1, y2, y3 in itertools.product(list(range(3)), repeat=6):
         if (x1 + x2 + x3) % 3 == 0 and (y1 + y2 + y3) % 3 == 0:
             c1 = tree_counts_on_mod3_grid[x1][y1]
             c2 = tree_counts_on_mod3_grid[x2][y2]
@@ -62,8 +62,8 @@ def solve(problem):
     return count / 6
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

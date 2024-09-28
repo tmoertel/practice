@@ -91,6 +91,7 @@ Well, I solved a different problem, but it was fun, too  :-)
 """
 
 from operator import xor
+from functools import reduce
 
 def array_parity(xs):
     xsum = reduce(xor, xs, 0)

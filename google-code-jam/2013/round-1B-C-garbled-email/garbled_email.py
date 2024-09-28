@@ -36,17 +36,17 @@ def solve(words, S):
 import fileinput
 import sys
 
-LETTERS = ''.join(chr(i) for i in xrange(ord('a'), ord('z') + 1))
+LETTERS = ''.join(chr(i) for i in range(ord('a'), ord('z') + 1))
 
 def main():
     words = prefix_tree(file('garbled_email_dictionary.txt').read().split())
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(words, p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(words, S):
     N = len(S)
-    dead_penalty = sys.maxint >> 1
+    dead_penalty = sys.maxsize >> 1
 
     # the following is an ode to Python's tragic lack of tail-call elimination
 
@@ -103,8 +103,8 @@ def prefix_tree(words):
     return d
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

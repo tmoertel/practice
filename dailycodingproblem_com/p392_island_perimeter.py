@@ -86,7 +86,7 @@ def perimeter(grid):
 
     # Compute the perimeter.
     perimeter = 0
-    for row, col in itertools.product(range(row_count), range(col_count)):
+    for row, col in itertools.product(list(range(row_count)), list(range(col_count))):
         if grid[row][col]:
             perimeter += 4 - sum(neighbor_values(row, col))
     return perimeter
@@ -107,8 +107,8 @@ def test_zero_size_island_should_have_zero_perimeter():
 
 def test_single_cell_island_should_have_4_perimeter():
     n = 5
-    for row_count, col_count in itertools.product(range(1, n), range(1, n)):
-        for row, col in itertools.product(range(row_count), range(col_count)):
+    for row_count, col_count in itertools.product(list(range(1, n)), list(range(1, n))):
+        for row, col in itertools.product(list(range(row_count)), list(range(col_count))):
             grid = [[0] * col_count for _ in range(row_count)]
             grid[row][col] = 1
             eq_(perimeter(grid), 4)

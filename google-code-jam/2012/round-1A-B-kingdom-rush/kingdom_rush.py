@@ -35,13 +35,13 @@ from heapq import heappop, heappush
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %s' % (i, s)
+        print('Case #%r: %s' % (i, s))
 
 def solve(problem):
     N, level_stars = problem
-    a, b = zip(*level_stars)
-    levels_by_a = sorted(xrange(N), key=a.__getitem__)
-    levels_by_b = sorted(xrange(N), key=b.__getitem__)
+    a, b = list(zip(*level_stars))
+    levels_by_a = sorted(range(N), key=a.__getitem__)
+    levels_by_b = sorted(range(N), key=b.__getitem__)
     visited = set()
     one_star_eligible_levels = []
     stars = visited_twice = next_one_star_level = 0
@@ -80,13 +80,13 @@ def solve(problem):
     return str(N + visited_twice)
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):
     N, = read_ints(lines)
-    level_stars = [read_ints(lines) for _ in xrange(N)]
+    level_stars = [read_ints(lines) for _ in range(N)]
     return N, level_stars
 
 def read_ints(lines):

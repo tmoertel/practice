@@ -282,11 +282,11 @@ def bsearch(f, lo, hi, y):
 # testing logic
 
 def test():
-    for name, f in globals().iteritems():
+    for name, f in globals().items():
         if name.startswith('intersect'):
-            print 'testing {}...'.format(name),
+            print('testing {}...'.format(name), end=' ')
             check_function(f)
-            print 'ok'
+            print('ok')
 
 def check_function(f):
     # fundamental property:
@@ -294,11 +294,11 @@ def check_function(f):
     from math import factorial
     from random import randrange
     from nose.tools import assert_equal
-    for N in xrange(8):
-        for _ in xrange(factorial(N)):  # get decent sample of problem space
+    for N in range(8):
+        for _ in range(factorial(N)):  # get decent sample of problem space
             m, n = randrange(N + 1), randrange(N + 1)
-            A = sorted(randrange(N + 1) for _ in xrange(m))
-            B = sorted(randrange(N + 1) for _ in xrange(n))
+            A = sorted(randrange(N + 1) for _ in range(m))
+            B = sorted(randrange(N + 1) for _ in range(n))
             got = f(A, B)
             expected = sorted(set(A) & set(B))
             # print 'A={} B={}, f(A, B)={}, ref={}'.format(A, B, got, expected)

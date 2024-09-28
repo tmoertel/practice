@@ -68,13 +68,13 @@ def lsb_mask(x):
 def test():
     soln = find_two_singletons
     for n in range(2, 7):
-        for seq in itertools.permutations(range(n)):
+        for seq in itertools.permutations(list(range(n))):
             # Make a random problem instance with a known solution.
             offset = random.randint(0, n)  # Allows for negative values.
             seq = [x - offset for x in seq]
             singletons = seq[:2]   # The first two values are the singletons.
             seq[2:] = seq[2:] * 2  # The others are the doubles.
             random.shuffle(seq)
-            print 'ans = {}, seq = {}'.format(singletons, seq)
+            print('ans = {}, seq = {}'.format(singletons, seq))
             # The solver must identify the singleton elements.
             assert soln(seq) == tuple(sorted(singletons))

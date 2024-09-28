@@ -80,8 +80,8 @@ def worst_case_trial_count(floors, eggs):
         return floors
     return min(1 + max(worst_case_trial_count(i - 1, eggs - 1),
                        worst_case_trial_count(floors - i, eggs))
-               for i in xrange(1, floors))
+               for i in range(1, floors))
 
 
 if __name__ == '__main__':
-    print worst_case_trial_count(int(sys.argv[1]), int(sys.argv[2]))
+    print(worst_case_trial_count(int(sys.argv[1]), int(sys.argv[2])))

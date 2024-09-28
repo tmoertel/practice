@@ -114,8 +114,8 @@ def serialized_trees(depth):
     if not depth:
         yield '0'
     depth_pairs = itertools.chain(
-        itertools.product([depth - 1], range(depth)),
-        itertools.product(range(depth), [depth - 1]))
+        itertools.product([depth - 1], list(range(depth))),
+        itertools.product(list(range(depth)), [depth - 1]))
     for left_depth, right_depth in depth_pairs:
         for serialized_left_subtree in serialized_trees(left_depth):
             for serialized_right_subtree in serialized_trees(right_depth):

@@ -2,6 +2,7 @@
 
 import itertools
 import operator
+from functools import reduce
 
 
 def find_odd_occurring_int(xs):
@@ -14,7 +15,7 @@ def find_even_occurring_int(xs):
     for x in xs:
         counts.setdefault(x, 0)
         counts[x] += 1
-    for x, count in counts.iteritems():
+    for x, count in counts.items():
         if count % 2 == 0:
             return x
 
@@ -57,7 +58,7 @@ def is_balanced(xs):
 
 def bt_levels_top_down(tree):
     levels = itertools.groupby(bfs_w_depth(tree), operator.itemgetter(0))
-    return [map(operator.itemgetter(1), xs) for _, xs in levels]
+    return [list(map(operator.itemgetter(1), xs)) for _, xs in levels]
 
 def bt_levels_bottom_up(tree):
     return list(reversed(bt_levels_top_down(tree)))
@@ -90,7 +91,7 @@ def convert_array(xs):
     n = len(xs) / 3
     def map_index(i):
         return n * (i % 3) + i / 3
-    for i in xrange(len(xs)):
+    for i in range(len(xs)):
         j = map_index(i)
         while j < i:
             j = map_index(j)

@@ -27,11 +27,11 @@ def add(x, y):
     return z
 
 def test_mul():
-    for x in xrange(25):
-        for y in xrange(25):
+    for x in range(25):
+        for y in range(25):
             assert x * y == mul(x, y)
 
 def test_add():
-    for x in xrange(25):
-        for y in xrange(25):
+    for x in range(25):
+        for y in range(25):
             assert x + y == add(x, y)

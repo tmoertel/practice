@@ -67,7 +67,7 @@ from heapq import heapify, heappop, heappush
 
 def merge_iters(iters):
     """Merge a series of sorted iterators into a single sorted iterator."""
-    streams = filter(None, map(iter_to_stream, map(iter, iters)))
+    streams = [_f for _f in map(iter_to_stream, list(map(iter, iters))) if _f]
     heapify(streams)
     while streams:
         stream = heappop(streams)
@@ -82,7 +82,7 @@ def merge_iters(iters):
 def iter_to_stream(iter):
     # Stream ::= None | (value, iterator)
     try:
-        return iter.next(), iter
+        return next(iter), iter
     except StopIteration:
         None  # = empty stream
 
@@ -100,12 +100,12 @@ def test():
     from random import randrange
     from nose.tools import assert_equal
 
-    for N in xrange(8):
-        for _ in xrange(factorial(N)):
+    for N in range(8):
+        for _ in range(factorial(N)):
             xss = []
-            for _ in xrange(N):
+            for _ in range(N):
                 size = randrange(2 * N + 1) + 1
-                xs = sorted([randrange(size) for _ in xrange(randrange(size))])
+                xs = sorted([randrange(size) for _ in range(randrange(size))])
                 xss.append(xs)
             assert_equal(sorted(chain(*xss)), list(merge_iters(xss)))
 
@@ -114,7 +114,7 @@ def test():
 
 def main():
     import sys
-    in_iters = map(open, sys.argv[1:])
+    in_iters = list(map(open, sys.argv[1:]))
     sys.stdout.writelines(merge_iters(in_iters))
 
 if __name__ == '__main__':

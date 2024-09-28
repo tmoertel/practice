@@ -201,7 +201,7 @@ def brute_force_solutions(first, second, total, modulus=None, bindings=None):
     free_digits = list(set(range(10)) - set(bindings.values()))
     free_vars = sorted(set(first + second + total) - set(bindings))
     for digit_sequence in itertools.permutations(free_digits, len(free_vars)):
-        new_bindings = dict(zip(free_vars, digit_sequence))
+        new_bindings = dict(list(zip(free_vars, digit_sequence)))
         new_bindings.update(bindings)
         if is_solution(new_bindings):
             yield new_bindings
@@ -211,13 +211,13 @@ def cryptarithmetic_solutions(first, second, total):
     """Returns solutions to a cryptarithmetic puzzle."""
     solutions = [{}]
     # Work from 1 to n + 1 decimal places, solving successively larger puzzles.
-    for places in range(1, max(map(len, [first, second, total])) + 2):
+    for places in range(1, max(list(map(len, [first, second, total]))) + 2):
         def solve_from_partial_solution(solution):
             return brute_force_solutions(
                 first[-places:], second[-places:], total[-places:],
                 10**places, solution)
         solutions = itertools.chain.from_iterable(
-            map(solve_from_partial_solution, solutions))
+            list(map(solve_from_partial_solution, solutions)))
     return solutions
 
 
@@ -233,7 +233,7 @@ def test_example_soln_must_match_problem_statement():
         normalize_bindings(soln)
         for soln in cryptarithmetic_solutions('SEND', 'MORE', 'MONEY')]
     for soln in solutions:
-        print 'soln: {}'.format(soln)
+        print('soln: {}'.format(soln))
     expected = {'S': 9, 'E': 5, 'N': 6, 'D': 7, 'M': 1, 'O': 0, 'R': 8, 'Y': 2}
     expected = normalize_bindings(expected)
     assert expected in solutions
@@ -261,7 +261,7 @@ def test_empty_puzzle_must_have_only_the_empty_solution():
 
 def main():
     if len(sys.argv) != 4:
-        print 'Usage: {} first_word second_word total_word'.format(sys.argv[0])
+        print('Usage: {} first_word second_word total_word'.format(sys.argv[0]))
         sys.exit(1)
 
     # Preserve the character ordering from the given words.
@@ -277,7 +277,7 @@ def main():
     for bindings in cryptarithmetic_solutions(*words):
         variable_map = ', '.join('%s=%r' % (c, bindings[c]) for c in char_order)
         solution = ''.join(str(bindings.get(c, c)) for c in ' '.join(words))
-        print '{} / {}'.format(variable_map, solution)
+        print('{} / {}'.format(variable_map, solution))
 
 
 if __name__ == '__main__':

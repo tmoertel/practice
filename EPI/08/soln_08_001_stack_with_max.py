@@ -68,15 +68,15 @@ def test():
     from random import randrange
     from nose.tools import raises, assert_equal
 
-    for N in xrange(8):
+    for N in range(8):
 
-        for _ in xrange(factorial(N)):
+        for _ in range(factorial(N)):
 
             # set up a test case of N pushes intermixed with some
             # number of pops (about half as many on average)
             mstack = MaxStack()
             oracle = []  # use built-in Python stack as oracle
-            xs = [randrange(N) for _ in xrange(N)]  # elems to push
+            xs = [randrange(N) for _ in range(N)]  # elems to push
 
             def assert_mstack_matches_oracle():
                 assert_equal(len(oracle), len(mstack))

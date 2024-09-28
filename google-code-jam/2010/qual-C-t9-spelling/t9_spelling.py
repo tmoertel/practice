@@ -18,7 +18,7 @@ KEYPRESS_MAP = dict((char, (key, reps))
 def main():
     for i, p in enumerate(read_problems(fileinput.input())):
         s = solve(p)
-        print 'Case #%r: %s' % (i + 1, s)
+        print('Case #%r: %s' % (i + 1, s))
 
 
 def solve(problem):
@@ -40,8 +40,8 @@ def keys_for_char(c):
 
 
 def read_problems(lines):
-    N = int(lines.next())
-    for _ in xrange(N):
+    N = int(next(lines))
+    for _ in range(N):
         yield read_problem(lines)
 
 

@@ -22,7 +22,7 @@ import itertools
 def main():
     lang, pats = read_problem(fileinput.input())
     for i, soln in enumerate(solve(lang, pats), 1):
-        print 'Case #%r: %s' % (i, soln)
+        print('Case #%r: %s' % (i, soln))
 
 
 def solve(lang, pats):
@@ -65,7 +65,7 @@ def prefix_tree(words):
 
 
 def read_problem(lines):
-    L, D, N = map(int, lines.next().split())
+    L, D, N = list(map(int, lines.next().split()))
     lang = set(' '.join(itertools.islice(lines, D)).split())
     assert all(len(word) == L for word in lang)
     pats = ' '.join(itertools.islice(lines, N)).split()

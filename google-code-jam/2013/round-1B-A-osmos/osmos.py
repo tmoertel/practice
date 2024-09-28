@@ -28,7 +28,7 @@ def main():
     sys.setrecursionlimit(int(1e6 + 1))
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print 'Case #%r: %r' % (i, s)
+        print('Case #%r: %r' % (i, s))
 
 def solve(problem):
     A, N, sizes = problem
@@ -49,8 +49,8 @@ def solve(problem):
     return cost(A, 0)
 
 def read_problems(lines):
-    T = int(lines.next())
-    for _ in xrange(T):
+    T = int(next(lines))
+    for _ in range(T):
         yield read_problem(lines)
 
 def read_problem(lines):

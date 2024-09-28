@@ -125,6 +125,7 @@ def fib1e(n):
     return result
 
 import functools
+from functools import reduce
 
 
 def fib1f(n):
@@ -758,7 +759,7 @@ import sys
 LETTERS = 'abc'
 N = 1
 S = 'foo'
-max_penalty = sys.maxint >> 1
+max_penalty = sys.maxsize >> 1
 words = dict()
 
 def mcost(i, delay, tree):
@@ -779,13 +780,13 @@ def mcost(i, delay, tree):
 
 def test():
     fns = dict(globals())
-    for fname, f in sorted(fns.iteritems()):
+    for fname, f in sorted(fns.items()):
         if fname.startswith('factorial'):
-            print('testing {}'.format(fname))
-            for n in xrange(5):
-                assert f(n) == reduce(int.__mul__, [1] + range(1, n + 1))
+            print(('testing {}'.format(fname)))
+            for n in range(5):
+                assert f(n) == reduce(int.__mul__, [1] + list(range(1, n + 1)))
         if 'fib' in fname:
-            print('testing {}'.format(fname))
-            assert map(f, range(10)) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+            print(('testing {}'.format(fname)))
+            assert list(map(f, list(range(10)))) == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 if __name__ == '__main__':
     test()

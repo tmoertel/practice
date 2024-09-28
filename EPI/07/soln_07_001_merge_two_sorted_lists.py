@@ -73,8 +73,8 @@ def merge(xs, ys):
 
 def test():
     from nose.tools import assert_equals as eq
-    for xs in powerset(range(7)):
-        for ys in powerset(range(7)):
+    for xs in powerset(list(range(7))):
+        for ys in powerset(list(range(7))):
             spec = sorted(xs + ys)
             result = merge(from_seq(xs), from_seq(ys))
             eq(to_pylist(result), spec)

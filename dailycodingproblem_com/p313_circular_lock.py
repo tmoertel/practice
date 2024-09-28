@@ -128,7 +128,7 @@ def toroidal_manhattan_distance(a, b):
         greatest_digit = max(from_digit, to_digit)
         return min(greatest_digit - least_digit,
                    10 + least_digit - greatest_digit)
-    return sum(itertools.starmap(digit_distance, zip(a, b)))
+    return sum(itertools.starmap(digit_distance, list(zip(a, b))))
 
 
 def test_without_dead_spots_min_moves_should_equal_manhattan_distance():

@@ -74,10 +74,10 @@ def test():
         return ([a for a in A if a < x] +
                 [a for a in A if a == x] +
                 [a for a in A if a > x])
-    for n in xrange(5):
-        for A in permutations(range(n)):
+    for n in range(5):
+        for A in permutations(list(range(n))):
             A = list(A)
-            for i in xrange(n):
+            for i in range(n):
                 x = A[i]
                 AP = partition(A, i)
                 eq(sorted(AP), sorted(A))  # must preserve all elems

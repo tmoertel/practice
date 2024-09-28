@@ -17,7 +17,7 @@ NEIGHBOR_OFFSETS = [(-1,  0), (0, -1), (0,  1), (1,  0)]
 def main():
     for i, (H, W, heights) in enumerate(read_problems(fileinput.input()), 1):
         s = solve(H, W, heights)
-        print 'Case #%r:\n%s' % (i, s)
+        print('Case #%r:\n%s' % (i, s))
 
 def solve(H, W, heights):
     # start w/ cells as singleton sets
@@ -37,8 +37,8 @@ def solve(H, W, heights):
     labels = {}
     def label(loc):
         return labels.setdefault(find(loc), chr(ord('a') + len(labels)))
-    return '\n'.join(' '.join(label((row, col)) for col in xrange(W))
-                     for row in xrange(H))
+    return '\n'.join(' '.join(label((row, col)) for col in range(W))
+                     for row in range(H))
 
 def mk_union_find_domain(elems):
     d = dict((e, e) for e in elems)
@@ -52,14 +52,14 @@ def mk_union_find_domain(elems):
     return union, find
 
 def read_problems(lines):
-    N = int(lines.next())
-    for _ in xrange(N):
+    N = int(next(lines))
+    for _ in range(N):
         yield read_problem(lines)
 
 def read_problem(lines):
-    H, W = map(int, lines.next().split())
+    H, W = list(map(int, lines.next().split()))
     heights = dict(((row, col), int(s))
-                   for row in xrange(H)
+                   for row in range(H)
                    for (col, s) in enumerate(lines.next().split()))
     return H, W, heights
 

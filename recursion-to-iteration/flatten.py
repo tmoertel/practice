@@ -55,6 +55,6 @@ def check_flattener(f):
     assert f(tree3) == [5, 7, 9]
     assert f(tree4) == [2, 5, 7, 9]
     assert f(tree5) == [1, 2, 5, 7, 9]
-    print 'ok'
+    print('ok')
 
 check_flattener(flatten)  # ok

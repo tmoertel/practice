@@ -270,18 +270,18 @@ def test():
     for soln in (find_non_triplicate_element_1,
                  find_non_triplicate_element_2,
                  find_non_triplicate_element_2_optimized):
-        print '\n>>> Checking {}'.format(soln.__name__)
+        print('\n>>> Checking {}'.format(soln.__name__))
         _check_solution(soln)
 
 def _check_solution(soln):
     # Start small and work toward larger problem instances.
     for n in range(1, 7):
-        for seq in itertools.permutations(range(n)):
+        for seq in itertools.permutations(list(range(n))):
             # Make a random problem instance with a known solution.
             seq = list(seq)
             singleton = seq[0]     # The first value is the singleton.
             seq[1:] = seq[1:] * 3  # The others are the triplicates.
             random.shuffle(seq)
-            print 'ans = {}, seq = {}'.format(singleton, seq)
+            print('ans = {}, seq = {}'.format(singleton, seq))
             # The solver must identify the singleton element.
             assert soln(seq) == singleton

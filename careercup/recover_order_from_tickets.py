@@ -95,13 +95,13 @@ def test():
 
     max_cities = 10  # test all journeys up to 10 cities in length
 
-    for n in xrange(max_cities):
+    for n in range(max_cities):
 
         if n == 1:
             continue  # can't have any flights between just 1 city
 
-        city_ordering = sample(xrange(n), n)  # a random n-city ordering
-        tickets = zip(city_ordering[:-1], city_ordering[1:])
+        city_ordering = sample(range(n), n)  # a random n-city ordering
+        tickets = list(zip(city_ordering[:-1], city_ordering[1:]))
 
         # for all ticket orderings, we must recover the original city ordering
         for shuffled_tickets in permutations(tickets):

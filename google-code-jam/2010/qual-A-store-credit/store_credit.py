@@ -13,7 +13,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         j1, j2 = solve(p)
-        print 'Case #%r: %r %r' % (i, j1, j2)
+        print('Case #%r: %r %r' % (i, j1, j2))
 
 
 def solve(problem):
@@ -27,15 +27,15 @@ def solve(problem):
 
 
 def read_problems(lines):
-    N = int(lines.next())
-    for _ in xrange(N):
+    N = int(next(lines))
+    for _ in range(N):
         yield read_problem(lines)
 
 
 def read_problem(lines):
-    C = int(lines.next())
-    I = int(lines.next())
-    Ps = map(int, lines.next().split())
+    C = int(next(lines))
+    I = int(next(lines))
+    Ps = list(map(int, lines.next().split()))
     return C, I, Ps
 
 
