@@ -30,10 +30,15 @@ class DiscreteRandomVariable:
         value_and_weight_pairs = list(value_and_weight_pairs)
 
         # Weights must be non-negative integers.
-        assert all(isinstance(w, int) and w >= 0 for _, w in value_and_weight_pairs)
+        for _, w in value_and_weight_pairs:
+            if not isinstance(w, int):
+                raise TypeError("weights must be int values")
+            if w < 0:
+                raise ValueError("weights cannot be less than 0")
 
         # The distribution must have a positive total weight.
-        assert any(w > 0 for _, w in value_and_weight_pairs)
+        if not any(w > 0 for _, w in value_and_weight_pairs):
+            raise ValueError("at least one weight must be greater than 0")
 
         # Rescale all weights so that they can be evenly divided by the count of
         # pairs. This will guarantee that if the weights have integer values,
@@ -109,6 +114,31 @@ class DiscreteRandomVariable:
         # ... and, within that block, which of the block's two values the dart hit.
         value = block.low if y < block.low_weight else block.high
         return value
+
+
+def test_discrete_random_variables_raise_error_when_initialized_with_non_integer_weights():
+    import pytest
+
+    with pytest.raises(TypeError):
+        DiscreteRandomVariable([("value_with_non_integer_weight", 1.23)])
+
+
+def test_discrete_random_variables_raise_error_when_initialized_with_a_negative_weight():
+    import pytest
+
+    with pytest.raises(ValueError):
+        DiscreteRandomVariable([("value_with_negative_weight", -2)])
+
+
+def test_discrete_random_variables_raise_error_when_initialized_with_zero_total_weight():
+    import pytest
+
+    with pytest.raises(ValueError):
+        DiscreteRandomVariable([])
+    with pytest.raises(ValueError):
+        DiscreteRandomVariable(
+            [("value_with_zero_weight", 0), ("another_value_with_zero_weight", 0)]
+        )
 
 
 def test_discrete_random_variables_exactly_represent_their_underlying_distributions():
