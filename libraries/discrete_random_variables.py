@@ -33,12 +33,12 @@ class DiscreteRandomVariable:
         assert all(isinstance(w, int) and w >= 0 for _, w in value_and_weight_pairs)
 
         # The distribution must have a positive total weight.
-        assert any(w >= 0 for _, w in value_and_weight_pairs)
+        assert any(w > 0 for _, w in value_and_weight_pairs)
 
         # Rescale all weights so that they can be evenly divided by the count of
         # pairs. This will guarantee that if the weights have integer values,
         # the mean weight will have an integer value also. Note that the mean
-        # after rescaling is equal to the total before scaling.
+        # after rescaling is equal to the total before rescaling.
         mean_weight = sum(w for _, w in value_and_weight_pairs)
         n = len(value_and_weight_pairs)
         value_and_weight_pairs = [(v, w * n) for v, w in value_and_weight_pairs]
