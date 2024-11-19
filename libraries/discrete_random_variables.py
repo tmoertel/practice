@@ -48,14 +48,14 @@ class DiscreteRandomVariable:
         # pairs. This will guarantee that if the weights have integer values,
         # the mean weight will have an integer value also. Note that the mean
         # after rescaling is equal to the total before rescaling.
-        mean_weight = sum(w for _, w in value_and_weight_pairs)
+        self.mean_weight = sum(w for _, w in value_and_weight_pairs)
         n = len(value_and_weight_pairs)
         value_and_weight_pairs = [(v, w * n) for v, w in value_and_weight_pairs]
 
         # Partition the pairs by whether they are below the mean or not.
         def is_below_mean(pair):
             _, weight = pair
-            return weight < mean_weight
+            return weight < self.mean_weight
 
         below_pairs = [vw for vw in value_and_weight_pairs if is_below_mean(vw)]
         not_below_pairs = [vw for vw in value_and_weight_pairs if not is_below_mean(vw)]
@@ -64,7 +64,6 @@ class DiscreteRandomVariable:
         # weight of exactly the mean and each representing one or two of the
         # original values.
         self.packed_blocks = []
-        self.mean_weight = mean_weight
         while below_pairs:
             # While there are values having a weight w_low below the mean, there
             # must exist values having a weight w_high not below the mean. We
@@ -76,8 +75,8 @@ class DiscreteRandomVariable:
 
             # We trim off the excess weight and add it back to the list of
             # below-mean or not-below-mean pairs, as its weight demands.
-            w_leftover = w_low + w_high - mean_weight
-            (below_pairs if w_leftover < mean_weight else not_below_pairs).append(
+            w_leftover = w_low + w_high - self.mean_weight
+            (below_pairs if w_leftover < self.mean_weight else not_below_pairs).append(
                 (v_high, w_leftover)
             )
 
