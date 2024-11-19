@@ -1,4 +1,4 @@
-"""Discrete random variables that you can draw values from."""
+"""Discrete random variables that you can draw values from in O(1) time."""
 
 from collections.abc import Iterable
 import collections
