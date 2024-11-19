@@ -83,9 +83,12 @@ class DiscreteRandomVariable:
 
         Args:
           randrange: (optional) A function that when called with an integer
-            argument `n` returns a random integer from the set {0, 1, 2, ..., n - 1}.
-            This function will be used to provide the randomness used to draw the
-            value from the distribution. Defaults to `random.randrange`.
+            argument `n` returns a random integer from the set {0,1,2,...,n-1}.
+            This function will be used to provide the randomness used to draw a
+            value from the distribution. Defaults to `random.randrange`. You
+            won't need to provide this argument unless you are testing or are
+            trying to control the randomness regime, e.g., for a game with
+            repeatable procedural generation mechanics.
 
         GUARANTEED to call `randrange` exactly once and perform only
         constant-time work.
