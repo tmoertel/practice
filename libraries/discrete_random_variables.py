@@ -17,10 +17,13 @@ class DiscreteRandomVariable:
         Args:
           value_and_weight_pairs: An iterable series of (value, weight) pairs
             specifying the wanted distribution. For example, to represent a
-            fair coin toss, you could use the series `[(1, 'heads'), (1, 'tails')]`.
+            fair coin toss, you could use the series `[('heads', 1), ('tails', 1)]`.
 
         REQUIRED: All weights must be integer values, at least zero, and the
         total weight of the pairs must be greater than zero.
+
+        GUARANTEED: Constructing the instance takes time and memory linear in
+        the length of the pairs series.
 
         """
         # Convert the pairs into a list we can iterate over repeatedly.
