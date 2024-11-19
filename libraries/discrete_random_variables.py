@@ -48,9 +48,10 @@ class DiscreteRandomVariable:
         below_pairs = [vw for vw in value_and_weight_pairs if is_below_mean(vw)]
         not_below_pairs = [vw for vw in value_and_weight_pairs if not is_below_mean(vw)]
 
-        # Repack the weighted pairs into a single array of mean-weighted blocks
-        # each representing one or two of the original values.
-        self.draw_array = []
+        # Repack the weighted pairs into a single array of blocks, each having a
+        # weight of exactly the mean and each representing one or two of the
+        # original values.
+        self.packed_blocks = []
         self.mean_weight = mean_weight
         while below_pairs:
             # While there are values having a weight w_low below the mean, there
@@ -59,7 +60,7 @@ class DiscreteRandomVariable:
             # w_low + w_high, which must be greater than the mean.
             v_low, w_low = below_pairs.pop()
             v_high, w_high = not_below_pairs.pop()
-            self.draw_array.append(TwoValues(w_low, v_low, v_high))
+            self.packed_blocks.append(TwoValues(w_low, v_low, v_high))
 
             # We trim off the excess weight and add it back to the list of
             # below-mean or not-below-mean pairs, as its weight demands.
@@ -69,10 +70,10 @@ class DiscreteRandomVariable:
             )
 
         # When no more below-mean pairs exist, the `not_below_pairs` list may
-        # still contain some pairs having a weight of exactly the mean. These
-        # we add to the draw array as degenerate two-value blocks having a
-        # low value that occupies the entire block.
-        self.draw_array.extend(TwoValues(w, v, None) for v, w in not_below_pairs)
+        # still contain some pairs having a weight of exactly the mean. These we
+        # add to the packed-block array as degenerate two-value blocks, each
+        # having a low value that occupies the entire block.
+        self.packed_blocks.extend(TwoValues(w, v, None) for v, w in not_below_pairs)
 
     def draw(self, randrange=random.randrange):
         """Returns a value from the distribution at random.
@@ -87,10 +88,20 @@ class DiscreteRandomVariable:
         constant-time work.
 
         """
-        n = len(self.draw_array)
-        k = randrange(n * self.mean_weight)
-        block = self.draw_array[k // self.mean_weight]
-        value = block.low if k % self.mean_weight < block.low_weight else block.high
+        # If we imagine the n packed blocks as an n * u rectangular area, where
+        # u is the mean weight, our goal is to throw a random dart in this area
+        # to pick one of the original values. Instead of having to generate two
+        # random numbers -- one for the x coordinate in [0, n), and one for the
+        # y in [0, u) -- we instead generate a single number in [0, n * u) and
+        # unpack it into the dart's x-y coordinates.
+        n = len(self.packed_blocks)
+        dart_combined_coordinates = randrange(n * self.mean_weight)
+        x = dart_combined_coordinates // self.mean_weight
+        y = dart_combined_coordinates % self.mean_weight
+        # Now that we know where the dart hit, we determine which block it selected.
+        block = self.packed_blocks[x]
+        # ... and, within that block, which of the block's two values the dart hit.
+        value = block.low if y < block.low_weight else block.high
         return value
 
 
@@ -127,7 +138,6 @@ def test_discrete_random_variables_exactly_represent_their_underlying_distributi
             # variable's internal logic, namely that if its internal
             # distribution has n weights and a total weight of t, then it will
             # request random integers X in the range 0 <= X < n * t.
-
             total_weight = sum(weights)
             actual_distribution = collections.Counter(
                 [
@@ -136,9 +146,6 @@ def test_discrete_random_variables_exactly_represent_their_underlying_distributi
                 ]
             )
             expected_distribution = collections.Counter(
-                {
-                    value: num_values * weight
-                    for value, weight in values_and_weights
-                }
+                {value: num_values * weight for value, weight in values_and_weights}
             )
             assert actual_distribution == expected_distribution
