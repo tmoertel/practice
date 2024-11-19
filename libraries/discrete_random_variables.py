@@ -5,7 +5,11 @@ import collections
 import random
 from typing import Any
 
-TwoValues = collections.namedtuple("TwoValue", "low_weight, low, high")
+# Internally, we pack two weighted values into a block of fixed total weight,
+# where the low value occupies the bottom `low_weight / (low_weight +
+# high_weight)` share of the block. (Since all blocks have the same fixed total
+# weight, we don't need to store the high weight; it is known implicitly.)
+TwoValues = collections.namedtuple("TwoValue", "low_weight, low_value, high_value")
 
 
 class DiscreteRandomVariable:
@@ -112,7 +116,7 @@ class DiscreteRandomVariable:
         # Now that we know where the dart hit, we determine which block it selected.
         block = self.packed_blocks[x]
         # ... and, within that block, which of the block's two values the dart hit.
-        value = block.low if y < block.low_weight else block.high
+        value = block.low_value if y < block.low_weight else block.high_value
         return value
 
 
