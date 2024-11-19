@@ -32,9 +32,6 @@ class DiscreteRandomVariable:
         # The distribution must have a positive total weight.
         assert any(w >= 0 for _, w in value_and_weight_pairs)
 
-        # Values with zero weight can be ignored as they can never be observed.
-        value_and_weight_pairs = [(v, w) for v, w in value_and_weight_pairs if w > 0]
-
         # Rescale all weights so that they can be evenly divided by the count of
         # pairs. This will guarantee that if the weights have integer values,
         # the mean weight will have an integer value also. Note that the mean
@@ -128,19 +125,19 @@ def test_discrete_random_variables_exactly_represent_their_underlying_distributi
             # us to observe exactly the distribution represented by the random
             # variable we're testing. This test relies on knowledge of the
             # variable's internal logic, namely that if its internal
-            # distribution has n nonzero weights and a total weight of t, then
-            # it will request random integers X in the range 0 <= X < n * t.
-            num_nonzero_values = sum(w > 0 for w in weights if w > 0)
+            # distribution has n weights and a total weight of t, then it will
+            # request random integers X in the range 0 <= X < n * t.
+
             total_weight = sum(weights)
             actual_distribution = collections.Counter(
                 [
                     random_variable.draw(lambda _: i)
-                    for i in range(num_nonzero_values * total_weight)
+                    for i in range(num_values * total_weight)
                 ]
             )
             expected_distribution = collections.Counter(
                 {
-                    value: num_nonzero_values * weight
+                    value: num_values * weight
                     for value, weight in values_and_weights
                 }
             )
