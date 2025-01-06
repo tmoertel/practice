@@ -1,4 +1,4 @@
-"""Discrete random variables that you can draw values from in O(1) time."""
+"""Discrete random variables that you can draw random values from in O(1) time."""
 
 from collections.abc import Iterable
 import collections
@@ -145,6 +145,19 @@ def test_discrete_random_variables_raise_error_when_initialized_with_zero_total_
 
 
 def test_discrete_random_variables_exactly_represent_their_underlying_distributions():
+    """This function tests the following property:
+
+    For all nonempty sequences `kws` of (key, weight) pairs having distinct keys,
+    non-negative integer weights, and a total weight greater than zero,
+    `DiscreteRandomVariable(kws).draw()` returns each key in `kws` with probability
+    proportional to its corresponding weight. In other words, if Y is a random
+    variable representing the result of calling `DiscreteRandomVariable(kws).draw()`,
+    Y's distribution is *exactly* as given by `kws`.
+
+    Assumption: Python's `random.randrange(n)` works as advertised. That is, it
+    returns a random integer uniformly from the set {0, 1, 2, ..., n-1}.
+
+    """
     import math
     from random import randint, shuffle
 
@@ -170,7 +183,7 @@ def test_discrete_random_variables_exactly_represent_their_underlying_distributi
             random_variable = DiscreteRandomVariable(values_and_weights)
 
             # To test this variable, we will override Python's normal
-            # random-number generation logic and instead sweep uniformly over
+            # `random.randrange` logic and instead sweep uniformly over
             # the range of possible numbers Python could generate. This allows
             # us to observe exactly the distribution represented by the random
             # variable we're testing. This test relies on knowledge of the
@@ -180,7 +193,7 @@ def test_discrete_random_variables_exactly_represent_their_underlying_distributi
             total_weight = sum(weights)
             actual_distribution = collections.Counter(
                 [
-                    random_variable.draw(lambda _: i)
+                    random_variable.draw(randrange=(lambda _: i))
                     for i in range(num_values * total_weight)
                 ]
             )
