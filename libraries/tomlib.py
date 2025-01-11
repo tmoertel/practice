@@ -7,30 +7,38 @@ Tom Moertel <tom@moertel.com>
 
 """
 
-# decorators
-
 import functools
 import sys
 from functools import reduce
+from bisect import bisect_right
+
+# Decorators.
+
 
 def memoize(f):
     """Make a memoized version of f that returns cached results."""
     cache = {}
+
     @functools.wraps(f)
     def g(*args):
         ret = cache.get(args, cache)
         if ret is cache:
             ret = cache[args] = f(*args)
         return ret
+
     return g
+
 
 def trace(f, printer=None):
     """Make a version of f that prints a trace of its calls."""
     fnm = f.__name__
     depth = [0]
+
     def default_printer(depth, fnm, args, ret):
-        print('%s%s%r => %r' % ('  ' * depth, fnm, args, ret))
+        print("%s%s%r => %r" % ("  " * depth, fnm, args, ret))
+
     printer = printer or default_printer
+
     @functools.wraps(f)
     def g(*args):
         depth[0] += 1
@@ -43,12 +51,14 @@ def trace(f, printer=None):
             depth[0] -= 1
             printer(depth[0], fnm, args, ret)
         return ret
+
     return g
 
 
-# numeric functions
+# Numeric functions.
 
-EPSILON = sys.float_info.epsilon ** 0.5  # default to half of system precision
+EPSILON = sys.float_info.epsilon**0.5  # default to half of system precision
+
 
 def find_minimum_by_newtons_method(f, f1, f2, x, e=EPSILON, a=0.25, b=0.5):
     """Find x' near x such that f(x') is a local minimum.
@@ -61,20 +71,21 @@ def find_minimum_by_newtons_method(f, f1, f2, x, e=EPSILON, a=0.25, b=0.5):
 
     """
     while True:
-        # find descent direction
+        # Find descent direction.
         f1x = f1(x)
-        delta = -f1x/max(0.001, abs(f2(x)))  # keep f2(x) positive
-        # check stopping criterion
+        delta = -f1x / max(0.001, abs(f2(x)))  # keep f2(x) positive
+        # Check stopping criterion.
         if -delta * f1x <= 2 * e:
             return x
-        # choose step size t via backtracking search
+        # Choose step size `t` via backtracking search.
         t = 1.0
         fx = f(x)
         while f(x + t * delta) > fx + a * t * delta * f1x:
             t *= b
-        # update
+        # Update location.
         x += t * delta
     return x
+
 
 def find_real_by_newtons_method(f, f_prime, x, y, e=EPSILON):
     """From a guess x, find an improved x within e of the true soln f(x) = y.
@@ -93,6 +104,7 @@ def find_real_by_newtons_method(f, f_prime, x, y, e=EPSILON):
         x += update
     return x
 
+
 def find_real_by_bisection(f, lo, hi, y, e=EPSILON):
     """Find x in [lo, hi] such that f(x) <= y < f(x + e).
 
@@ -100,7 +112,7 @@ def find_real_by_bisection(f, lo, hi, y, e=EPSILON):
 
     """
     _check_bisection_bounds(f, lo, hi, y)
-    hi0 = hi  # save upper bound
+    hi0 = hi  # Save upper bound.
     while lo < hi:
         mid = (lo + hi) / 2.0
         if f(mid) <= y:
@@ -109,6 +121,7 @@ def find_real_by_bisection(f, lo, hi, y, e=EPSILON):
             hi = mid - e
     return lo if lo <= hi0 and f(lo) <= y else lo - e
 
+
 def find_int_by_bisection(f, lo, hi, y):
     """Find maximal int x in [lo, hi] such that f(x) <= y.
 
@@ -116,7 +129,7 @@ def find_int_by_bisection(f, lo, hi, y):
 
     """
     _check_bisection_bounds(f, lo, hi, y)
-    hi0 = hi  # save upper bound
+    hi0 = hi  # Save upper bound.
     while lo < hi:
         mid = lo + ((hi - lo) >> 1)
         if f(mid) <= y:
@@ -125,21 +138,26 @@ def find_int_by_bisection(f, lo, hi, y):
             hi = mid - 1
     return lo if lo <= hi0 and f(lo) <= y else lo - 1
 
+
 def _check_bisection_bounds(f, lo, hi, y):
     if lo > hi:
-        raise ValueError('lower bound is above upper bound')
+        raise ValueError("lower bound is above upper bound")
     if y < f(lo):
-        raise ValueError('solution is below lower bound')
+        raise ValueError("solution is below lower bound")
     if y > f(hi):
-        raise ValueError('solution is above upper bound')
+        raise ValueError("solution is above upper bound")
+
 
 def isqrt(y):
     """Find maximal int x > 0 such that x * x <= y."""
     if y < 0:
-        raise ValueError('isqrt is not defined for negative values')
+        raise ValueError("isqrt is not defined for negative values")
+
     def f(x):
         return x * x
+
     return find_int_by_bisection(f, 0, y, y)
+
 
 def fast_pow(x, n):
     """Raise numeric x to integer power n."""
@@ -165,6 +183,7 @@ def fast_pow(x, n):
             n >>= 1
     return m
 
+
 def fast_gpow(x, n, mul, mul_identity):
     """Raise generalized numeric x to integer power n."""
     m = mul_identity
@@ -178,40 +197,51 @@ def fast_gpow(x, n, mul, mul_identity):
     return m
 
 
-# vectors
+# Vectors.
+
 
 def dot_product(u, v):
     """Compute dot product of equal-length vectors u and v."""
     return sum(u[i] * v[i] for i in range(len(u)))
 
+
 def mk_dot_product_mod(m):
     """Make a dot-product function that computes mod m."""
+
     def dot_product_mod(u, v):
         return sum((u[i] * v[i]) % m for i in range(len(u))) % m
+
     return dot_product_mod
+
 
 def dot_product_mod(u, v, m):
     """Compute dot product of equal-length vectors u and v (mod m)."""
     return mk_dot_product_mod(m)(u, v)
 
 
-# matrices
+# Matrices.
+
 
 def mk_matrix_mul(dot=dot_product):
     """Make matrix multiplier using a given dot-product function."""
+
     def matrix_mul(A, B):
         """Compute product of matrices A and B."""
         if not len(A[0]) == len(B) > 0:
-            raise ValueError('matrices are mismatched for multiplication')
-        Bt = list(zip(*B))  # transpose B to get column order
+            raise ValueError("matrices are mismatched for multiplication")
+        Bt = list(zip(*B))  # Transpose B to get column order.
         return [[dot(row, col) for col in Bt] for row in A]
+
     return matrix_mul
 
-matrix_mul = mk_matrix_mul()  # common-case version
+
+matrix_mul = mk_matrix_mul()  # Common-case version.
+
 
 def matrix_mul_mod(A, B, m):
     """Compute product of matrices A and B (mod m)."""
     return mk_matrix_mul(mk_dot_product_mod(m))(A, B)
+
 
 def identity_matrix(n):
     """Make n*n identity matrix."""
@@ -220,21 +250,27 @@ def identity_matrix(n):
         A[i][i] = 1
     return A
 
+
 def matrix_pow(A, n, dot=dot_product):
     """Raise matrix A to the integer power n."""
     return fast_gpow(A, n, mk_matrix_mul(dot), identity_matrix(len(A)))
 
+
 def matrix_pow_mod(A, n, m):
     """Raise matrix A to the integer power n (mod m)."""
-    return fast_gpow(A, n, mk_matrix_mul(mk_dot_product_mod(m)),
-                     identity_matrix(len(A)))
+    return fast_gpow(
+        A, n, mk_matrix_mul(mk_dot_product_mod(m)), identity_matrix(len(A))
+    )
 
 
-# combinatorics
+# Combinatorics.
+
 
 def binomial(n, k):
     """Compute binomial coefficient "n choose k" for integers n and k."""
-    # use identity C(n, k) = C(n - 1, k - 1) * n // k
+    # Use the identity `C(n, k) = C(n - 1, k - 1) * n // k` as the basis for
+    # a recursive algorithm to compute the coefficient. This algorithm is
+    # implemented here iteratively.
     if k > n - k:
         k = n - k
     if k < 0:
@@ -246,9 +282,12 @@ def binomial(n, k):
         n += 1
     return p
 
+
 def real_binomial(r, k):
     """Compute binomial coefficient "r choose k" for real r and integer k."""
-    # use identity C(r, k) = C(r - 1, k - 1) * r / k
+    # Use the identity `C(r, k) = C(r - 1, k - 1) * r / k` as the basis for
+    # a recursive algorithm to compute the coefficient. This algorithm is
+    # implemented here iteratively.
     if k < 0:
         return 0
     p = 1.0
@@ -259,9 +298,8 @@ def real_binomial(r, k):
     return p
 
 
-# number theory
+# Number theory.
 
-from bisect import bisect_right
 
 def primes_upto(n):
     """Get an increasing list of all primes <= n.
@@ -273,11 +311,13 @@ def primes_upto(n):
         while PRIME_TABLE_CUTOFF < n:
             PRIME_TABLE_CUTOFF *= 2
         PRIMES = _prime_sieve(PRIME_TABLE_CUTOFF)
-    return PRIMES[:bisect_right(PRIMES, n)]
+    return PRIMES[: bisect_right(PRIMES, n)]
+
 
 def primes_upto_at_least(n):
     """Get an increasing list of all primes <= m for some m >= n."""
     return PRIMES if n <= PRIME_TABLE_CUTOFF else primes_upto(n)
+
 
 def _prime_sieve(n):
     """Get an increasing list of all primes <= n."""
@@ -290,13 +330,15 @@ def _prime_sieve(n):
                 candidates[j] = False
     return primes
 
+
 PRIME_TABLE_CUTOFF = 2**16
 PRIMES = _prime_sieve(PRIME_TABLE_CUTOFF)
+
 
 def prime_factors(n):
     """Get an ordered list of the prime factors of n."""
     if n < 1:
-        raise ValueError('n=%r cannot have prime factors' % (n, ))
+        raise ValueError("n=%r cannot have prime factors" % (n,))
     if n == 1:
         return [1]
     primes = primes_upto_at_least(isqrt(n) + 1)
@@ -314,12 +356,15 @@ def prime_factors(n):
         factors.append(n)
     return factors
 
-# disjoint sets
+
+# Disjoint sets, supporting union and find operations.
+
 
 def mk_union_find_domain(elems):
     """Make union and find methods over disjoint singleton sets from elems."""
     d = dict((e, e) for e in elems)
     r = dict((e, 1) for e in d)  # ranks
+
     def union(u, v):
         urep = find(u)
         vrep = find(v)
@@ -331,65 +376,83 @@ def mk_union_find_domain(elems):
                 d[vrep] = urep
                 if rank_diff == 0:
                     r[urep] += 1
+
     def find(u):
         urep = d[u]
         if urep != u:
             urep = d[u] = find(urep)
         return urep
+
     return union, find
 
 
+# Tests.
 
-# tests
 
 def approx_eq(x, y):
     return abs(x - y) < EPSILON
 
+
 def test_memoize():
     counters = [0] * 5
+
     def f(i):
         counters[i] += 1
         return counters[i]
+
     for i in range(5):
-        assert f(i) != f(i)  # un-memoized f returns changing values
+        assert f(i) != f(i)  # Un-memoized f returns changing values.
     f = memoize(f)
     for i in range(5):
-        assert f(i) == f(i)  # memoized f must return cached values
+        assert f(i) == f(i)  # Memoized f must return cached values.
+
 
 def test_trace():
     from nose.tools import raises
+
     output = []
+
     def recorder(*args):
         output.append(args)
-    ex = Exception('Bang!')
+
+    ex = Exception("Bang!")
+
     def exploder():
         raise ex
+
     exploder = trace(exploder, recorder)
     raises(Exception)(exploder)()
-    assert output == [(0, 'exploder', (), ex)]
-    output[:] = []  # reset flight recorder for next test
+    assert output == [(0, "exploder", (), ex)]
+    output[:] = []  # Reset flight recorder for next test.
+
     def factorial(i):
         if i < 2:
             return i
         return i * factorial(i - 1)
+
     factorial = trace(factorial, recorder)
     factorial(3)
-    assert output == [(2, 'factorial', (1,), 1),
-                      (1, 'factorial', (2,), 2),
-                      (0, 'factorial', (3,), 6)]
+    assert output == [
+        (2, "factorial", (1,), 1),
+        (1, "factorial", (2,), 2),
+        (0, "factorial", (3,), 6),
+    ]
+
 
 def test_isqrt():
     """isqrt(y) must return maximal x such that 0 <= x*x <= y."""
-    # normal cases
+    # Normal cases.
     for base in range(32):
         for frac in range(-base, base):
             y = base * base + frac
             x = isqrt(y)
-            assert x * x <= y             # must not exceed y
-            assert (x + 1) * (x + 1) > y  # must be maximal
-    # exceptional cases
+            assert x * x <= y  # Must not exceed y.
+            assert (x + 1) * (x + 1) > y  # Must be maximal.
+    # Exceptional cases.
     from nose.tools import raises
+
     raises(ValueError)(isqrt)(-1)
+
 
 def test_find_minimum_by_newtons_method():
     def make_objective_for_parabola(X, Y, a, b):
@@ -397,14 +460,19 @@ def test_find_minimum_by_newtons_method():
         Y = float(Y)
         a = float(a)
         b = float(b)
+
         def f(x):
-            y = (a * (x - b * X))**2 + Y
+            y = (a * (x - b * X)) ** 2 + Y
             return y
+
         def f1(x):
             return 2 * a**2 * (x - b * X)
+
         def f2(x):
             return 2 * a**2
+
         return f, f1, f2
+
     for X in range(-10, 11):
         for Y in range(-10, 11):
             for a in range(1, 6):
@@ -414,68 +482,89 @@ def test_find_minimum_by_newtons_method():
                         x = find_minimum_by_newtons_method(f, f1, f2, guess)
                         assert approx_eq(x, b * X)
 
+
 def test_find_real_by_newtons_method():
-    # use +/- inverse square root as oracle
-    scenarios = [[ 1, lambda x:  x*x, lambda x:  2*x],
-                 [-1, lambda x: -x*x, lambda x: -2*x]]
+    # Use +/- inverse square root as oracle.
+    scenarios = [
+        [1, lambda x: x * x, lambda x: 2 * x],
+        [-1, lambda x: -x * x, lambda x: -2 * x],
+    ]
     e = EPSILON
     for sign, f, f_prime in scenarios:
         y = sign * e
         while abs(y) < 100.0:
             x = find_real_by_newtons_method(f, f_prime, 1.0, y, e)
-            assert ((f(x) <= y and (f(x + e) > y or f(x - e) > y)) or
-                    (f(x) >= y and (f(x + e) < y or f(x - e) < y)))
+            assert (f(x) <= y and (f(x + e) > y or f(x - e) > y)) or (
+                f(x) >= y and (f(x + e) < y or f(x - e) < y)
+            )
             y *= 1.1
+
 
 def test_find_real_by_bisection():
     HIGH = 100.0
+
     def f(x):
         return x * x
+
     def check(y, in_range):
         while in_range(y):
             x = find_real_by_bisection(f, 0.0, HIGH, y)
             assert f(x) <= y < f(x + EPSILON)
             y *= y
+
     check(1.0 - EPSILON, lambda y: y > EPSILON)
     check(1.0 + EPSILON, lambda y: y < HIGH)
     from nose.tools import raises
+
     raises(ValueError)(find_real_by_bisection)(f, 1.0, 0.0, 2.0)  # lo > hi
     raises(ValueError)(find_real_by_bisection)(f, 2.0, 3.0, 2.0)  # f(lo) > y
     raises(ValueError)(find_real_by_bisection)(f, 2.0, 3.0, 9.9)  # f(hi) < y
 
+
 def test_find_int_by_bisection_exc():
     """find_by_bisection must report out-of-bounds errors."""
-    # exceptional cases (normal cases are tested by test_isqrt)
+
+    # Exceptional cases (normal cases are tested by test_isqrt).
     def identity(x):
         return x
+
     from nose.tools import raises
+
     raises(ValueError)(find_int_by_bisection)(identity, 1, 0, 0)  # lo > hi
     raises(ValueError)(find_int_by_bisection)(identity, 1, 2, 0)  # f(lo) > y
     raises(ValueError)(find_int_by_bisection)(identity, 1, 2, 3)  # f(hi) < y
+
 
 def test_fast_pow():
     for x in range(10):
         for n in range(10):
             assert x**n == fast_pow(x, n)
 
+
 def test_fast_gpow():
     from operator import mul
+
     for x in range(10):
         for n in range(10):
             assert x**n == fast_gpow(x, n, mul, 1)
 
+
 def test_matrix_pow_():
     A = [[6, -4], [1, 0]]
     A1K1 = matrix_pow(A, 1001)
-    assert ([[A1K1[0][0] % 371, A1K1[0][1] % 371],
-             [A1K1[1][0] % 371, A1K1[1][1] % 371]] == [[131, 286], [114, 189]])
+    assert [
+        [A1K1[0][0] % 371, A1K1[0][1] % 371],
+        [A1K1[1][0] % 371, A1K1[1][1] % 371],
+    ] == [[131, 286], [114, 189]]
     assert matrix_pow(A, 0) == identity_matrix(2)
+
 
 def test_matrix_pow_mod():
     A = [[6, -4], [1, 0]]
     A1K1 = matrix_pow_mod(A, 1001, 371)
     assert A1K1 == [[131, 286], [114, 189]]
     assert matrix_pow_mod(A, 0, 371) == identity_matrix(2)
+
 
 def test_prime_factors():
     assert prime_factors(1) == [1]
@@ -485,61 +574,71 @@ def test_prime_factors():
             assert all(f == m for f in factors)
             assert len(factors) == n
     from operator import mul
+
     for n in range(2, 1000):
         assert reduce(mul, prime_factors(n)) == n
     from nose.tools import raises
+
     raises(ValueError)(prime_factors)(-1)
     raises(ValueError)(prime_factors)(0)
+
 
 def test_primes_upto():
     primes = _prime_sieve(PRIME_TABLE_CUTOFF + 1000)
     l = len(PRIMES)
-    for i, p in list(enumerate(primes, 1))[l-10:l+10]:
+    for i, p in list(enumerate(primes, 1))[l - 10 : l + 10]:
         ps = primes_upto(p)
         assert p in ps
         assert len(ps) == i
         assert ps == primes[:i]
 
+
 def test_primes_upto_at_least():
     primes = _prime_sieve(PRIME_TABLE_CUTOFF + 1000)
     l = len(PRIMES)
-    for i, p in list(enumerate(primes, 1))[l-10:l+10]:
+    for i, p in list(enumerate(primes, 1))[l - 10 : l + 10]:
         ps = primes_upto_at_least(p)
         assert p in ps
         assert len(ps) >= i
         assert ps[:i] == primes[:i]
 
+
 def test_mk_union_find_domain():
     from random import randint, sample, shuffle
+
     xs = list(range(100))
     for _ in range(100):
-        # use a newly shuffled set of elements
+        # Use a newly shuffled set of elements.
         shuffle(xs)
         union, find = mk_union_find_domain(xs)
         # break it into desired subsets
         n_cuts = randint(1, len(xs))
         cuts = sorted(sample(range(len(xs)), n_cuts)) + [len(xs)]
-        subsets = [xs[cuts[i - 1]:cuts[i]] for i in range(1, len(cuts))]
+        subsets = [xs[cuts[i - 1] : cuts[i]] for i in range(1, len(cuts))]
         subsets = [_f for _f in subsets if _f]
-        # join the elements of each subset
+        # Join the elements of each subset.
         for subset in subsets:
             subset = list(subset)
             shuffle(subset)
             for i in range(1, len(subset)):
                 union(subset[i - 1], subset[i])
-        # now verify:
+
+        # Now verify:
         def rep_elem_set(subset):
             return set(find(e) for e in subset)
+
         rep_elem_sets = list(map(rep_elem_set, subsets))
-        # for each subset, all elems must have the same representative elem
+        # For each subset, all elems must have the same representative elem.
         for res in rep_elem_sets:
             assert len(res) == 1
-        # none of the disjoint subsets should share a representative element
+        # None of the disjoint subsets should share a representative element.
         assert len(reduce(set.union, rep_elem_sets)) == len(subsets)
+
 
 def test_binomial():
     from operator import __eq__
     from math import factorial as fact
+
     assert isinstance(real_binomial(1, 1), float)
     for f, eq in ((binomial, __eq__), (real_binomial, approx_eq)):
         for n in range(20):
@@ -548,7 +647,7 @@ def test_binomial():
                     assert eq(f(n, k), 0)
                 else:
                     assert eq(f(n, k), fact(n) / fact(k) / fact(n - k))
-                    if k > 0 :
+                    if k > 0:
                         assert eq(f(n, -k), 0)
     # To prove correct our implementation of the binomial coefficient
     # C(r, k) for real r, int k, we only need one non-integer test
