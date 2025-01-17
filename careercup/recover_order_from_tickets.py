@@ -55,11 +55,13 @@ space use is again O(|V| + |E|) = O(N).
 
 from collections import defaultdict
 
+
 def recover_order(tickets):
     """From airline tickets, recover order in which the cities were visited."""
     G = ticket_graph(tickets)
     ordering = topo_sort(G)
     return list(ordering)
+
 
 def ticket_graph(tickets):
     """Create graph induced by a set of airline tickets (= edges)."""
@@ -69,10 +71,12 @@ def ticket_graph(tickets):
         G[dest]  # make sure dest vertex exists in graph
     return G
 
+
 def topo_sort(G):
     """Return vertices of graph in topological order."""
     ordering = []
     seen = set()
+
     def dfs(v):
         if v in seen:
             return
@@ -80,6 +84,7 @@ def topo_sort(G):
         for u in G[v]:
             dfs(u)
         ordering.append(v)
+
     for v in G:
         dfs(v)
     return reversed(ordering)
@@ -87,16 +92,14 @@ def topo_sort(G):
 
 # tests
 
-def test():
 
+def test():
     from itertools import permutations
     from random import sample
-    from nose.tools import assert_equal as eq
 
     max_cities = 10  # test all journeys up to 10 cities in length
 
     for n in range(max_cities):
-
         if n == 1:
             continue  # can't have any flights between just 1 city
 
@@ -105,4 +108,4 @@ def test():
 
         # for all ticket orderings, we must recover the original city ordering
         for shuffled_tickets in permutations(tickets):
-            eq(recover_order(shuffled_tickets), city_ordering)
+            assert recover_order(shuffled_tickets) == city_ordering

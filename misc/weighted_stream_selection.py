@@ -1,6 +1,9 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:3601272973.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:3442675363.
 """Write a function to generate a weighted random sample from a stream."""
 
 import random
+
 
 def select_weighted_value(weighted_values):
     """Return a randomly selected value from a stream of weighted values.
@@ -23,13 +26,14 @@ def select_weighted_value(weighted_values):
     total_weight = 0
     for weight, value in weighted_values:
         if weight < 0:
-            raise ValueError('received negative weight %r' % weight)
+            raise ValueError("received negative weight %r" % weight)
         total_weight += weight
         if 0 < total_weight and random.randint(1, total_weight) <= weight:
             selected_value = value
     if selected_value is no_selection:
-        raise ValueError('there were no positively weighted values')
+        raise ValueError("there were no positively weighted values")
     return selected_value
+
 
 """Proof of correctness.
 
@@ -65,23 +69,31 @@ also a properly weighted selection.  Q.E.D.
 
 """
 
+
+import pytest
+
+
 def test_sampling_an_empty_set_must_raise_error():
-    from nose.tools import raises
-    raises(ValueError)(select_weighted_value)([])
+    with pytest.raises(ValueError):
+        select_weighted_value([])
+
 
 def test_negative_weights_must_raise_error():
-    from nose.tools import raises
-    raises(ValueError)(select_weighted_value)([(-1, 'value')])
+    with pytest.raises(ValueError):
+        select_weighted_value([(-1, "value")])
+
 
 def test_zero_total_weight_must_raise_error():
-    from nose.tools import raises
-    raises(ValueError)(select_weighted_value)([(0, 'value')])
+    with pytest.raises(ValueError):
+        select_weighted_value([(0, "value")])
+
 
 def test_singleton_value_must_always_be_selected():
     for weight in range(1, 10):
-        assert select_weighted_value([(weight, 'value')]) == 'value'
+        assert select_weighted_value([(weight, "value")]) == "value"
+
 
 def test_zero_weighted_value_must_never_be_selected():
     for weight in range(1, 10):
-        assert select_weighted_value([(0, 'x'), (weight, 'value')]) == 'value'
-        assert select_weighted_value([(weight, 'value'), (0, 'x')]) == 'value'
+        assert select_weighted_value([(0, "x"), (weight, "value")]) == "value"
+        assert select_weighted_value([(weight, "value"), (0, "x")]) == "value"

@@ -71,7 +71,12 @@ def stream_next(stream):
     return val, iterator_to_stream(iterator)
 
 import sys
-from blist import sorteddict  # http://stutzbachenterprises.com/blist/
+try:
+    # Hide this import to allow pytest to scan this module w/o failing.
+    from blist import sorteddict  # http://stutzbachenterprises.com/blist/
+except:
+    import pytest
+    pytest.skip(allow_module_level=True)
 
 class HeightIntervalSet(object):
 

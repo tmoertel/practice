@@ -1,3 +1,4 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:1317266528.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -73,9 +74,7 @@ as we want. QED
 
 import itertools
 
-VALUE_MAP = {'(':  1,
-             '0':  0,
-             ')': -1}
+VALUE_MAP = {"(": 1, "0": 0, ")": -1}
 
 
 def value(c):
@@ -88,35 +87,33 @@ def serialized_tree_depth(serialized_tree):
     return max(itertools.accumulate(value(c) for c in serialized_tree))
 
 
-
 # Tests.
-
-from nose.tools import eq_, raises
 
 
 def test_simple_cases():
     S = serialized_tree_depth
-    eq_(S('0'), 0)
-    eq_(S('(00)'), 1)
-    eq_(S('(0(00))'), 2)
-    eq_(S('((00)0)'), 2)
+    assert S("0") == 0
+    assert S("(00)") == 1
+    assert S("(0(00))") == 2
+    assert S("((00)0)") == 2
 
 
 def test_exhaustively_up_to_depth_n():
     n = 5
     for depth in range(n):
         for serialized_tree in serialized_trees(depth):
-            eq_(serialized_tree_depth(serialized_tree), depth)
+            assert serialized_tree_depth(serialized_tree) == depth
 
 
 def serialized_trees(depth):
     """Exhaustively yield all serialized trees of a given depth."""
     if not depth:
-        yield '0'
+        yield "0"
     depth_pairs = itertools.chain(
         itertools.product([depth - 1], list(range(depth))),
-        itertools.product(list(range(depth)), [depth - 1]))
+        itertools.product(list(range(depth)), [depth - 1]),
+    )
     for left_depth, right_depth in depth_pairs:
         for serialized_left_subtree in serialized_trees(left_depth):
             for serialized_right_subtree in serialized_trees(right_depth):
-                yield f'({serialized_left_subtree}{serialized_right_subtree})'
+                yield f"({serialized_left_subtree}{serialized_right_subtree})"

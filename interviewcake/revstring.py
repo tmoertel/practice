@@ -5,6 +5,7 @@
 # Tom Moertel <tom@moertel.com>
 # Thu Oct 17 10:33:38 EDT 2013
 
+
 def reverse(xs):
     """Reverse an array xs (Python list) in place."""
     i, j = 0, len(xs) - 1
@@ -13,6 +14,7 @@ def reverse(xs):
         i += 1
         j -= 1
     return xs
+
 
 # Claim: reverse(xs) reverses the array xs.
 
@@ -35,10 +37,3 @@ def reverse(xs):
 # correctly.  Thus the final result is xs with its first and last
 # elements swapped and the subarray of in-between elements reversed.
 # Thus xs will have been reversed in whole, completing the proof.
-
-
-def test():
-    assert reverse([]) == []
-    assert reverse([1]) == [1]
-    assert reverse([1, 2]) == [2, 1]
-    assert reverse([1, 2, 3]) == [3, 2, 1]

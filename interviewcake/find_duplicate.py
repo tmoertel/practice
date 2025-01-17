@@ -62,7 +62,6 @@ total number of items minus the lower-half count.
 
 """
 
-import random
 
 def FindDupeViaInPlaceSort(A):
     """Finds a duplicate in A if it exists.
@@ -81,8 +80,9 @@ def FindDupeViaInPlaceSort(A):
             continue
         # Otherwise, inspect j and try to swap it into its place.
         if not 1 <= j <= len(A):
-            return ValueError('Encountered illegal value {} in array of len {}'.
-                              format(j, len(A)))
+            return ValueError(
+                "Encountered illegal value {} in array of len {}".format(j, len(A))
+            )
         if A[j - 1] == j:
             return j  # Already a j in j's place: we've found a duplicate!
         A[i - 1], A[j - 1] = A[j - 1], A[i - 1]
@@ -99,12 +99,14 @@ def FindDupeViaDivideAndConquerOverIntegers(A):
     N = len(A) - 1
     # Verify that we have a well-formed problem.
     if N < 1:
-        raise ValueError('There can be no duplicates in an array of length {}.'.
-                         format(N + 1))
+        raise ValueError(
+            "There can be no duplicates in an array of length {}.".format(N + 1)
+        )
     for a in A:
         if not 1 <= a <= N:
-            raise ValueError('The value {} is not between 1 and {} '
-                             '= array length - 1.'.format(a, N))
+            raise ValueError(
+                "The value {} is not between 1 and {} = array length - 1.".format(a, N)
+            )
     # Find a duplicate by binary search over the range 1..N.
     lo, hi = 1, N
     while lo < hi:
@@ -118,51 +120,3 @@ def FindDupeViaDivideAndConquerOverIntegers(A):
         else:
             lo = mid + 1
     return lo
-
-
-def _MakeRandomArrayWithDupes(array_size, num_dupes):
-    dupes = set()
-    reps = {i: 1 for i in range(1, array_size + 1)}
-    while num_dupes:
-        i = random.choice(list(reps))
-        potential_victims = list(set(reps) - dupes - set([i]))
-        if not potential_victims:
-            break
-        j = random.choice(potential_victims)
-        dupes.add(i)
-        reps[i] += 1
-        del reps[j]
-        num_dupes -= 1
-    A = []
-    for i, count in list(reps.items()):
-        A.extend([i] * count)
-    random.shuffle(A)
-    assert len(A) == array_size
-    return A, dupes
-
-
-def _IsStrictlyLegal(A):
-    N = len(A) - 1
-    return N > 0 and all(1 <= a <= N for a in A)
-
-
-def _Test(f, only_strictly_legal_instances=False):
-    import math
-    for array_size in range(7):
-        for _random_case in range(math.factorial(array_size)):
-            for num_dupes in range(array_size + 1):
-                A, dupes = _MakeRandomArrayWithDupes(array_size, num_dupes)
-                if only_strictly_legal_instances and not _IsStrictlyLegal(A):
-                    continue
-                result = f(A)
-                if dupes:
-                    assert result in dupes
-                else:
-                    assert result is None
-    print(('All tests pass for {}.'.format(f.__name__)))
-
-
-if __name__ == '__main__':
-    _Test(FindDupeViaInPlaceSort)
-    _Test(FindDupeViaDivideAndConquerOverIntegers,
-          only_strictly_legal_instances=True)

@@ -199,6 +199,7 @@ as the function intersect_by_mid_search.
 
 """
 
+
 def intersect(A, B):
     # strategy: parallel left-to-right scan of both arrays
     C = []
@@ -218,9 +219,11 @@ def intersect(A, B):
                 j += 1
     return C
 
+
 def intersect_by_mid_mid(A, B):
     # strategy: compare midpoints of both arrays, divide & conquer
     C = []
+
     def go(alo, ahi, blo, bhi):
         if alo > ahi or blo > bhi:
             return
@@ -241,12 +244,15 @@ def intersect_by_mid_mid(A, B):
             if not C or C[-1] != a:
                 C.append(a)  # must occur between amid-1 and amid+1 calls
             go(amid + 1, ahi, bmid + 1, bhi)
+
     go(0, len(A) - 1, 0, len(B) - 1)
     return C
+
 
 def intersect_by_mid_search(A, B):
     # strategy: take midpoint of B, find nearest value in A, divide & conquer
     C = []
+
     def go(alo, ahi, blo, bhi):
         if alo > ahi or blo > bhi:
             return
@@ -264,8 +270,10 @@ def intersect_by_mid_search(A, B):
             if not C or C[-1] != a:
                 C.append(a)  # must occur between amid-1 and amid+1 calls
             go(amid + 1, ahi, bmid + 1, bhi)
+
     go(0, len(A) - 1, 0, len(B) - 1)
     return C
+
 
 def bsearch(f, lo, hi, y):
     """For monotonic f, find largest x in [lo, hi] such that f(x) <= y."""
@@ -277,29 +285,3 @@ def bsearch(f, lo, hi, y):
         else:
             hi = mid - 1
     return lo - 1 if lo > hi0 or f(lo) > y else lo
-
-
-# testing logic
-
-def test():
-    for name, f in globals().items():
-        if name.startswith('intersect'):
-            print('testing {}...'.format(name), end=' ')
-            check_function(f)
-            print('ok')
-
-def check_function(f):
-    # fundamental property:
-    # forall sorted arrays A, B. intersect(A, B) == sorted(set(A) & set(B))
-    from math import factorial
-    from random import randrange
-    from nose.tools import assert_equal
-    for N in range(8):
-        for _ in range(factorial(N)):  # get decent sample of problem space
-            m, n = randrange(N + 1), randrange(N + 1)
-            A = sorted(randrange(N + 1) for _ in range(m))
-            B = sorted(randrange(N + 1) for _ in range(n))
-            got = f(A, B)
-            expected = sorted(set(A) & set(B))
-            # print 'A={} B={}, f(A, B)={}, ref={}'.format(A, B, got, expected)
-            assert_equal(got, expected)

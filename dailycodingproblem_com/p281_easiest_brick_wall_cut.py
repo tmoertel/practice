@@ -57,9 +57,7 @@ complete solution taking O(n) time and space.
 
 """
 
-
 import collections
-import itertools
 
 
 def minimal_vertical_cut_through_brick_wall(rows):
@@ -107,27 +105,33 @@ def minimal_vertical_cut_through_brick_wall(rows):
 
 # Tests.
 
-from nose.tools import raises
+import pytest
 
-@raises(AssertionError)
+
 def test_degenerate_wall_with_no_rows_should_be_rejected():
-    minimal_vertical_cut_through_brick_wall([])
+    with pytest.raises(AssertionError):
+        minimal_vertical_cut_through_brick_wall([])
 
-@raises(AssertionError)
+
 def test_degenerate_wall_with_zero_width_bricks_should_be_rejected():
-    minimal_vertical_cut_through_brick_wall([[0]])
+    with pytest.raises(AssertionError):
+        minimal_vertical_cut_through_brick_wall([[0]])
 
-@raises(AssertionError)
+
 def test_degenerate_wall_with_negative_width_bricks_should_be_rejected():
-    minimal_vertical_cut_through_brick_wall([[-1]])
+    with pytest.raises(AssertionError):
+        minimal_vertical_cut_through_brick_wall([[-1]])
 
-@raises(AssertionError)
+
 def test_degenerate_wall_with_empty_rows_should_be_rejected():
-    minimal_vertical_cut_through_brick_wall([[]])
+    with pytest.raises(AssertionError):
+        minimal_vertical_cut_through_brick_wall([[]])
 
-@raises(AssertionError)
+
 def test_degenerate_wall_with_unequal_row_widths_should_be_rejected():
-    minimal_vertical_cut_through_brick_wall([[3], [4]])
+    with pytest.raises(AssertionError):
+        minimal_vertical_cut_through_brick_wall([[3], [4]])
+
 
 def test_nondegenerate_walls_should_be_cut_where_fewest_bricks_are_broken():
     soln = minimal_vertical_cut_through_brick_wall
@@ -146,10 +150,12 @@ def test_nondegenerate_walls_should_be_cut_where_fewest_bricks_are_broken():
                 assert soln(wall) == (brick_width, 0)
 
     # Solver should solve the example problem.
-    example_problem = [[3, 5, 1, 1],
-                       [2, 3, 3, 2],
-                       [5, 5],
-                       [4, 4, 2],
-                       [1, 3, 3, 3],
-                       [1, 1, 6, 1, 1]]
+    example_problem = [
+        [3, 5, 1, 1],
+        [2, 3, 3, 2],
+        [5, 5],
+        [4, 4, 2],
+        [1, 3, 3, 3],
+        [1, 1, 6, 1, 1],
+    ]
     assert soln(example_problem) == (8, 2)

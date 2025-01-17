@@ -1,3 +1,5 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2576281436.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:1189424178.
 #!/usr/bin/python
 #
 # Tom Moertel <tom@moertel.com>
@@ -73,12 +75,14 @@ running time is given by O(|V| + |E|).
 
 import itertools
 
+
 def has_path_meeting_bound(G, W):
     """Test whether a graph G has a path of weight >= W."""
     try:
         return max_path_weight(G) >= W
     except PositiveWeightCycle:
         return True
+
 
 def max_path_weight(G):
     """Find weight of maximum-weight path in G.
@@ -89,6 +93,7 @@ def max_path_weight(G):
     """
     max_from_vert = {}
     opening_running_total = {}
+
     def dfs(v, running_total=0):
         if v in max_from_vert:
             return max_from_vert[v]  # v is closed
@@ -101,23 +106,27 @@ def max_path_weight(G):
         opening_running_total[v] = running_total
         max_from_vert[v] = zmax(w + dfs(u, running_total + w) for u, w in G[v])
         return max_from_vert[v]
+
     return zmax(dfs(v) for v in G)
+
 
 class PositiveWeightCycle(Exception):
     """Signals that a graph has an positive-weight cycle."""
+
 
 def zmax(xs):
     """Return max of sequence, with 0 as lower bound."""
     return max(itertools.chain([0], xs))
 
+
 def test():
-    from nose.tools import assert_equals as eq
-    from nose.tools import raises
-    eq(max_path_weight({}), 0)
-    eq(max_path_weight({1: []}), 0)
-    eq(max_path_weight({1: [(1, 0)]}), 0)  # 0-weight cycle
-    eq(max_path_weight({1: [(1, -1)]}), 0)  # neg-weight cycle
-    raises(PositiveWeightCycle)(max_path_weight)({1: [(1, 1)]})
-    eq(max_path_weight({1: [(2, 1)], 2: []}), 1)
-    eq(max_path_weight({1: [(2, 1)], 2: [(1, -1)]}), 1)
-    return 'ok'
+    import pytest
+
+    assert max_path_weight({}) == 0
+    assert max_path_weight({1: []}) == 0
+    assert max_path_weight({1: [(1, 0)]}) == 0  # 0-weight cycle
+    assert max_path_weight({1: [(1, -1)]}) == 0  # neg-weight cycle
+    with pytest.raises(PositiveWeightCycle):
+        max_path_weight({1: [(1, 1)]})
+    assert max_path_weight({1: [(2, 1)], 2: []}) == 1
+    assert max_path_weight({1: [(2, 1)], 2: [(1, -1)]}) == 1

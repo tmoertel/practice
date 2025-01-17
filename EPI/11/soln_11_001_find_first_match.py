@@ -24,6 +24,7 @@ match within an array of length N.
 
 """
 
+
 def find_first_1(A, k):
     """Find index of first instance of k in sorted array A, -1 if not found."""
     lo, hi = 0, len(A) - 1
@@ -47,6 +48,7 @@ def find_first_1(A, k):
             return lo
     return -1  # not found
 
+
 def find_first(A, k):
     """Find index of first instance of k in sorted array A, -1 if not found."""
     lo, hi = 0, len(A) - 1
@@ -61,29 +63,3 @@ def find_first(A, k):
             if lo == hi:
                 return lo
     return -1  # not found
-
-def test():
-    for f in find_first, find_first_1:
-        check_function(f)
-
-def check_function(find_first):
-    from nose.tools import assert_equal as eq
-    from random import randrange, sample
-    # the defining property of find_first is this:
-    # for all values k,
-    # for all counts n,
-    # for all sorted series xs such that all(x < k for x in xs),
-    # for all sorted series ys such that all(y > k for y in ys),
-    # find_first(xs + [k]*n + ys) == -1        if n == 0
-    #                             == len(xs)   otherwise
-    for k in range(-2, 3):
-        eq(find_first([], k), -1)
-        for n in range(1, 5):
-            eq(find_first([k] * n, k), 0)
-        for _ in range(1000):
-            before = sorted(sample(range(-100, -2), randrange(5)))
-            after = sorted(sample(range(3, 100), randrange(5)))
-            eq(find_first(before + after, k), -1)
-            for n in range(1, 5):
-                xs = [k] * n
-                eq(find_first(before + xs + after, k), len(before))

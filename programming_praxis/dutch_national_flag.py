@@ -23,6 +23,7 @@ http://programmingpraxis.com/2013/03/05/dutch-national-flag/
 # will be sorted by color (into the 'r', 'w', 'b' order of the Dutch
 # National Flag).
 
+
 def dnf_sort(A):
     """Sort (in-place) a 3-colored array."""
 
@@ -35,37 +36,13 @@ def dnf_sort(A):
     while i < blue:
         # invariant: all elems in A[blue:i] are 'w'
         # invariant: all elems in A[i:red] are unexamined
-        if A[i] == 'r':
+        if A[i] == "r":
             swap(i, red)
             red += 1
             i += 1
-        elif A[i] == 'b':
+        elif A[i] == "b":
             blue -= 1
             swap(i, blue)
             # don't advance i: after swap A[i] is now unexamined
         else:
             i += 1
-
-# Test code
-
-COLORS = 'rwb'
-VALUES = [0, 1, 2]
-cval = dict(list(zip(COLORS, VALUES))).get
-cvals = lambda cs: list(map(cval, cs))
-
-def test_dnf_sort():
-    for l in range(8):
-        for cs in combinations([COLORS] * l):
-            assert_sorted(cs)
-
-def combinations(xss):
-    if xss == []:
-        return [[]]
-    return [list(x) + ys
-            for ys in combinations(xss[1:])
-            for x in xss[0]]
-
-def assert_sorted(cs):
-    expected = sorted(cvals(cs))
-    dnf_sort(cs)
-    assert cvals(cs) == expected

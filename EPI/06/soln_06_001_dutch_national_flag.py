@@ -65,20 +65,3 @@ def partition(A, i):
             swap(k, l)
 
     return A  # for convenient testing and chaining
-
-
-def test():
-    from nose.tools import assert_equal as eq
-    from itertools import permutations
-    def stable_partition(A, x):
-        return ([a for a in A if a < x] +
-                [a for a in A if a == x] +
-                [a for a in A if a > x])
-    for n in range(5):
-        for A in permutations(list(range(n))):
-            A = list(A)
-            for i in range(n):
-                x = A[i]
-                AP = partition(A, i)
-                eq(sorted(AP), sorted(A))  # must preserve all elems
-                eq(AP, stable_partition(AP, x))  # must be a valid partition

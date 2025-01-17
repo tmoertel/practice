@@ -1,3 +1,5 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2126216455.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:964989922.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -148,41 +150,31 @@ def pseudobinary_search(x, xs):
 
 # Tests.
 
-
-from nose.tools import eq_, raises
-
-
-def test_binary_search():
-    _test(binary_search)
+import pytest
 
 
-def test_pseudobinary_search():
-    _test(pseudobinary_search)
-
-
-def _test(soln):
-    # Edge case: We can never find the value if the list is empty.
-    eq_(soln(1, []), -1)
+@pytest.mark.parametrize("soln", (binary_search, pseudobinary_search))
+def test_binary_search_implementaiton(soln):
+    assert soln(1, []) == -1
 
     # General case: Generate random trials for increasing problem sizes.
     for problem_size in range(1, 7):
-        print(f'Trying problems of size {problem_size}.')
+        print(f"Trying problems of size {problem_size}.")
         for _ in range(2 * math.factorial(problem_size)):
             # Construct a random sorted array of ints.
-            xs = sorted(random.randint(-problem_size, problem_size)
-                        for _ in range(problem_size))
+            xs = sorted(
+                random.randint(-problem_size, problem_size) for _ in range(problem_size)
+            )
 
             # Find a random value in the array.
             an_x_in_xs = xs[random.randrange(problem_size)]
             # The solution should find an index of that value.
             index = soln(an_x_in_xs, xs)
-            eq_(xs[index], an_x_in_xs)
+            assert xs[index] == an_x_in_xs
 
             # Now find a random value that's not in the array.
             while True:
-                an_x_not_in_xs = random.randint(
-                    -2 * problem_size, 2 * problem_size)
+                an_x_not_in_xs = random.randint(-2 * problem_size, 2 * problem_size)
                 if an_x_not_in_xs not in xs:
                     break
-            # The solution should not find any corresponding index.
-            eq_(soln(an_x_not_in_xs, xs), -1)
+            assert soln(an_x_not_in_xs, xs) == -1

@@ -100,17 +100,18 @@ a forward-only path of length N, completing the proof.
 """
 
 import fileinput
-from string import maketrans
+
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %s' % (i, s))
+        print("Case #%r: %s" % (i, s))
+
 
 def solve(problem):
     X, Y = problem
     if X == Y == 0:
-        return ''
+        return ""
     X, Y, denormalize = normalize(X, Y)
     xy_dist = X + Y
     N = find_int_by_bisection(S, 0, xy_dist, xy_dist)
@@ -126,6 +127,7 @@ def solve(problem):
     # make a forward path to the band and reverse a step to reach (X, Y)
     path = forward_path_with_optional_reversal(X + diff, N, diff // 2)
     return denormalize(path)
+
 
 def forward_path_with_optional_reversal(x, n, reversal_size=0):
     # since x + y = S(n), y is determined by x and n
@@ -143,44 +145,54 @@ def forward_path_with_optional_reversal(x, n, reversal_size=0):
             x_steps.add(i)
             x -= i
     assert x == 0
+
     def step(i):
         if i in reversals:
-            return 'W'
-        return 'E' if i in x_steps else 'N'
-    return ''.join(step(i) for i in range(1, n + 1))
+            return "W"
+        return "E" if i in x_steps else "N"
+
+    return "".join(step(i) for i in range(1, n + 1))
+
 
 def normalize(x, y):
     denormalizers = []
     if x < 0:
         x = -x
-        denormalizers.append(maketrans('EW', 'WE'))
+        denormalizers.append(str.maketrans("EW", "WE"))
     if y < 0:
         y = -y
-        denormalizers.append(maketrans('NS', 'SN'))
+        denormalizers.append(str.maketrans("NS", "SN"))
     if x < y:
         x, y = y, x
-        denormalizers.append(maketrans('NSEW', 'EWNS'))
+        denormalizers.append(str.maketrans("NSEW", "EWNS"))
+
     def denormalize(path):
         for transform in reversed(denormalizers):
             path = path.translate(transform)
         return path
+
     return x, y, denormalize
+
 
 def S(n):
     """Compute the sum 1, 2, ... n."""
     return n * (n + 1) // 2  # Gauss's formula
+
 
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     X, Y = read_ints(lines)
     return X, Y
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
+
 
 def find_int_by_bisection(f, lo, hi, y):
     """Find maximal int x in [lo, hi] such that f(x) <= y.
@@ -197,13 +209,15 @@ def find_int_by_bisection(f, lo, hi, y):
             hi = mid - 1
     return lo if f(lo) <= y else lo - 1
 
+
 def _check_bisection_bounds(f, lo, hi, y):
     if lo > hi:
-        raise ValueError('lower bound is above upper bound')
+        raise ValueError("lower bound is above upper bound")
     if y < f(lo):
-        raise ValueError('solution is below lower bound')
+        raise ValueError("solution is below lower bound")
     if y > f(hi):
-        raise ValueError('solution is above upper bound')
+        raise ValueError("solution is above upper bound")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

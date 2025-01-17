@@ -39,7 +39,7 @@ def cps(f):
             if fun is None:
                 if cont is None:
                     if not stack:
-                        print('maxdepth = %r' %1 (maxdepth, ))
+                        print('maxdepth = %r' % (maxdepth, ))
                         return args
                     cont, cargs = stack.pop()
                 # print 'invoking cont=%r(arg=%r, cargs=%r); stack=%r' % (cont, args, cargs, stack)

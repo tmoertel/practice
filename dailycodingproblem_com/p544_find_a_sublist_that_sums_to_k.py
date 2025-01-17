@@ -1,3 +1,4 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:4258436701.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -26,6 +27,7 @@ This problem comes from https://www.dailycodingproblem.com/ on
 
 """
 
+
 def subset_sum(vals, k):
     """Returns a subset of `vals` summing to `k` or None if not possible.
 
@@ -47,6 +49,7 @@ def sublist_sum(vals, k):
 
     # Search for sums we can reach by adding (or not) each of the given values.
     reachable_sums = {0: None}
+
     def search_for_sublist_summing_to_k():
         for val in vals:
             if val == 0:
@@ -58,6 +61,7 @@ def sublist_sum(vals, k):
                 reachable_sums.setdefault(new_reachable_sum, val)
                 if new_reachable_sum == k:
                     return  # We found a sublist that sums to k! Exit the search.
+
     search_for_sublist_summing_to_k()
 
     # Can we reach the target value k?
@@ -78,17 +82,16 @@ def sublist_sum(vals, k):
 
 
 # Tests.
-
-from nose.tools import eq_, raises
-
+def eq_(x, y):
+    assert x == y
 def test_base_cases():
-    eq_(sublist_sum([], 0), [])
-    eq_(sublist_sum([], 1), None)
-    eq_(sublist_sum([1], 1), [1])
-    eq_(sublist_sum([1, 1], 1), [1])
-    eq_(sublist_sum([1, 1], 2), [1, 1])
-    eq_(subset_sum ([1, 1], 2), None)
-    eq_(sublist_sum([1, 2], 0), [])
-    eq_(sublist_sum([1, 2], 1), [1])
-    eq_(sublist_sum([1, 2], 2), [2])
-    eq_(sublist_sum([1, 2], 3), [1, 2])
+    assert sublist_sum([], 1) is None
+    assert sublist_sum([], 0) == []
+    assert sublist_sum([1], 1) == [1]
+    assert sublist_sum([1, 1], 1) == [1]
+    assert sublist_sum([1, 1], 2) == [1, 1]
+    assert subset_sum([1, 1], 2) is None
+    assert sublist_sum([1, 2], 0) == []
+    assert sublist_sum([1, 2], 1) == [1]
+    assert sublist_sum([1, 2], 2) == [2]
+    assert sublist_sum([1, 2], 3) == [1, 2]

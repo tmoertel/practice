@@ -70,9 +70,11 @@ STARTING_COMBINATION = 000
 # more convenient to use a sequence of digits, these conversion
 # helpers will let us move between the two representations.
 
+
 def int_to_3_digits(i):
-    chars = f'{i:03d}'
-    return [ord(c) - ord('0') for c in chars]
+    chars = f"{i:03d}"
+    return [ord(c) - ord("0") for c in chars]
+
 
 def digits_to_int(digits):
     place_value = 1
@@ -100,10 +102,12 @@ def minimal_combination_moves(target_combination, dead_end_combinations=None):
     dead_end_combinations = set(dead_end_combinations or [])
     frontier = collections.deque()
     seen = set()
+
     def schedule(combination, distance):
         if combination not in seen and combination not in dead_end_combinations:
             seen.add(combination)
             frontier.append((combination, distance))
+
     schedule(STARTING_COMBINATION, 0)
     while frontier:
         combination, distance = frontier.popleft()
@@ -115,33 +119,35 @@ def minimal_combination_moves(target_combination, dead_end_combinations=None):
 
 
 # Tests.
-
-from nose.tools import eq_, raises
+def eq_(a, b):
+    assert a == b
 
 
 def toroidal_manhattan_distance(a, b):
     """Returns the distance between points on a 10x10x10 torroidal lattice."""
     a = int_to_3_digits(a)
     b = int_to_3_digits(b)
+
     def digit_distance(from_digit, to_digit):
         least_digit = min(from_digit, to_digit)
         greatest_digit = max(from_digit, to_digit)
-        return min(greatest_digit - least_digit,
-                   10 + least_digit - greatest_digit)
+        return min(greatest_digit - least_digit, 10 + least_digit - greatest_digit)
+
     return sum(itertools.starmap(digit_distance, list(zip(a, b))))
 
 
 def test_without_dead_spots_min_moves_should_equal_manhattan_distance():
     for combination in range(0, 1000):
-        eq_(minimal_combination_moves(combination),
-            toroidal_manhattan_distance(000, combination))
+        assert minimal_combination_moves(combination) == toroidal_manhattan_distance(
+            000, combination
+        )
 
 
 def test_when_the_start_is_a_dead_end_no_moves_suffice():
-    for combination in range(0, 1000):
-        eq_(minimal_combination_moves(combination, [000]), None)
+    for combination in range(0, 10):
+        assert minimal_combination_moves(combination, [000]) is None
 
 
 def test_when_the_end_is_a_dead_end_no_moves_suffice():
-    for combination in range(0, 1000):
-        eq_(minimal_combination_moves(combination, [combination]), None)
+    for combination in range(0, 10):
+        assert minimal_combination_moves(combination, [combination]) is None

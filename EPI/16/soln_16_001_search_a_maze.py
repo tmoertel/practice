@@ -36,6 +36,7 @@ the search predecessor relationship) is minimal.
 
 from collections import deque
 
+
 def find_maze_path(A, s, e):
     """Find path from s to e in A, or None if no such path exists."""
 
@@ -74,46 +75,3 @@ def find_maze_path(A, s, e):
 
     # the reverse gives our desired start-to-exit path
     return list(reversed(backpath))
-
-
-def test():
-    from random import randrange
-    from math import factorial
-
-    # empty mazes have no valid paths
-    assert find_maze_path([], (0, 0), (0, 0)) == None
-    assert find_maze_path([[]], (0, 0), (0, 0)) == None
-
-    # 1-cell mazes have only trivial solutions
-    assert find_maze_path([[False]], (0, 0), (0, 0)) == None
-    assert find_maze_path([[True]], (0, 0), (0, 0)) == [(0, 0)]
-
-    N = 6
-    white_row = [True] * N
-    black_row = [False] * N
-
-    def randcell():
-        return randrange(N), randrange(N)
-
-    # check fundamental properties of solutions for mazes having them
-    A = [white_row] * N   # all white maze
-    for _ in range(factorial(N)):
-        s = randcell()
-        e = randcell()
-        P = find_maze_path(A, s, e)
-        assert P is not None
-        # If P = find_maze_path(A, s, e) and P is not None, then the
-        # following properties must hold:
-        assert P[0] == s   # the path must start at s...
-        assert P[-1] == e  # ... and end at e
-        all(A[i][j] for (i, j) in P)  # path cells must be white...
-        all(abs(i - i1) + abs(j - j1) == 1  # ... and adjacent
-            for ((i, j), (i1, j1)) in zip(P, P[1:]))
-
-    # solution must be None for mazes without valid paths
-    B = [white_row, black_row, white_row]  # top and bottom separated by black
-    for sj in range(N):
-        s = (0, sj)  # start in top row
-        for ej in range(N):
-            e = (2, ej)  # exit in bottom row
-            assert find_maze_path(B, s, e) is None

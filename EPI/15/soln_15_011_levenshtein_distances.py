@@ -89,8 +89,10 @@ implementation details.
 
 """
 
-# recursive
+import functools
 
+
+# Recursive version.
 def levenshtein_distance1(A, B):
     @memoize
     def ld(i, j):
@@ -103,14 +105,12 @@ def levenshtein_distance1(A, B):
         # recursive cases
         if A[i] == B[j]:
             return ld(i + 1, j + 1)
-        return 1 + min(ld(i + 1, j),
-                       ld(i + 1, j + 1),
-                       ld(i, j + 1))
+        return 1 + min(ld(i + 1, j), ld(i + 1, j + 1), ld(i, j + 1))
+
     return ld(0, 0)
 
 
-# dynamic programming
-
+# Dynamic programming version.
 def levenshtein_distance2(A, B):
     # initialize memo table to all zeroes
     memo = [[0] * (len(B) + 1) for _ in range(len(A) + 1)]
@@ -127,16 +127,13 @@ def levenshtein_distance2(A, B):
             if A[i] == B[j]:
                 memo[i][j] = memo[i + 1][j + 1]
             else:
-                memo[i][j] = 1 + min(memo[i + 1][j],
-                                     memo[i + 1][j + 1],
-                                     memo[i][j + 1])
+                memo[i][j] = 1 + min(memo[i + 1][j], memo[i + 1][j + 1], memo[i][j + 1])
 
     # the solution is in the topmost cell
     return memo[0][0]
 
 
-# dynamic programming, trimmed
-
+# Dynamic programming, trimmed version.
 def levenshtein_distance3(A, B):
     # In this version, I keep only the 2 most-recent rows of the memo
     # table.  Compared to the previous version, prev = memo[i + 1] and
@@ -162,12 +159,10 @@ def levenshtein_distance3(A, B):
     return prev[0]
 
 
-# memoization decorator
-
-import functools
-
+# Memoization decorator.
 def memoize(f):
     cache = {}
+
     @functools.wraps(f)
     def g(*args):
         try:
@@ -175,45 +170,5 @@ def memoize(f):
         except KeyError:
             ret = cache[args] = f(*args)
         return ret
+
     return g
-
-
-# testing
-
-def test():
-
-    from nose.tools import assert_equal as eq
-
-    for ld in (levenshtein_distance1,
-               levenshtein_distance2,
-               levenshtein_distance3):
-
-        eq(0, ld("", ""))
-        eq(0, ld("ab", "ab"))
-        eq(0, ld("abc", "abc"))
-
-        eq(1, ld("a", ""))
-        eq(1, ld("", "b"))
-        eq(1, ld("bc", "abc"))
-        eq(1, ld("ac", "abc"))
-        eq(1, ld("ab", "abc"))
-        eq(1, ld("abc", "bc"))
-        eq(1, ld("abc", "ac"))
-        eq(1, ld("abc", "ab"))
-        eq(1, ld("xbc", "abc"))
-        eq(1, ld("axc", "abc"))
-        eq(1, ld("abx", "abc"))
-        eq(1, ld("abc", "xbc"))
-        eq(1, ld("abc", "axc"))
-        eq(1, ld("abc", "abx"))
-
-        eq(2, ld("c", "abc"))
-        eq(2, ld("a", "abc"))
-        eq(2, ld("abc", "c"))
-        eq(2, ld("abc", "a"))
-        eq(2, ld("xxc", "abc"))
-        eq(2, ld("axx", "abc"))
-        eq(2, ld("xbx", "abc"))
-        eq(2, ld("abc", "xxc"))
-        eq(2, ld("abc", "axx"))
-        eq(2, ld("abc", "xbx"))

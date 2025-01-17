@@ -1,3 +1,5 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:301319322.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2335347702.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -68,6 +70,7 @@ import itertools
 # cell. (Python's str.rfind does a linear search.)
 def longest_palindromic_subsequence_length_1(S):
     """Returns the length of the longest palindromic subsequence of a string."""
+
     # Helper that solves a more general version of the problem over
     # any substring of S.
     @functools.lru_cache()  # Memoize recursive calls.
@@ -81,6 +84,7 @@ def longest_palindromic_subsequence_length_1(S):
 
     # Solve the original problem in terms of the generalized problem.
     return lps_len_between(0, len(S))
+
 
 # This variant of the previous solution reduces the run-time cost from
 # O(n^3) to O(n^2) by paying a one-time O(n^2) price to build a dict
@@ -110,6 +114,7 @@ def longest_palindromic_subsequence_length_2(S):
 
     # Solve the original problem in terms of the generalized problem.
     return lps_len_between(0, len(S))
+
 
 # This variant uses dynamic programming to solve the problem in O(n^2)
 # time and space. Looking at the recursive solutions, we can see that
@@ -146,35 +151,38 @@ def longest_palindromic_subsequence_length_3(S):
 
 # Tests.
 
-from nose.tools import eq_, raises
-
 # Test all three solution variants.
 SOLVERS = (
     longest_palindromic_subsequence_length_1,
     longest_palindromic_subsequence_length_2,
     longest_palindromic_subsequence_length_3,
-    )
+)
+
 
 def test_empty_string_has_lps_len_of_zero():
     for solve in SOLVERS:
-        eq_(solve(''), 0)
+        assert solve("") == 0
+
 
 def test_singleton_string_has_lps_len_of_one():
     for solve in SOLVERS:
-        eq_(solve('a'), 1)
-        eq_(solve('0'), 1)
+        assert solve("a") == 1
+        assert solve("0") == 1
+
 
 def test_strings_of_unique_characters_have_lps_len_of_one():
     for solve in SOLVERS:
-        eq_(solve('ab'), 1)
-        eq_(solve('abc'), 1)
-        eq_(solve('abcd'), 1)
+        assert solve("ab") == 1
+        assert solve("abc") == 1
+        assert solve("abcd") == 1
+
 
 def test_strings_of_a_singleton_alphabet_have_lps_equal_to_their_length():
     for solve in SOLVERS:
         for n in range(7):
-            eq_(solve('a' * n), n)
+            assert solve("a" * n) == n
+
 
 def test_soln_for_given_problem_must_match_given_soln():
     for solve in SOLVERS:
-        eq_(solve('MAPTPTMTPA'), 7)
+        assert solve("MAPTPTMTPA") == 7

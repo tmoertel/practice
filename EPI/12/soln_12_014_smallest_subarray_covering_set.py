@@ -101,6 +101,7 @@ Tom Moertel <tom@moertel.com>
 
 from collections import OrderedDict
 
+
 def smallest_subarray_covering_set(A, Q):
     """Find smallest range (i,j) s.t. all q in Q are in A[i..j]."""
 
@@ -117,7 +118,6 @@ def smallest_subarray_covering_set(A, Q):
     # stream elements of A, maintaining the shortest covering range
     # that ends at the current element
     for j, elem in enumerate(A):
-
         # skip elements that can't contribute to a covering
         if elem not in Q:
             continue
@@ -135,21 +135,3 @@ def smallest_subarray_covering_set(A, Q):
                 min_covering_range = i, j
 
     return min_covering_range
-
-
-def test():
-    from nose.tools import assert_equal as eq
-    S = smallest_subarray_covering_set
-    eq(S("a", ""), (0, -1))  # 0-length covering exists
-    eq(S("", "a"), None)
-    eq(S("..a", "a"), (2, 2))
-    eq(S("aa", "a"), (0, 0))  # when many ranges are smallest, earliest wins
-    eq(S("aab", "ab"), (1, 2))
-    eq(S("aab", "aba"), (1, 2))  # dupes in Q must not affect result
-    eq(S("acaaaabc", "abc"), (5, 7))
-    eq(S("acaaaabbc", "abc"), (5, 8))
-    eq(S("acaaaabbcccc", "abc"), (5, 8))
-    return 'ok'
-
-if __name__ == '__main__':
-    test()

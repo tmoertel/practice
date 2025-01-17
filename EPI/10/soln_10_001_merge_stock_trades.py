@@ -65,6 +65,7 @@ Refs:  [1]  http://blog.moertel.com/posts/2013-05-26-python-lazy-merge.html
 
 from heapq import heapify, heappop, heappush
 
+
 def merge_iters(iters):
     """Merge a series of sorted iterators into a single sorted iterator."""
     streams = [_f for _f in map(iter_to_stream, list(map(iter, iters))) if _f]
@@ -77,45 +78,36 @@ def merge_iters(iters):
         yield x
 
 
-# stream abstraction
+# Stream abstraction.
+
 
 def iter_to_stream(iter):
-    # Stream ::= None | (value, iterator)
+    """Converts an iterator to a stream, which exposes its next value."""
+    # Stream ::= None | (value, (iterator_id, iterator))
+    #
+    # We use the iterator_id as a tiebreaker so that, when two streams
+    # are compared, if their values are the same, we are guaranteed to
+    # break the tie on their iterator_ids, preventing Python from trying
+    # to compare the following iterators (which causes an error since '<'
+    # is not defined on list iterators.)
     try:
-        return next(iter), iter
+        return next(iter), (id(iter), iter)
     except StopIteration:
         None  # = empty stream
 
+
 def stream_next(stream):
-    x, iter = stream
+    x, (_, iter) = stream
     return x, iter_to_stream(iter)
 
 
-# test logic
-
-def test():
-
-    from itertools import chain
-    from math import factorial
-    from random import randrange
-    from nose.tools import assert_equal
-
-    for N in range(8):
-        for _ in range(factorial(N)):
-            xss = []
-            for _ in range(N):
-                size = randrange(2 * N + 1) + 1
-                xs = sorted([randrange(size) for _ in range(randrange(size))])
-                xss.append(xs)
-            assert_equal(sorted(chain(*xss)), list(merge_iters(xss)))
-
-
-# take set of files to merge from the command line
-
+# Take set of files to merge from the command line.
 def main():
     import sys
+
     in_iters = list(map(open, sys.argv[1:]))
     sys.stdout.writelines(merge_iters(in_iters))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

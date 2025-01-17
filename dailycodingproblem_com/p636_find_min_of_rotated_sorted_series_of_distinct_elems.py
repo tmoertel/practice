@@ -1,3 +1,4 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:1489477190.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -58,10 +59,12 @@ constant number of O(1)-size variables to do its work.
 
 """
 
+
 def find_min_of_rotated_sorted_distinct_elements_recursive(xs):
     """Finds the min element in a rotated sorted array of distinct values."""
     if not xs:
         raise ValueError
+
     # Use a recursive binary search for the minimum element.
     def search(start, end):
         # If the series is nondecreasing, its first element is its minimum.
@@ -110,27 +113,37 @@ def find_min_of_rotated_sorted_distinct_elements(xs):
 
 # Tests.
 
+import pytest
 
-from nose.tools import eq_, raises
+
+def eq_(x, y):
+    """Asserts that x == y, using a more descriptive error msg."""
+    assert x == y
 
 
 def test_base_cases():
-    for soln in (find_min_of_rotated_sorted_distinct_elements,
-                 find_min_of_rotated_sorted_distinct_elements_recursive):
-        raises(ValueError)(soln)([])
-        eq_(soln([1]), 1)
-        eq_(soln([1, 2]), 1)
-        eq_(soln([2, 1]), 1)
-        eq_(soln([1, 2, 3]), 1)
-        eq_(soln([2, 3, 1]), 1)
-        eq_(soln([3, 1, 2]), 1)
+    for soln in (
+        find_min_of_rotated_sorted_distinct_elements,
+        find_min_of_rotated_sorted_distinct_elements_recursive,
+    ):
+        with pytest.raises(ValueError):
+            soln([])
+
+        assert soln([1]) == 1
+        assert soln([1, 2]) == 1
+        assert soln([2, 1]) == 1
+        assert soln([1, 2, 3]) == 1
+        assert soln([2, 3, 1]) == 1
+        assert soln([3, 1, 2]) == 1
 
 
 def test_soln_finds_minumum_of_a_rotated_sorted_list_of_distinct_values():
-    for soln in (find_min_of_rotated_sorted_distinct_elements,
-                 find_min_of_rotated_sorted_distinct_elements_recursive):
+    for soln in (
+        find_min_of_rotated_sorted_distinct_elements,
+        find_min_of_rotated_sorted_distinct_elements_recursive,
+    ):
         for size in range(1, 10):
             sorted_range = list(range(size))
             for pivot in range(size):
                 rotated_sorted_range = sorted_range[pivot:] + sorted_range[:pivot]
-                eq_(soln(rotated_sorted_range), 0)
+                assert soln(rotated_sorted_range) == 0

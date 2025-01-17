@@ -1,3 +1,6 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:45758302.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:4087070036.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2522741966.
 #!/usr/bin/python
 #
 # Tom Moertel <tom@moertel.com>
@@ -53,12 +56,14 @@ from copy import copy
 
 # brute-force implementation that rearranges all elements
 
+
 def rot90(A):
     """Return matrix that is A rotated 90 degrees clockwise ."""
     return [list(reversed(row)) for row in zip(*A)]
 
 
 # O(1) implementation that uses coordinate transforms
+
 
 class CoordTransform(object):
     """Represents a coordinate transformation via a 3x3 matrix.
@@ -93,19 +98,15 @@ class CoordTransform(object):
         """Compose this transform with another to create a new one."""
         return CoordTransform(mmul(self.T, T.T))
 
-identity_xform = CoordTransform([[1, 0, 0],
-                                 [0, 1, 0],
-                                 [0, 0, 1]])
 
-transpose_xform = CoordTransform([[0, 1, 0],
-                                  [1, 0, 0],
-                                  [0, 0, 1]])
+identity_xform = CoordTransform([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+
+transpose_xform = CoordTransform([[0, 1, 0], [1, 0, 0], [0, 0, 1]])
+
 
 def mk_rev_cols_xform(N):
     """Make a CoordTransform to reverse the cols of an N-col matrix."""
-    return CoordTransform([[1,  0,  0 ],
-                           [0, -1, N-1],
-                           [0,  0,  1 ]])
+    return CoordTransform([[1, 0, 0], [0, -1, N - 1], [0, 0, 1]])
 
 
 class Matrix(object):
@@ -124,8 +125,9 @@ class Matrix(object):
 
     def tolists(self):
         """Convert the matrix into its list of lists representation."""
-        return [[self.get(i, j) for j in range(self.dims[1])]
-                for i in range(self.dims[0])]
+        return [
+            [self.get(i, j) for j in range(self.dims[1])] for i in range(self.dims[0])
+        ]
 
     def rot_cw(self):
         """Rotate the matrix clockwise via O(1) coordinate change."""
@@ -156,31 +158,30 @@ def mmul(A, B):
 
 
 def test():
-    from nose.tools import assert_equals as eq
+    def eq(x, y):
+        assert x == y
 
-    # rotate via brute-force element arrangement
-    eq(rot90([['a', 'b'], ['c', 'd']]), [['c', 'a'], ['d', 'b']])
+    # Rotate via brute-force element arrangement.
+    assert rot90([["a", "b"], ["c", "d"]]) == [["c", "a"], ["d", "b"]]
 
-    # transpose via coordinate transformation
-    A = Matrix('abcdef', (2, 3))
-    eq(A.transpose().tolists(), [['a', 'd'], ['b', 'e'], ['c', 'f']])
+    # Transpose via coordinate transformation.
+    A = Matrix("abcdef", (2, 3))
+    assert A.transpose().tolists() == [["a", "d"], ["b", "e"], ["c", "f"]]
 
-    # reverse columns via coordinate transformation
-    eq(A.reverse_cols().tolists(), [['c', 'b', 'a'], ['f', 'e', 'd']])
+    # Reverse columns via coordinate transformation.
+    assert A.reverse_cols().tolists() == [["c", "b", "a"], ["f", "e", "d"]]
 
-    # rotate via coordinate transformation
-    eq(A.rot_cw().tolists(), [['d', 'a'], ['e', 'b'], ['f', 'c']])
-    eq(A.rot_ccw().tolists(), [['c', 'f'], ['b', 'e'], ['a', 'd']])
-    eq(A.rot_cw().rot_cw().tolists(),  [['f', 'e', 'd'], ['c', 'b', 'a']])
-    eq(A.rot_ccw().rot_cw().tolists(), [['a', 'b', 'c'], ['d', 'e', 'f']])
-    eq(A.rot_cw().rot_ccw().tolists(), [['a', 'b', 'c'], ['d', 'e', 'f']])
+    # Rotate via coordinate transformation.
+    assert A.rot_cw().tolists() == [["d", "a"], ["e", "b"], ["f", "c"]]
+    assert A.rot_ccw().tolists() == [["c", "f"], ["b", "e"], ["a", "d"]]
+    assert A.rot_cw().rot_cw().tolists() == [["f", "e", "d"], ["c", "b", "a"]]
+    assert A.rot_ccw().rot_cw().tolists() == [["a", "b", "c"], ["d", "e", "f"]]
+    assert A.rot_cw().rot_ccw().tolists() == [["a", "b", "c"], ["d", "e", "f"]]
 
     # 4 rotations must be equivalent to identity transform
     Arrrr = A.rot_ccw().rot_ccw().rot_ccw().rot_ccw()
-    eq(Arrrr.coord_xform.T, identity_xform.T)
+    assert Arrrr.coord_xform.T == identity_xform.T
 
-    # clockwise and counter-clockwise rotations must be inverses
-    eq(A.rot_ccw().rot_cw().tolists(), A.tolists())
-    eq(A.rot_cw().rot_ccw().coord_xform.T, identity_xform.T)
-
-    return 'ok'
+    # Clockwise and counter-clockwise rotations must be inverses.
+    assert A.rot_ccw().rot_cw().tolists() == A.tolists()
+    assert A.rot_cw().rot_ccw().coord_xform.T == identity_xform.T

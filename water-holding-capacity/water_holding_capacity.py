@@ -263,6 +263,7 @@ Links:
 
 """
 
+
 def water_holding_capacity_recursive(A):
     def whc(i, j, lm, rm):
         # base case: 0-width strip => can hold no water
@@ -276,6 +277,7 @@ def water_holding_capacity_recursive(A):
 
     return whc(0, len(A) - 1, 0, 0)
 
+
 def water_holding_capacity_tail_recusrive(A):
     def whc(i, j, lm, rm, vol):
         # base case: 0-width strip => can hold no water
@@ -288,6 +290,7 @@ def water_holding_capacity_tail_recusrive(A):
             return whc(i, j - 1, lm, max(rm, A[j]), vol + max(0, rm - A[j]))
 
     return whc(0, len(A) - 1, 0, 0, 0)
+
 
 def water_holding_capacity_iterative(A):
     (i, j) = (0, len(A) - 1)
@@ -304,12 +307,17 @@ def water_holding_capacity_iterative(A):
             j -= 1
     return vol
 
-def test():
-    for name, f in globals().items():
-        if name.startswith('water_'):
-            print('testing {}'.format(name))
-            test_func(f)
 
+# Tests.
+
+
+import pytest
+
+@pytest.mark.parametrize("f", [
+    water_holding_capacity_recursive,
+    water_holding_capacity_tail_recusrive,
+    water_holding_capacity_iterative,
+])
 def test_func(f):
     from random import randrange
     from math import factorial

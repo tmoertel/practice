@@ -1,3 +1,6 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:3461967487.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2040426766.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2062667162.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -98,12 +101,14 @@ import functools
 def memoize(f):
     """Makes a memoized version of f that returns cached results."""
     cache = {}
+
     @functools.wraps(f)
     def g(*args):
         ret = cache.get(args, cache)
         if ret is cache:
             ret = cache[args] = f(*args)
         return ret
+
     return g
 
 
@@ -137,7 +142,6 @@ def moves(p):
 
 # Tests.
 
-from nose.tools import eq_, raises
 
 # When a knight starts on the board and makes no moves, it is
 # guaranteed to end on the board.
@@ -145,20 +149,21 @@ def test_knight_on_board_making_no_moves_must_stay_on_board():
     for r in range(1, 9):
         for c in range(1, 9):
             p = r, c
-            eq_(K(p, 0), 1.0)
+            assert K(p, 0) == 1.0
+
 
 # When a knight starts off the board, it never ends on the board.
 def test_knight_off_board_must_stay_off_board():
     for p in (0, 0), (1, 0), (0, 1), (9, 9), (-3, 2):
         for n in range(8):
-            eq_(K(p, n), 0.0)
+            assert K(p, n) == 0.0
 
 
 # When a knight starts in the middle of the board and makes only one
 # move, it always ends on the board.
 def test_knight_in_middle_making_one_move_must_stay_on_board():
     for p in (3, 3), (4, 4), (3, 4), (4, 3), (5, 3), (4, 5), (6, 6):
-        eq_(K(p, 1), 1.0)
+        assert K(p, 1) == 1.0
 
 
 # When a knight starts on a corner of the board and makes a single move,
@@ -167,4 +172,4 @@ def test_knight_on_corner_making_one_jump_stays_on_board_one_quarter_of_the_time
     for r in 1, 8:
         for c in 1, 8:
             p = r, c
-            eq_(K(p, 1), 0.25)
+            assert K(p, 1) == 0.25

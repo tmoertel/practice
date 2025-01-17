@@ -1,3 +1,7 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:2421117277.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:4087789386.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:1420993134.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:3504247023.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -88,8 +92,8 @@ could be reused for other purposes.
 
 """
 
-
 import collections
+
 
 def matrix_to_board(matrix):
     """Returns the board representation for a 3x3 tile matrix."""
@@ -100,29 +104,33 @@ def matrix_to_board(matrix):
             board = set_tile(board, row, col, tile)
     return board
 
+
 def get_empty_position(board):
     """Gets (row, col) giving the position of the empty tile."""
-    index = board & 0xf
+    index = board & 0xF
     row = index // 3
     col = index % 3
     return row, col
 
+
 def get_tile(board, row, col):
     """Gets the board tile at row and col (0 indexed)."""
-    return (board >> (4 * (3 * row + col + 1))) & 0xf
+    return (board >> (4 * (3 * row + col + 1))) & 0xF
+
 
 def set_tile(board, row, col, tile):
     """Sets the board tile at row and col (0 indexed)."""
     shift = 4 * (3 * row + col + 1)
-    mask = ~(0xf << shift)
+    mask = ~(0xF << shift)
     shifted_tile = tile << shift
     board &= mask
     board |= shifted_tile
     # If we set the empty tile, record its position.
     if not tile:
-        board &= ~0xf
+        board &= ~0xF
         board |= 3 * row + col
     return board
+
 
 def neighbors(board):
     """Gets the boards we can reach by moving one tile on `board`."""
@@ -132,7 +140,8 @@ def neighbors(board):
         (row - 1, col),
         (row, col - 1),
         (row, col + 1),
-        (row + 1, col))
+        (row + 1, col),
+    )
     for nrow, ncol in positions_adjacent_to_empty:
         if not (0 <= nrow <= 2 and 0 <= ncol <= 2):
             continue
@@ -140,6 +149,7 @@ def neighbors(board):
         new_board = set_tile(board, nrow, ncol, 0)
         new_board = set_tile(new_board, row, col, tile_to_move)
         yield new_board
+
 
 def solve_eight_tile_puzzle(puzzle_matrix):
     """Returns a minimal solution for a given 3x3 8-tile puzzle matrix.
@@ -153,16 +163,19 @@ def solve_eight_tile_puzzle(puzzle_matrix):
     path = search(start_board, END_BOARD)
     return path
 
+
 def search(start_board, end_board):
     """Returns the lexically least minimal path from start to end."""
     # Prepare the ingredients we need for a breadth-first search.
     seen = {}
     frontier = collections.deque()
+
     def explore(board, parent_board=None):
         """Ensure that `board` is explored and its parent recorded."""
         if board not in seen:
             seen[board] = parent_board
             frontier.append(board)
+
     # Search from the start board to the end board (breadth first).
     explore(start_board)
     while frontier:
@@ -180,6 +193,7 @@ def search(start_board, end_board):
     # The solution is the reversed path back.
     return back_path[::-1]
 
+
 # The desired end configuration of the board.
 END_MATRIX = [[1, 2, 3], [4, 5, 6], [7, 8, None]]
 END_BOARD = matrix_to_board(END_MATRIX)
@@ -187,60 +201,50 @@ END_BOARD = matrix_to_board(END_MATRIX)
 
 # Tests.
 
-from nose.tools import eq_, raises
 
+# fmt: off
 def test_solving_an_already_solved_puzzle_should_give_an_empty_path():
-    eq_(solve_eight_tile_puzzle(END_MATRIX), [])
+    assert solve_eight_tile_puzzle(END_MATRIX) == []
 
 def test_solutions_for_one_move_puzzles_should_be_one_move():
-    eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                 [4, 5, 6],
-                                 [7, 0, 8]]),
-       [(2, 2)])
-    eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                 [4, 5, 0],
-                                 [7, 8, 6]]),
-       [(2, 2)])
+    assert solve_eight_tile_puzzle([[1, 2, 3],
+                                    [4, 5, 6],
+                                    [7, 0, 8]]) == [(2, 2)]
+    assert solve_eight_tile_puzzle([[1, 2, 3],
+                                    [4, 5, 0],
+                                    [7, 8, 6]]) == [(2, 2)]
 
 def test_solutions_for_two_move_puzzles_should_be_two_moves():
-    eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                 [4, 5, 6],
-                                 [0, 7, 8]]),
-       [(2, 1), (2, 2)])
-    eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                 [4, 0, 6],
-                                 [7, 5, 8]]),
-       [(2, 1), (2, 2)])
-    eq_(solve_eight_tile_puzzle([[1, 2, 0],
-                                 [4, 5, 3],
-                                 [7, 8, 6]]),
-       [(1, 2), (2, 2)])
-    eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                 [4, 0, 5],
-                                 [7, 8, 6]]),
-       [(1, 2), (2, 2)])
+    assert solve_eight_tile_puzzle([[1, 2, 3],
+                                    [4, 5, 6],
+                                    [0, 7, 8]]) == [(2, 1), (2, 2)]
+    assert solve_eight_tile_puzzle([[1, 2, 3],
+                                    [4, 0, 6],
+                                    [7, 5, 8]]) == [(2, 1), (2, 2)]
+    assert solve_eight_tile_puzzle([[1, 2, 0],
+                                    [4, 5, 3],
+                                    [7, 8, 6]]) == [(1, 2), (2, 2)]
+    assert solve_eight_tile_puzzle([[1, 2, 3],
+                                    [4, 0, 5],
+                                    [7, 8, 6]]) == [(1, 2), (2, 2)]
 
 def test_solutions_for_three_move_puzzles_should_be_three_moves():
-    eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                 [0, 5, 6],
-                                 [4, 7, 8]]),
-       [(2, 0), (2, 1), (2, 2)])
-    eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                 [0, 4, 6],
-                                 [7, 5, 8]]),
-       [(1, 1), (2, 1), (2, 2)])
-    eq_(solve_eight_tile_puzzle([[1, 0, 2],
-                                 [4, 5, 3],
-                                 [7, 8, 6]]),
-       [(0, 2), (1, 2), (2, 2)])
-    eq_(solve_eight_tile_puzzle([[1, 0, 3],
-                                 [4, 2, 5],
-                                 [7, 8, 6]]),
-       [(1, 1), (1, 2), (2, 2)])
+    assert solve_eight_tile_puzzle([[1, 2, 3],
+                                    [0, 5, 6],
+                                    [4, 7, 8]]) == [(2, 0), (2, 1), (2, 2)]
+    assert solve_eight_tile_puzzle([[1, 2, 3],
+                                    [0, 4, 6],
+                                    [7, 5, 8]]) == [(1, 1), (2, 1), (2, 2)]
+    assert solve_eight_tile_puzzle([[1, 0, 2],
+                                    [4, 5, 3],
+                                    [7, 8, 6]]) == [(0, 2), (1, 2), (2, 2)]
+    assert solve_eight_tile_puzzle([[1, 0, 3],
+                                    [4, 2, 5],
+                                    [7, 8, 6]]) == [(1, 1), (1, 2), (2, 2)]
 
 def test_zero_or_none_can_be_used_to_represent_the_empty_tile():
     for E in 0, None:
-        eq_(solve_eight_tile_puzzle([[1, 2, 3],
-                                     [4, 5, 6],
-                                     [7, E, 8]]),
-            [(2, 2)])
+        assert solve_eight_tile_puzzle([[1, 2, 3],
+                                        [4, 5, 6],
+                                        [7, E, 8]]) == [(2, 2)]
+# fmt: on

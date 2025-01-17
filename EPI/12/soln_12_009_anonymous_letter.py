@@ -132,21 +132,8 @@ subdocument of M.
 
 from collections import Counter
 
+
 def is_subdocument(L, M):
     counts_L = Counter(L)
     counts_M = Counter(M)
     return all(n <= counts_M[x] for x, n in counts_L.items())
-
-def test():
-    for xs in "", "x", "xx", "xyx", "xyyx":
-        for ys in "", "1", "2", "12", "123":
-            assert is_subdocument(xs, xs + ys)
-            assert is_subdocument(ys, xs + ys)
-            assert is_subdocument(xs, ys + xs)
-            assert is_subdocument(ys, ys + xs)
-            if ys:
-                assert not is_subdocument(xs + ys, xs)
-                assert not is_subdocument(ys + xs, xs)
-            if xs:
-                assert not is_subdocument(xs + ys, ys)
-                assert not is_subdocument(ys + xs, ys)

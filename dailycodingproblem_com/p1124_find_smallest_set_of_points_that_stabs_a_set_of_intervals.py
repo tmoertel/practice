@@ -1,3 +1,6 @@
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:3042642290.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:1693984896.
+# Suggested code may be subject to a license. Learn more: ~LicenseLog:726555125.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -71,6 +74,7 @@ the endpoints and runs in O(n lg n) time.
 
 """
 
+
 def smallest_set_of_covering_points(intervals):
     # Sort the endpoints of the intervals so that we can scan them
     # from from left to right. When one interval ends at the same
@@ -112,16 +116,17 @@ def smallest_set_of_covering_points(intervals):
 
 # Tests.
 
-from nose.tools import eq_, raises
 
 def test_solution_for_example_must_be_correct():
     intervals = [(0, 4), (4, 6), (8, 9), (9, 11)]
-    eq_(smallest_set_of_covering_points(intervals), [4, 9])
+    assert smallest_set_of_covering_points(intervals) == [4, 9]
+
 
 def test_empty_intervals_is_covered_by_empty_points():
     intervals = []
-    eq_(smallest_set_of_covering_points(intervals), [])
+    assert smallest_set_of_covering_points(intervals) == []
+
 
 def test_single_point_intervals_are_covered_by_their_sole_points():
     intervals = [(1, 1), (2, 2), (3.1, 3.1)]
-    eq_(smallest_set_of_covering_points(intervals), [1, 2, 3.1])
+    assert smallest_set_of_covering_points(intervals) == [1, 2, 3.1]

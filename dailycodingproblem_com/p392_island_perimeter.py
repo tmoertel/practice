@@ -70,7 +70,7 @@ def perimeter(grid):
     if row_count == 0:
         return 0
     col_count = len(grid[0])
-    assert(all(len(row) == col_count for row in grid))
+    assert all(len(row) == col_count for row in grid)
     if col_count == 0:
         return 0
 
@@ -94,16 +94,17 @@ def perimeter(grid):
 
 # Tests.
 
-from nose.tools import eq_, raises
 
 def test_zero_size_sea_should_have_zero_perimeter():
-    eq_(perimeter([]), 0)
-    eq_(perimeter([[]]), 0)
+    assert perimeter([]) == 0
+    assert perimeter([[]]) == 0
+
 
 def test_zero_size_island_should_have_zero_perimeter():
-    for n in range (1, 5):
+    for n in range(1, 5):
         empty_grid = [[0] * n] * n
-        eq_(perimeter(empty_grid), 0)
+        assert perimeter(empty_grid) == 0
+
 
 def test_single_cell_island_should_have_4_perimeter():
     n = 5
@@ -111,11 +112,10 @@ def test_single_cell_island_should_have_4_perimeter():
         for row, col in itertools.product(list(range(row_count)), list(range(col_count))):
             grid = [[0] * col_count for _ in range(row_count)]
             grid[row][col] = 1
-            eq_(perimeter(grid), 4)
+            assert perimeter(grid) == 4
+
 
 def test_soln_for_example_problem_should_match_given_soln():
-    grid = [[0, 1, 1, 0],
-            [1, 1, 1, 0],
-            [0, 1, 1, 0],
-            [0, 0, 1, 0]]
-    eq_(perimeter(grid), 14)
+    grid = [[0, 1, 1, 0], [1, 1, 1, 0], [0, 1, 1, 0], [0, 0, 1, 0]]
+    assert perimeter(grid) == 14
+

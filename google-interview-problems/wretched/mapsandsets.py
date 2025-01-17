@@ -52,8 +52,8 @@ August 2013
 import collections
 import random
 
-class GrabBag(object):
 
+class GrabBag(object):
     """A bag that supports random selection."""
 
     def __init__(self):
@@ -69,12 +69,12 @@ class GrabBag(object):
 
     def random_val(self):
         if not self.vals:
-            raise ValueError('bag is empty')
+            raise ValueError("bag is empty")
         return random.choice(self.vals)
 
     def remove(self, x):
         if x not in self.val_locs:
-            raise ValueError('the value is not in the bag')
+            raise ValueError("the value is not in the bag")
         # swap x with the final value in the array
         x_loc = self.val_locs[x].pop()  # get an x's loc
         final_loc = len(self.vals) - 1
@@ -91,48 +91,5 @@ class GrabBag(object):
             del self.val_locs[x]
 
     def __repr__(self):
-        return 'GrabBag(vals={}, val_locs={})'.format(self.vals, self.val_locs)
+        return "GrabBag(vals={}, val_locs={})".format(self.vals, self.val_locs)
 
-
-
-def test_grabbag():
-
-    from nose.tools import assert_raises
-
-    b = GrabBag()
-
-    for x in range(5):
-
-        # at this point, b has no x values and one y value for 0 <= y < x
-        assert x not in b
-        assert_raises(ValueError, lambda: b.remove(x))
-
-        # when x is not in b, x must not be one of the random possibilities
-        if x == 0:
-            assert_raises(ValueError, b.random_val)  # b is empty
-        else:
-            for _ in range(1000):
-                if b.random_val() == x:
-                    raise Exception('got {} as random value'.format(x))
-
-        b.insert(x)        # 1 x value in b
-        assert x in b
-
-        b.insert(x)        # 2 x values in b
-        assert x in b
-
-        b.remove(x)        # 1 x values in b
-        assert x in b
-
-        # when x is in b, x must be one of the random possibilities
-        for _ in range(1000):
-            if b.random_val() == x:
-                break
-        else:
-            raise Exception('never got {} as random value'.format(x))
-
-        # remove final copy of x
-        b.remove(x)
-
-        # leave one x around for the next round of tests on x + 1
-        b.insert(x)

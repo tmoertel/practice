@@ -173,6 +173,7 @@ That's why we must also check our proposed n-digit solutions modulo
 import itertools
 import sys
 
+
 def brute_force_solutions(first, second, total, modulus=None, bindings=None):
     """Yields solutions to a cryptarithmetic puzzle.
 
@@ -182,11 +183,13 @@ def brute_force_solutions(first, second, total, modulus=None, bindings=None):
        TOTAL
 
     """
+
     def mod(n):
         return n % modulus if modulus else n
 
     def is_solution(bindings):
         """Returns True iff the given variable bindings satisfy the equation."""
+
         def to_num(word):
             place = 1
             value = 0
@@ -194,6 +197,7 @@ def brute_force_solutions(first, second, total, modulus=None, bindings=None):
                 value += place * bindings[variable]
                 place *= 10
             return value
+
         return mod(to_num(first) + to_num(second)) == mod(to_num(total))
 
     # Brute force: try all assignments of free digits to free variables.
@@ -212,73 +216,80 @@ def cryptarithmetic_solutions(first, second, total):
     solutions = [{}]
     # Work from 1 to n + 1 decimal places, solving successively larger puzzles.
     for places in range(1, max(list(map(len, [first, second, total]))) + 2):
+
         def solve_from_partial_solution(solution):
             return brute_force_solutions(
-                first[-places:], second[-places:], total[-places:],
-                10**places, solution)
+                first[-places:], second[-places:], total[-places:], 10**places, solution
+            )
+
         solutions = itertools.chain.from_iterable(
-            list(map(solve_from_partial_solution, solutions)))
+            list(map(solve_from_partial_solution, solutions))
+        )
     return solutions
 
 
 # Tests.
 
-from nose.tools import assert_dict_equal
 
 def normalize_bindings(bindings):
     return sorted(bindings.items())
 
+
 def test_example_soln_must_match_problem_statement():
     solutions = [
         normalize_bindings(soln)
-        for soln in cryptarithmetic_solutions('SEND', 'MORE', 'MONEY')]
+        for soln in cryptarithmetic_solutions("SEND", "MORE", "MONEY")
+    ]
     for soln in solutions:
-        print('soln: {}'.format(soln))
-    expected = {'S': 9, 'E': 5, 'N': 6, 'D': 7, 'M': 1, 'O': 0, 'R': 8, 'Y': 2}
+        print("soln: {}".format(soln))
+    expected = {"S": 9, "E": 5, "N": 6, "D": 7, "M": 1, "O": 0, "R": 8, "Y": 2}
     expected = normalize_bindings(expected)
     assert expected in solutions
 
 
 def test_single_digit_solution_must_match_common_sense():
-    for bindings in cryptarithmetic_solutions('A', 'B', 'C'):
-        assert bindings['A'] + bindings['B'] == bindings['C']
+    for bindings in cryptarithmetic_solutions("A", "B", "C"):
+        assert bindings["A"] + bindings["B"] == bindings["C"]
 
 
 def test_unsolvable_equation_must_have_no_solutions():
-    solns = list(cryptarithmetic_solutions('A', 'B', 'CCC'))
+    solns = list(cryptarithmetic_solutions("A", "B", "CCC"))
     assert not solns
+
 
 def test_puzzle_with_more_than_ten_variables_must_have_no_solutions():
-    solns = list(cryptarithmetic_solutions('ABCD', 'GHIJ', 'KLMN'))
+    solns = list(cryptarithmetic_solutions("ABCD", "GHIJ", "KLMN"))
     assert not solns
 
+
 def test_empty_puzzle_must_have_only_the_empty_solution():
-    solns = list(cryptarithmetic_solutions('', '', ''))
+    solns = list(cryptarithmetic_solutions("", "", ""))
     assert solns == [{}]
 
 
 # Command-line solver.
 
+
 def main():
     if len(sys.argv) != 4:
-        print('Usage: {} first_word second_word total_word'.format(sys.argv[0]))
+        print("Usage: {} first_word second_word total_word".format(sys.argv[0]))
         sys.exit(1)
 
     # Preserve the character ordering from the given words.
     words = sys.argv[1:4]
     seen = set()
     char_order = []
-    for char in ''.join(words):
+    for char in "".join(words):
         if char not in seen:
             seen.add(char)
             char_order.append(char)
 
     # Print each solution on its own line, using the initial ordering.
     for bindings in cryptarithmetic_solutions(*words):
-        variable_map = ', '.join('%s=%r' % (c, bindings[c]) for c in char_order)
-        solution = ''.join(str(bindings.get(c, c)) for c in ' '.join(words))
-        print('{} / {}'.format(variable_map, solution))
+        variable_map = ", ".join("%s=%r" % (c, bindings[c]) for c in char_order)
+        solution = "".join(str(bindings.get(c, c)) for c in " ".join(words))
+        print("{} / {}".format(variable_map, solution))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

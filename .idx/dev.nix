@@ -7,8 +7,11 @@
   # Use https://search.nixos.org/packages to find packages
   packages = [
     # pkgs.go
+    pkgs.btop
+    pkgs.gcc
     (pkgs.python3.withPackages (python-pkgs: [
       python-pkgs.pytest
+      python-pkgs.scipy
     ]))
     # pkgs.python311Packages.pip
     # pkgs.nodejs_20

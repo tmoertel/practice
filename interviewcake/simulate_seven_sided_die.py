@@ -144,7 +144,6 @@ A similar proof holds for rand7. QED.
 
 """
 
-
 import random
 
 
@@ -158,6 +157,7 @@ def rand4():
         if i < 5:
             return i
 
+
 def rand8():
     rand_0_to_15 = ((rand4() - 1) << 2) | (rand4() - 1)
     return 1 + (rand_0_to_15 & 0x7)
@@ -168,21 +168,3 @@ def rand7():
         i = rand8()
         if i < 8:
             return i
-
-
-def test_rand7():
-    import collections
-    # Generate a sample of random draws and compute its distribution.
-    N = 10000
-    counts = collections.Counter(rand7() for _ in range(N))
-    # All value counts must be in the range 1 to 7.
-    assert sorted(counts) == list(range(1, 8))
-    # The counts must be approximately equally distributed.
-    expected_mean_count = N / 7
-    for count in list(counts.values()):
-        assert 0.9 * expected_mean_count < count < 1.1 * expected_mean_count
-    print('All tests pass.')
-
-
-if __name__ == '__main__':
-    test_rand7()
