@@ -1,0 +1,6 @@
+{
+    "IDX.aI.enableInlineCompletion": true,
+    "IDX.aI.enableCodebaseIndexing": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
