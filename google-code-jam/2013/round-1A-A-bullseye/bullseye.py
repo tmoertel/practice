@@ -37,18 +37,21 @@ And that's our closed-form for n.
 
 import fileinput
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     r, t = problem
-    x = 8*t + 4*r*r - 4*r + 1
-    n = int((isqrt(x)- 2*r + 1) / 4.0)
-    while n * (2*r + 2*n - 1) <= t:
+    x = 8 * t + 4 * r * r - 4 * r + 1
+    n = int((isqrt(x) - 2 * r + 1) / 4.0)
+    while n * (2 * r + 2 * n - 1) <= t:
         n += 1
     return n - 1
+
 
 def isqrt(x, want_upper_bound=False):
     lo, hi = 1, x
@@ -64,17 +67,21 @@ def isqrt(x, want_upper_bound=False):
         else:
             return mid
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     r, t = read_ints(lines)
     return r, t
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

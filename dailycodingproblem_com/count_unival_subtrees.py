@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""Solve interview problem: count "univalued" subtrees in a binary tree.
+'''Solve interview problem: count "univalued" subtrees in a binary tree.
 
 This problem comes from Daily Coding Problem on 2019-04-01 and was
 classified as Easy difficulty:
@@ -22,7 +22,8 @@ Reported source: Google.
     / \   \
    3   3   0
 
-"""
+'''
+
 
 class Node:
     def __init__(self, val, left=None, right=None):
@@ -30,9 +31,11 @@ class Node:
         self.left = left
         self.right = right
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Solve the problem using divide-and-conquer recursion.
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def count_unival_subtrees(tree):
     def process(tree):
@@ -48,17 +51,20 @@ def count_unival_subtrees(tree):
         if is_unival_r and is_unival_r and val_l == val_r == tree.val:
             return True, tree.val, count_l + count_r + 1
         return False, None, count_l + count_r
+
     return process(tree)[2]
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Fun exploration:
 #
 # Solve the problem using divide-and-conquer recursion in which the
 # recursion has been factored out using functional-programming
 # methods.
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # These two functions are the fundamental building blocks of recursion.
+
 
 def tree_fmap(f, tree):
     """Maps a function f over a tree."""
@@ -66,23 +72,31 @@ def tree_fmap(f, tree):
         return None
     return Node(tree.val, f(tree.left), f(tree.right))
 
+
 def tree_fold(algebra, tree):
     """Reduces a tree to a value using a tree-term algebra."""
+
     def tree_fold_using_algebra(tree):
         return algebra(tree_fmap(tree_fold_using_algebra, tree))
+
     return tree_fold_using_algebra(tree)
 
+
 # This example shows how to use them to count the nodes of a tree.
+
 
 def count_nodes_algebra(tree):
     if tree is None:
         return 0
     return 1 + tree.left + tree.right
 
+
 def count_nodes(tree):
     return tree_fold(count_nodes_algebra, tree)
 
+
 # Now we solve the actual problem.
+
 
 def count_unival_subtrees_algebra(tree):
     """Reduces a tree term to a value indicating its unival status.
@@ -111,14 +125,16 @@ def count_unival_subtrees_algebra(tree):
         return True, tree.val, count_l + count_r + 1
     return False, None, count_l + count_r
 
+
 def count_unival_subtrees_functional_style(tree):
     fold_result = tree_fold(count_unival_subtrees_algebra, tree)
     return fold_result[2]
 
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Tests.
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def test():
     assert count_nodes(None) == 0
@@ -126,6 +142,6 @@ def test():
     for soln in count_unival_subtrees, count_unival_subtrees_functional_style:
         print(soln.__name__)
         assert soln(None) == 0
-        assert soln(Node('foo')) == 1
+        assert soln(Node("foo")) == 1
         tree = Node(0, Node(1), Node(0, Node(1, Node(1), Node(1)), Node(0)))
         assert soln(tree) == 5

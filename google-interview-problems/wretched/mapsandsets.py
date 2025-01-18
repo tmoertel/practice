@@ -92,4 +92,3 @@ class GrabBag(object):
 
     def __repr__(self):
         return "GrabBag(vals={}, val_locs={})".format(self.vals, self.val_locs)
-

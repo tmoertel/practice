@@ -9,15 +9,13 @@ http://code.google.com/codejam/contest/619102/dashboard#s=p0
 
 """
 
-
 import fileinput
-
 
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
 
 
 def solve(wires):
@@ -27,8 +25,8 @@ def solve(wires):
     N = len(wires)
     (lri, lir), (rri, rir) = list(map(ranks, list(zip(*wires))))
     # the following brute-force solution runs in O(N^2) time for N wires
-    return sum(len(set(lri[:lir[i]]) & set(rri[rir[i]+1:]))
-               for i in range(N))
+    return sum(len(set(lri[: lir[i]]) & set(rri[rir[i] + 1 :])) for i in range(N))
+
 
 def ranks(xs):
     rank_to_index = sorted(range(len(xs)), key=xs.__getitem__)
@@ -42,18 +40,22 @@ def solve1(wires):
     """O(N^2) brute-force solution (timing: 5.1s)."""
     N = len(wires)
     # the following brute-force solution runs in O(N^2) time for N wires
-    return sum(cmp(wires[i][0], wires[j][0]) != cmp(wires[i][1], wires[j][1])
-               for i in range(N)
-               for j in range(i))
+    return sum(
+        cmp(wires[i][0], wires[j][0]) != cmp(wires[i][1], wires[j][1])
+        for i in range(N)
+        for j in range(i)
+    )
 
 
 def solve2(wires):
     """O(N^2) brute-force solution (timing: 5.6s)."""
     N = len(wires)
     # the following brute-force solution runs in O(N^2) time for N wires
-    return sum(wires[i][0] < wires[j][0] and wires[i][1] > wires[j][1]
-               for i in range(N)
-               for j in range(N))
+    return sum(
+        wires[i][0] < wires[j][0] and wires[i][1] > wires[j][1]
+        for i in range(N)
+        for j in range(N)
+    )
 
 
 def read_problems(lines):
@@ -66,5 +68,6 @@ def read_problem(lines):
     N = int(next(lines))
     return [tuple(map(int, lines.next().split())) for _ in range(N)]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

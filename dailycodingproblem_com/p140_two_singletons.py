@@ -46,6 +46,7 @@ import itertools
 import operator
 import random
 
+
 def find_two_singletons(xs):
     """Returns the two values in `xs` that occur once.
 
@@ -57,13 +58,16 @@ def find_two_singletons(xs):
     singleton2 = selected_xor_sum(xs, lambda x: not (x & partition_bit))
     return min(singleton1, singleton2), max(singleton1, singleton2)
 
+
 def selected_xor_sum(xs, is_wanted=lambda _: True):
     """XORs the elems of `xs` for which `is_wanted` returns true."""
     return reduce(operator.__xor__, (x for x in xs if is_wanted(x)), 0)
 
+
 def lsb_mask(x):
     """Returns the least significant bit of `x` that is set."""
     return x ^ (x & (x - 1))
+
 
 def test():
     soln = find_two_singletons
@@ -72,9 +76,9 @@ def test():
             # Make a random problem instance with a known solution.
             offset = random.randint(0, n)  # Allows for negative values.
             seq = [x - offset for x in seq]
-            singletons = seq[:2]   # The first two values are the singletons.
+            singletons = seq[:2]  # The first two values are the singletons.
             seq[2:] = seq[2:] * 2  # The others are the doubles.
             random.shuffle(seq)
-            print('ans = {}, seq = {}'.format(singletons, seq))
+            print("ans = {}, seq = {}".format(singletons, seq))
             # The solver must identify the singleton elements.
             assert soln(seq) == tuple(sorted(singletons))

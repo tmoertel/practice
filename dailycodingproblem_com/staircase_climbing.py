@@ -117,21 +117,26 @@ exponentiation.]
 
 import functools
 
+
 def memoize(f):
     """Make a memoized version of f that returns cached results."""
     cache = {}
+
     @functools.wraps(f)
     def g(*args):
         ret = cache.get(args, cache)
         if ret is cache:
             ret = cache[args] = f(*args)
         return ret
+
     return g
+
 
 def number_of_distinct_step_sequences(steps_to_climb, allowed_step_multiples):
     # Sanity check arguments.
     assert all(j > 0 for j in allowed_step_multiples)
     assert len(allowed_step_multiples) == len(set(allowed_step_multiples))
+
     # Memoize the solution recurrence to prevent us from having to
     # recompute solutions for overlapping subproblems.
     @memoize
@@ -141,8 +146,10 @@ def number_of_distinct_step_sequences(steps_to_climb, allowed_step_multiples):
         if N == 0:
             return 1
         return sum(ways(N - j) for j in allowed_step_multiples)
+
     # Solve the problem using the recurrance.
     return ways(steps_to_climb)
+
 
 def test():
     assert number_of_distinct_step_sequences(4, (1, 2)) == 5

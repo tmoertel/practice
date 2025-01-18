@@ -37,14 +37,16 @@ tail directly.)
 
 """
 
+
 class Cons(object):
     """Cons cell for a singly linked list."""
 
-    __slots__ = 'head tail'.split()
+    __slots__ = "head tail".split()
 
     def __init__(self, head, tail=None):
         self.head = head
         self.tail = tail
+
 
 def merge(xs, ys):
     """Merge nodes of two sorted singly linked lists."""

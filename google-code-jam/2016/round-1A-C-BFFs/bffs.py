@@ -58,6 +58,7 @@ whole-graph depth-first searches, and thus has the same costs.)
 import fileinput
 import sys
 
+
 def main():
     # The max problem size is N=1000, which is at the default
     # Python recursion limit, so we raise the limit.
@@ -65,7 +66,8 @@ def main():
     # Read the problems, solve them, and print the solutions.
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     N, bffs = problem
@@ -89,6 +91,7 @@ def solve(problem):
             max_large_cycle_size = max(max_large_cycle_size, size)
     return max(sum_of_2_cycle_sizes, max_large_cycle_size)
 
+
 def graph_from_edges(edges):
     G = {}
     for i, j in edges:
@@ -96,10 +99,12 @@ def graph_from_edges(edges):
         G.setdefault(j, set())
     return G
 
+
 def find_cycles(G):
     opened = {}
     closed = set()
     cycles = []
+
     def dfs(i, depth=0):
         if i in closed:
             return
@@ -110,32 +115,40 @@ def find_cycles(G):
         for j in G[i]:
             dfs(j, depth + 1)
         closed.add(i)
+
     for i in G:
         dfs(i)
     return cycles
 
+
 # ASSUMES that the subgraph of G rooted in node i is a tree.
 def tree_depth(G, i):
     max_depth = [0]
+
     def dfs(i, depth=0):
         max_depth[0] = max(max_depth[0], depth)
         for j in G[i]:
             dfs(j, depth + 1)
+
     dfs(i)
     return max_depth[0]
+
 
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
-    N, = read_ints(lines)
+    (N,) = read_ints(lines)
     bffs = read_ints(lines)
     return N, bffs
+
 
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

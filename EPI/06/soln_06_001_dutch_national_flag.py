@@ -35,6 +35,7 @@ a valid solution.
 
 """
 
+
 def partition(A, i):
     """Rearrange A's elements into <, =, and > partitions on A[i]."""
 

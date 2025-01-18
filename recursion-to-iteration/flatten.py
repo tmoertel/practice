@@ -11,7 +11,8 @@ See http://blog.moertel.com/posts/2013-06-03-recursion-to-iteration-3.html.
 
 import collections
 
-Node = collections.namedtuple('Node', 'val left right')
+Node = collections.namedtuple("Node", "val left right")
+
 
 # original recursive algorithm
 def flatten(bst):
@@ -20,6 +21,7 @@ def flatten(bst):
         return []
     # node case
     return flatten(bst.left) + [bst.val] + flatten(bst.right)
+
 
 # final iterative version
 def flatten(bst):
@@ -37,7 +39,6 @@ def flatten(bst):
     return left
 
 
-
 # test code
 
 # some sample trees having various node counts
@@ -48,6 +49,7 @@ tree3 = Node(7, tree1, Node(9, None, None))
 tree4 = Node(2, None, tree3)
 tree5 = Node(2, Node(1, None, None), tree3)
 
+
 def check_flattener(f):
     assert f(tree0) == []
     assert f(tree1) == [5]
@@ -55,6 +57,7 @@ def check_flattener(f):
     assert f(tree3) == [5, 7, 9]
     assert f(tree4) == [2, 5, 7, 9]
     assert f(tree5) == [1, 2, 5, 7, 9]
-    print('ok')
+    print("ok")
+
 
 check_flattener(flatten)  # ok

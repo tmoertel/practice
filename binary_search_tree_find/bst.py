@@ -16,9 +16,7 @@ Problem:
 
 """
 
-
 import unittest
-
 
 
 def find_min(bst, val, next_smallest=None):
@@ -81,6 +79,7 @@ Q.E.D.
 
 # Non-recursive translations of the find_min
 
+
 def find_min_iterative(bst, val, next_smallest=None):
     while True:
         if bst is None:
@@ -91,6 +90,7 @@ def find_min_iterative(bst, val, next_smallest=None):
             bst = bst.left
         else:
             bst, next_smallest = bst.right, bst.val
+
 
 def find_min_iterative2(bst, val, next_smallest=None):
     while bst is not None:
@@ -105,6 +105,7 @@ def find_min_iterative2(bst, val, next_smallest=None):
 
 # BST implementation and tests
 
+
 class BSTNode(object):
     """Binary search tree node."""
 
@@ -114,7 +115,7 @@ class BSTNode(object):
         self.right = right
 
     def __repr__(self):
-        return '(%s, %r, %r)' % (self.val, self.left, self.right)
+        return "(%s, %r, %r)" % (self.val, self.left, self.right)
 
     def is_bst(self):
         """Test whether the node represents a binary search tree."""
@@ -131,9 +132,9 @@ class BSTNode(object):
     def _parse(s):
         s = s.lstrip()
         if s[:1] == "(":
-            val, s = s[1:].split(',', 1)
+            val, s = s[1:].split(",", 1)
             left, s = BSTNode._parse(s)
-            _, s = s.split(',', 1)
+            _, s = s.split(",", 1)
             right, s = BSTNode._parse(s)
             s = s.lstrip()
             if s[:1] == ")":
@@ -145,40 +146,36 @@ def _is_bst(tree, min_val=None, max_val=None):
     """Test whether a tree represents a binary search tree."""
     if tree is None:
         return True
-    return ((min_val is None or tree.val >= min_val) and
-            (max_val is None or tree.val <= max_val) and
-            _is_bst(tree.left, min_val=min_val, max_val=tree.val) and
-            _is_bst(tree.right, min_val=tree.val, max_val=max_val))
+    return (
+        (min_val is None or tree.val >= min_val)
+        and (max_val is None or tree.val <= max_val)
+        and _is_bst(tree.left, min_val=min_val, max_val=tree.val)
+        and _is_bst(tree.right, min_val=tree.val, max_val=max_val)
+    )
 
 
 TEST_CASES = [
     # (expected_result, val, bst_tree_spec)
-
-    (None, 'c', ''),
-
-    ('c',  'c', '(c,,)'),
-    ('a',  'c', '(a,,)'),
-    (None, 'c', '(d,,)'),
-
-    ('a',  'c', '(d,(a,,),)'),
-    ('c',  'c', '(d,(c,,),)'),
-    (None, 'b', '(d,(c,,),)'),
-    ('a',  'c', '(a,,(d,,))'),
-    ('c',  'c', '(c,,(d,,))'),
-    (None, 'c', '(d,,(d,,))'),
-    ('a',  'c', '(a,,(d,,))'),
-
-    (None, 'a', '(c,(b,,),(d,,))'),
-    ('a',  'b', '(c,(a,,),(d,,))'),
-    ('c',  'c', '(c,(a,,),(d,,))'),
-    ('d',  'd', '(c,(a,,),(d,,))'),
-    ('d',  'e', '(c,(a,,),(d,,))'),
-    (None, 'a', '(c,(b,,),(d,,))'),
-
-    (None, 'c', '(a,(d,,),)'),  # not a valid BST
-    (None, 'c', '(c,(a,,(d,,)),)'),  # not a valid BST
-
-    ]
+    (None, "c", ""),
+    ("c", "c", "(c,,)"),
+    ("a", "c", "(a,,)"),
+    (None, "c", "(d,,)"),
+    ("a", "c", "(d,(a,,),)"),
+    ("c", "c", "(d,(c,,),)"),
+    (None, "b", "(d,(c,,),)"),
+    ("a", "c", "(a,,(d,,))"),
+    ("c", "c", "(c,,(d,,))"),
+    (None, "c", "(d,,(d,,))"),
+    ("a", "c", "(a,,(d,,))"),
+    (None, "a", "(c,(b,,),(d,,))"),
+    ("a", "b", "(c,(a,,),(d,,))"),
+    ("c", "c", "(c,(a,,),(d,,))"),
+    ("d", "d", "(c,(a,,),(d,,))"),
+    ("d", "e", "(c,(a,,),(d,,))"),
+    (None, "a", "(c,(b,,),(d,,))"),
+    (None, "c", "(a,(d,,),)"),  # not a valid BST
+    (None, "c", "(c,(a,,(d,,)),)"),  # not a valid BST
+]
 
 
 class Tests(unittest.TestCase):
@@ -189,9 +186,11 @@ class Tests(unittest.TestCase):
                 bst = BSTNode.from_str(bst_tree_spec)
                 result = f(bst, val)
                 self.assertEqual(
-                    result, expected_result,
-                    msg=('%s: %r -> %r' % (f.__name__, case, result)))
+                    result,
+                    expected_result,
+                    msg=("%s: %r -> %r" % (f.__name__, case, result)),
+                )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

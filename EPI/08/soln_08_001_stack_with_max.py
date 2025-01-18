@@ -16,11 +16,14 @@ Discussion.
 
 """
 
+
 class Error(Exception):
     """Base class for all MaxStack exceptions."""
 
+
 class EmptyStack(Error):
     """Thrown when you try to extract an element from an empty MaxStack."""
+
 
 class MaxStack(object):
     """Stack that supports a max query over all elements."""
@@ -54,7 +57,7 @@ class MaxStack(object):
 
     def max(self):
         self._require_nonempty()
-        return self.stack[-1][1]    # return top stack_max value
+        return self.stack[-1][1]  # return top stack_max value
 
     def _require_nonempty(self):
         if not self:

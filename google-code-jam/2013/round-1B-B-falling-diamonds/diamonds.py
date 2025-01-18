@@ -117,14 +117,15 @@ subcases:
 
 """
 
-
 import fileinput
 from scipy.stats import binom
+
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     N, X, Y = problem
@@ -143,15 +144,18 @@ def solve(problem):
         return binom.cdf(abs(X) - 1, m, 0.5)  # B(2)
     return 1.0 - binom.cdf(b(i + 1) - abs(X) - 1, N - s(i), 0.5)  # B(3)
 
+
 def is_triangle_diamond(x, y, i):
     """Test whether (x, y) locates a diamond in the complete triangle i."""
     size = b(i)
     xmax = size - y - 1
     return abs(x) <= xmax and (xmax + x) % 2 == 0
 
+
 def s(i):
     """Get the size in diamonds of the complete triangle i."""
-    return i * (2*i - 1)
+    return i * (2 * i - 1)
+
 
 def b(i):
     """Get the base length in diamonds of the complete triangle i."""
@@ -159,17 +163,21 @@ def b(i):
         return 0
     return 2 * i - 1
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     N, X, Y = read_ints(lines)
     return N, X, Y
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
+
 
 def find_int_by_bisection(f, lo, hi, y):
     """Find maximal int x in [lo, hi] such that f(x) <= y.
@@ -186,13 +194,15 @@ def find_int_by_bisection(f, lo, hi, y):
             hi = mid - 1
     return lo if f(lo) <= y else lo - 1
 
+
 def _check_bisection_bounds(f, lo, hi, y):
     if lo > hi:
-        raise ValueError('lower bound is above upper bound')
+        raise ValueError("lower bound is above upper bound")
     if y < f(lo):
-        raise ValueError('solution is below lower bound')
+        raise ValueError("solution is below lower bound")
     if y > f(hi):
-        raise ValueError('solution is above upper bound')
+        raise ValueError("solution is above upper bound")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -13,7 +13,7 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         j1, j2 = solve(p)
-        print('Case #%r: %r %r' % (i, j1, j2))
+        print("Case #%r: %r %r" % (i, j1, j2))
 
 
 def solve(problem):
@@ -39,5 +39,5 @@ def read_problem(lines):
     return C, I, Ps
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

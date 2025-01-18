@@ -33,11 +33,13 @@ import collections
 import fileinput
 import sys
 
+
 def main():
     sys.setrecursionlimit(2000)
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %s' % (i, s))
+        print("Case #%r: %s" % (i, s))
+
 
 def solve(problem):
     N, _M, likes_by_cust = problem
@@ -63,24 +65,26 @@ def solve(problem):
                 else:
                     likes_by_cust[cust].remove((flavor, is_malted))
                     if len(likes_by_cust[cust]) == 0:
-                        return 'IMPOSSIBLE'
+                        return "IMPOSSIBLE"
                     elif len(likes_by_cust[cust]) == 1:
                         flavor0, is_malted0 = list(likes_by_cust[cust])[0]
                         if is_malted0:
                             customers_liking_only_a_malt.append((cust, flavor0))
-    return ' '.join(('1' if flavor in malts else '0')
-                    for flavor in range(1, N + 1))
+    return " ".join(("1" if flavor in malts else "0") for flavor in range(1, N + 1))
+
 
 def read_problems(lines):
     C = int(next(lines))
     for _ in range(C):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     N = int(next(lines))  # flavor count
     M = int(next(lines))  # customer count
     cust_likes = read_cust_likes(M, lines)
     return N, M, cust_likes
+
 
 def read_cust_likes(M, lines):
     likes = collections.defaultdict(set)
@@ -92,5 +96,6 @@ def read_cust_likes(M, lines):
             likes[cust].add((next(spec_items), bool(next(spec_items))))
     return likes
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

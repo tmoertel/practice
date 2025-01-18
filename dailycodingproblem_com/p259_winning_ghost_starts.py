@@ -90,11 +90,14 @@ O(N) time and space in the worst case.
 
 """
 
+
 # We create a unique value, rather than the literal '$', to represent
 # word ends. This lets us use '$' in dictionary words.
 class WORD_END:
     def __repr__(self):
-        return '$'
+        return "$"
+
+
 WORD_END = WORD_END()
 
 
@@ -111,10 +114,12 @@ def prefix_tree(words):
 
 # Solve the problem using a prefix tree of the dictionary words.
 
+
 def winning_starts(words):
     """Returns the starting letters that guarantee Ghost wins for Player 1."""
     initial_choices = list(prefix_tree(words).items())
     return sorted(child[0] for child in initial_choices if is_win(child, 1))
+
 
 def is_win(node, depth):
     """Returns true iff P1 wins when `node` is on the game path at `depth`."""
@@ -128,15 +133,18 @@ def is_win(node, depth):
 
 # Tests.
 
+
 def test_empty_dict_must_give_empty_winning_starts():
     soln = winning_starts([])
     assert soln == []
 
+
 def test_dict_with_empty_word_must_give_word_end_as_sole_winning_start():
-    soln = winning_starts([''])
+    soln = winning_starts([""])
     assert soln == [WORD_END]
 
+
 def test_example_soln_must_be_correct():
-    d = 'cat calf dog bear'.split()
+    d = "cat calf dog bear".split()
     soln = winning_starts(d)
-    assert soln == ['b', 'c']
+    assert soln == ["b", "c"]

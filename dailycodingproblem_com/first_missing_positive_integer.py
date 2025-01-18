@@ -69,6 +69,7 @@ satisfies the requirements of the problem statement.
 
 """
 
+
 # Runs in O(n) time and space.
 def first_missing_postive_integer_1(ints):
     """Returns the least positive integer not in `ints`."""
@@ -78,16 +79,19 @@ def first_missing_postive_integer_1(ints):
         i += 1
     return i
 
+
 # Runs in O(n) time and O(1) space.
 def first_missing_postive_integer_2(ints):
     """Returns the least positive integer not in `ints` (modifies ints)."""
     n = len(ints)
+
     # Helper functions to treat `ints` as a 1-indexed array.
     def get(i):
         """Gets the value at position i (or None if i is out of bounds)."""
         if 1 <= i <= n:
             return ints[i - 1]
         return None
+
     def place(i):
         """Stores i at position i and returns any displaced value."""
         x = get(i)
@@ -95,6 +99,7 @@ def first_missing_postive_integer_2(ints):
             return None
         ints[i - 1] = i
         return x
+
     # Place all values in the array into their home positions.
     for i in ints:
         i = place(i)
@@ -109,12 +114,13 @@ def first_missing_postive_integer_2(ints):
     # the integers 1..n, so n + 1 is the answer.
     return n + 1
 
+
 def test():
     for soln in first_missing_postive_integer_1, first_missing_postive_integer_2:
         assert soln([]) == 1
         assert soln([0]) == 1
         assert soln([-1]) == 1
         assert soln([3, 4, -1, 1]) == 2
-        assert soln([1, 2,  0]) == 3
+        assert soln([1, 2, 0]) == 3
         for x in range(1, 10):
             assert soln(list(range(1, x))) == x

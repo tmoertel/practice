@@ -112,12 +112,15 @@ w.r.t. the length of the input sequence X.
 
 """
 
+
 def largest_nonadjacent_sum_recursive(X):
     def soln(i):
         if i < 0:
             return 0
         return max(X[i] + soln(i - 2), soln(i - 1))
+
     return soln(len(X) - 1)
+
 
 def largest_nonadjacent_sum_dp(X):
     max_sum = max_sum_lag_1 = max_sum_lag_2 = 0
@@ -126,6 +129,7 @@ def largest_nonadjacent_sum_dp(X):
         max_sum_lag_2 = max_sum_lag_1
         max_sum_lag_1 = max_sum
     return max_sum
+
 
 def test():
     for soln in largest_nonadjacent_sum_recursive, largest_nonadjacent_sum_dp:

@@ -76,7 +76,6 @@ So the output for this problem would be:
 
 """
 
-
 import fileinput
 
 
@@ -87,6 +86,7 @@ class Balance(object):
         self.l_balances = l_balances
         self.r_balances = r_balances
 
+
 def main():
     lines = fileinput.input()
     N = int(next(lines))
@@ -96,12 +96,14 @@ def main():
         rspec = parse_arm_spec(next(lines))
         balances.append(Balance(*(lspec + rspec)))
     adjustments = compute_adjustments(balances)
-    for (i, adjustment) in enumerate(adjustments):
+    for i, adjustment in enumerate(adjustments):
         print("%r: %r %r" % (i, max(0, -adjustment), max(0, adjustment)))
+
 
 def parse_arm_spec(s):
     nums = list(map(int, s.split()))
     return nums[0], nums[1:]
+
 
 def compute_adjustments(balances):
     """Compute the adjustment to bring each balance into perfect balance.
@@ -114,6 +116,7 @@ def compute_adjustments(balances):
     """
     N = len(balances)
     cache = {}  # stores (adjustment, weight) pair for each balance i
+
     def adjust(i):
         if i not in cache:
             b = balances[i]
@@ -123,10 +126,13 @@ def compute_adjustments(balances):
             weight = 10 + l + r + abs(adjustment)
             cache[i] = (adjustment, weight)
         return cache[i][0]
+
     def adjusted_weight(i):
         adjust(i)
         return cache[i][1]
+
     return list(map(adjust, range(N)))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -35,22 +35,24 @@ to incrementally calculate the n-value.
 import fileinput
 import sys
 
-LETTERS = set(chr(i) for i in range(ord('a'), ord('z') + 1))
-VOWELS = set('aeiou')
+LETTERS = set(chr(i) for i in range(ord("a"), ord("z") + 1))
+VOWELS = set("aeiou")
 CONSONANTS = LETTERS - VOWELS
+
 
 def main():
     sys.setrecursionlimit(int(1e6 + 2))
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     name, n = problem
     L = len(name)
     last_l = -1
     count = runlen = 0
-    for (r, c) in enumerate(name):
+    for r, c in enumerate(name):
         if c in CONSONANTS:
             runlen += 1
         else:
@@ -61,18 +63,22 @@ def solve(problem):
             last_l = l
     return count
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
+
 
 def read_problem(lines):
     name, strn = lines.next().split()
     n = int(strn)
     return name, n
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

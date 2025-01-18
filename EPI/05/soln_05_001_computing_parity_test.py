@@ -6,6 +6,7 @@
 
 from soln_05_001_computing_parity import array_parity
 
+
 def test_array_parity():
     assert array_parity([]) == 0
     assert array_parity([0]) == 0

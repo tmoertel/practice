@@ -14,13 +14,15 @@ import fileinput
 import heapq
 from itertools import groupby
 
-Tribe = namedtuple('Tribe', 'd, n, w, e, s, delta_d, delta_p, delta_s')
-Attack = namedtuple('Attack', 'd, w, e, s')
+Tribe = namedtuple("Tribe", "d, n, w, e, s, delta_d, delta_p, delta_s")
+Attack = namedtuple("Attack", "d, w, e, s")
+
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     tribes = problem
@@ -37,6 +39,7 @@ def solve(problem):
             wall.set_min_height_for_interval(attack.w, attack.e, attack.s)
     return successful_attacks
 
+
 def tribe_attacks(tribe):
     """Yield a tribe's attacks."""
     d, n, w, e, s, delta_d, delta_p, delta_s = tribe
@@ -46,6 +49,7 @@ def tribe_attacks(tribe):
         w += delta_p
         e += delta_p
         s += delta_s
+
 
 def merge(iterators):
     """Make a lazy sorted iterator that merges lazy sorted iterators."""
@@ -58,6 +62,7 @@ def merge(iterators):
             heapq.heappush(streams, stream)
             yield val
 
+
 def iterator_to_stream(iterator):
     """Convert an iterator into a stream (None if the iterator is empty)."""
     try:
@@ -65,24 +70,29 @@ def iterator_to_stream(iterator):
     except StopIteration:
         return None
 
+
 def stream_next(stream):
     """Get (next_value, next_stream) from a stream."""
     val, iterator = stream
     return val, iterator_to_stream(iterator)
 
+
 import sys
+
 try:
     # Hide this import to allow pytest to scan this module w/o failing.
     from blist import sorteddict  # http://stutzbachenterprises.com/blist/
 except:
     import pytest
+
     pytest.skip(allow_module_level=True)
 
-class HeightIntervalSet(object):
 
+class HeightIntervalSet(object):
     def __init__(self, initial_height=0):
-        self.heights = sorteddict([(-sys.maxsize - 1, initial_height),
-                                   (sys.maxsize, initial_height)])
+        self.heights = sorteddict(
+            [(-sys.maxsize - 1, initial_height), (sys.maxsize, initial_height)]
+        )
 
     def is_vulnerable_over_interval(self, start, end, min_val):
         start *= 2
@@ -123,21 +133,25 @@ class HeightIntervalSet(object):
             else:
                 current_height = height
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
-    N, = read_ints(lines)
+    (N,) = read_ints(lines)
     tribes = []
     for _ in range(N):
         tribe = Tribe(*read_ints(lines))
         tribes.append(tribe)
     return tribes
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

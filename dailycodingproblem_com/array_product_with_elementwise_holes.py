@@ -182,9 +182,11 @@ the loophole and ask the interviewer to clarify the requirements.)
 import functools
 import operator
 
+
 def product_of_all_elems(X):
     """Returns the product of all elements in X."""
     return functools.reduce(operator.mul, X, 1)
+
 
 # Broken solution that fails when X contains zero.
 def array_of_products_1(X):
@@ -192,11 +194,13 @@ def array_of_products_1(X):
     product = product_of_all_elems(X)
     return [product / x for x in X]
 
+
 # Solution using two temporary arrays to hold running products.
 def array_of_products_2(X):
     l_prods = lagged_running_products(X)
     r_prods = reversed(lagged_running_products(reversed(X)))
     return [x * y for x, y in zip(l_prods, r_prods)]
+
 
 # Solution using two on-the-fly running products.
 def array_of_products_3(X):
@@ -209,6 +213,7 @@ def array_of_products_3(X):
         l_running_product *= X[i]
         r_running_product *= X[n - i - 1]
     return result
+
 
 # Solution using two on-the-fly running products sequentially.
 # This approach eliminates one of the running-product variables
@@ -226,7 +231,9 @@ def array_of_products_4(X):
         running_product *= X[n - i - 1]
     return result
 
+
 # Helpers.
+
 
 def lagged_running_products(X):
     """Returns a list Y in which Y[i] is the product of all elems in X[:i]."""
@@ -237,10 +244,12 @@ def lagged_running_products(X):
         running_product *= x
     return products
 
+
 # Tests.
 
 import math
 import random
+
 
 def test():
     # We don't include array_of_products_1 because we know it is broken

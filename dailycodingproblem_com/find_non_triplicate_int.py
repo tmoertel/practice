@@ -161,9 +161,10 @@ implemented it below in `find_non_triplicate_element_2_optimized`.
 import itertools
 import random
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Solution 1
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def find_non_triplicate_element_1(xs):
     """Finds the one element in xs that does not occur three times."""
@@ -174,11 +175,12 @@ def find_non_triplicate_element_1(xs):
         pivot_value = xs[lo + random.randrange(hi - lo)]
         dividing_index = partition(xs, pivot_value, lo, hi)
         # Narrow to the partition containing the singleton element.
-        if ((dividing_index - lo) % 3 == 1):
+        if (dividing_index - lo) % 3 == 1:
             hi = dividing_index
         else:
             lo = dividing_index
     return xs[lo]
+
 
 def partition(xs, x, lo, hi):
     """Partitions xs[lo:hi] into elems <= x and > x; returns divider."""
@@ -196,9 +198,11 @@ def partition(xs, x, lo, hi):
     # partitions must span the entire input array.
     return lo  # Index after first partition.
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Solution 2: slow version.
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def find_non_triplicate_element_2(xs):
     """Finds the one integer >= 0 in xs that does not occur three times."""
@@ -209,8 +213,8 @@ def find_non_triplicate_element_2(xs):
     assert all(0 <= x for x in xs)
 
     # Reconstruct the singleton integer bit by bit, starting with bit 0.
-    bit_mask = 1         # Mask corresponding to bit 0.
-    singleton_bits = 0   # We start with the singleton's bits all set to 0.
+    bit_mask = 1  # Mask corresponding to bit 0.
+    singleton_bits = 0  # We start with the singleton's bits all set to 0.
 
     # Continue testing bits until the mask is large enough to cover
     # the largest integer in the array.
@@ -219,6 +223,7 @@ def find_non_triplicate_element_2(xs):
         # Construct a predicate for the current bit we're checking.
         def is_bit_set(x):
             return (x & bit_mask) != 0
+
         # If the bit is set in the singleton, set our copy of that bit.
         if is_true_for_singleton(is_bit_set, xs):
             singleton_bits |= bit_mask
@@ -228,17 +233,20 @@ def find_non_triplicate_element_2(xs):
     # singleton value; hence, we've found the singleton value itself!
     return singleton_bits
 
+
 def is_true_for_singleton(P, xs):
     """Returns whether P is true for the singleton in array xs."""
     true_count_mod_3 = 0
     for x in xs:
-      if P(x):
-        true_count_mod_3 = (true_count_mod_3 + 1) % 3
+        if P(x):
+            true_count_mod_3 = (true_count_mod_3 + 1) % 3
     return true_count_mod_3 == 1
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Solution 2: fast version.
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def find_non_triplicate_element_2_optimized(xs):
     """Finds the one integer >= 0 in xs that does not occur three times."""
@@ -255,23 +263,27 @@ def find_non_triplicate_element_2_optimized(xs):
     ones = twos = 0
     for x in xs:
         # Accumulate x's bits into the running counts.
-        twos, ones = ((~x & twos) | (x & ones),
-                      (~x & ones) | (x & ~twos & ~ones))
+        twos, ones = ((~x & twos) | (x & ones), (~x & ones) | (x & ~twos & ~ones))
 
     # Only the bits having counts (mod 3) of 1 are set in the singleton.
     # Thus the singleton is the integer with precisely those bits set.
     return ones
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Tests.
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def test():
-    for soln in (find_non_triplicate_element_1,
-                 find_non_triplicate_element_2,
-                 find_non_triplicate_element_2_optimized):
-        print('\n>>> Checking {}'.format(soln.__name__))
+    for soln in (
+        find_non_triplicate_element_1,
+        find_non_triplicate_element_2,
+        find_non_triplicate_element_2_optimized,
+    ):
+        print("\n>>> Checking {}".format(soln.__name__))
         _check_solution(soln)
+
 
 def _check_solution(soln):
     # Start small and work toward larger problem instances.
@@ -279,9 +291,9 @@ def _check_solution(soln):
         for seq in itertools.permutations(list(range(n))):
             # Make a random problem instance with a known solution.
             seq = list(seq)
-            singleton = seq[0]     # The first value is the singleton.
+            singleton = seq[0]  # The first value is the singleton.
             seq[1:] = seq[1:] * 3  # The others are the triplicates.
             random.shuffle(seq)
-            print('ans = {}, seq = {}'.format(singleton, seq))
+            print("ans = {}, seq = {}".format(singleton, seq))
             # The solver must identify the singleton element.
             assert soln(seq) == singleton

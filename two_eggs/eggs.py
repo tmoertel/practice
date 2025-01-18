@@ -65,12 +65,14 @@ import sys
 
 def memoize(f):
     cache = {}
+
     @functools.wraps(f)
     def newfunc(*args):
         args = tuple(args)
         if args not in cache:
             cache[args] = f(*args)
         return cache[args]
+
     return newfunc
 
 
@@ -78,10 +80,15 @@ def memoize(f):
 def worst_case_trial_count(floors, eggs):
     if eggs == 1 or floors < 2:
         return floors
-    return min(1 + max(worst_case_trial_count(i - 1, eggs - 1),
-                       worst_case_trial_count(floors - i, eggs))
-               for i in range(1, floors))
+    return min(
+        1
+        + max(
+            worst_case_trial_count(i - 1, eggs - 1),
+            worst_case_trial_count(floors - i, eggs),
+        )
+        for i in range(1, floors)
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(worst_case_trial_count(int(sys.argv[1]), int(sys.argv[2])))

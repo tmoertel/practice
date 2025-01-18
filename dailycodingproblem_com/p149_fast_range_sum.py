@@ -40,6 +40,7 @@ any 0 <= i <= j < len(L):
 
 """
 
+
 def make_fast_range_summer(xs):
     """Returns a function f such that f(i, j) = sum(xs[i:j])."""
     n = len(xs)
@@ -49,11 +50,14 @@ def make_fast_range_summer(xs):
     for x in xs:
         total += x
         running_totals.append(total)
+
     # Return a function that returns sum(xs[i:j]) in O(1) time.
     def range_sum(i, j):
         assert i <= j <= n
         return running_totals[j] - running_totals[i]
+
     return range_sum
+
 
 def test():
     L = [1, 2, 3, 4, 5]

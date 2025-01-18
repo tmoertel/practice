@@ -97,7 +97,8 @@ import collections
 import itertools
 import random
 
-WindowEntry = collections.namedtuple('WindowEntry', 'index value')
+WindowEntry = collections.namedtuple("WindowEntry", "index value")
+
 
 def max_subarray_values(xs, k):
     """Yields the maximum of each sequential k-length subarray of xs."""
@@ -109,6 +110,7 @@ def max_subarray_values(xs, k):
 
     # Helpers to maintain a window of local maxima over a span of elements.
     window = collections.deque()
+
     def window_add(x, i):
         """Adds `x` to the end of a k-length window ending at index `i`."""
         # Remove any elements before the start of the current window.
@@ -121,6 +123,7 @@ def max_subarray_values(xs, k):
             window.pop()
         # Attach the new end element.
         window.append(WindowEntry(i - 1, x))
+
     def window_max():
         return window[0].value
 
@@ -132,15 +135,17 @@ def max_subarray_values(xs, k):
         if i >= k:
             yield window_max()
 
+
 def test():
     def oracle(xs, k):
-        return [max(xs[i:i+k]) for i in range(len(xs) - k + 1)]
-    for soln in max_subarray_values, :
+        return [max(xs[i : i + k]) for i in range(len(xs) - k + 1)]
+
+    for soln in (max_subarray_values,):
         for i in range(7):
             for xs in itertools.permutations(list(range(i))):
                 for k in range(1, i + 1):
                     xs = list(xs)
                     expected = oracle(xs, k)
-                    print('\nsoln(xs={}, k={}) => {}'.format(xs, k, expected))
+                    print("\nsoln(xs={}, k={}) => {}".format(xs, k, expected))
                     observed = list(soln(xs, k))
                     assert observed == expected

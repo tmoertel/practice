@@ -19,6 +19,7 @@ This problem comes from https://www.dailycodingproblem.com/ on
 
 import collections
 
+
 class Histogram(object):
     def __init__(self):
         self.counts = collections.defaultdict(int)
@@ -38,10 +39,11 @@ class Histogram(object):
     def __len__(self):
         return len(self.counts)
 
+
 def anagram_indices(string, word):
     # Handle corner cases.
-    if word == '':
-        if string == '':
+    if word == "":
+        if string == "":
             return [0]
         return list(range(len(string)))
     # Handle the general case -- searching for matches -- knowing that
@@ -71,13 +73,13 @@ def anagram_indices(string, word):
 
 def test():
     soln = anagram_indices
-    assert soln('', '') == [0]
-    assert soln('foo', '') == [0, 1, 2]
-    assert soln('foo', 'x') == []
-    assert soln('foo', 'f') == [0]
-    assert soln('foo', 'o') == [1, 2]
-    assert soln('foo', 'of') == [0]
-    assert soln('foo', 'fo') == [0]
-    assert soln('foo', 'foo') == [0]
-    assert soln('foo', 'oof') == [0]
-    assert soln('foo', 'oo') == [1]
+    assert soln("", "") == [0]
+    assert soln("foo", "") == [0, 1, 2]
+    assert soln("foo", "x") == []
+    assert soln("foo", "f") == [0]
+    assert soln("foo", "o") == [1, 2]
+    assert soln("foo", "of") == [0]
+    assert soln("foo", "fo") == [0]
+    assert soln("foo", "foo") == [0]
+    assert soln("foo", "oof") == [0]
+    assert soln("foo", "oo") == [1]

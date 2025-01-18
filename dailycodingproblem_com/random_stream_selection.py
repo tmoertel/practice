@@ -18,6 +18,7 @@ This problem comes from https://www.dailycodingproblem.com/ on
 
 import random
 
+
 def random_element(xs):
     n = 0
     for n, x in enumerate(xs, 1):
@@ -25,6 +26,7 @@ def random_element(xs):
             selection = x
     assert n > 0
     return selection
+
 
 def test():
     for x in range(10):

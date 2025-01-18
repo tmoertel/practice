@@ -109,7 +109,9 @@ def test_zero_size_island_should_have_zero_perimeter():
 def test_single_cell_island_should_have_4_perimeter():
     n = 5
     for row_count, col_count in itertools.product(list(range(1, n)), list(range(1, n))):
-        for row, col in itertools.product(list(range(row_count)), list(range(col_count))):
+        for row, col in itertools.product(
+            list(range(row_count)), list(range(col_count))
+        ):
             grid = [[0] * col_count for _ in range(row_count)]
             grid[row][col] = 1
             assert perimeter(grid) == 4
@@ -118,4 +120,3 @@ def test_single_cell_island_should_have_4_perimeter():
 def test_soln_for_example_problem_should_match_given_soln():
     grid = [[0, 1, 1, 0], [1, 1, 1, 0], [0, 1, 1, 0], [0, 0, 1, 0]]
     assert perimeter(grid) == 14
-

@@ -57,6 +57,7 @@ O(lg n) time if it exists.
 
 import random
 
+
 # O(n) time and O(1) space.
 def find_fixed_point(A):
     """Finds an i in A such that A[i] = i; or None if no such i exists."""
@@ -83,11 +84,13 @@ def fast_find_fixed_point(A):
             return mid
     return None
 
+
 # Tests.
+
 
 def test():
     for soln in find_fixed_point, fast_find_fixed_point:
-        print('testing {}'.format(soln.__name__))
+        print("testing {}".format(soln.__name__))
 
         # Cases from the problem statement.
         assert soln([-6, 0, 2, 40]) == 2

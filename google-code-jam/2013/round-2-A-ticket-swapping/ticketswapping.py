@@ -34,10 +34,12 @@ who share a journey as a single group for efficiency.
 import fileinput
 from heapq import heappush, heappop
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %d' % (i, s))
+        print("Case #%r: %d" % (i, s))
+
 
 def solve(problem):
     N, journeys = problem
@@ -77,18 +79,22 @@ def solve(problem):
 
     return loss
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
+
 
 def read_problem(lines):
     N, M = read_ints(lines)
     journeys = [read_ints(lines) for _ in range(M)]
     return N, journeys
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

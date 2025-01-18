@@ -28,7 +28,8 @@ import heapq
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     E, R, _N, vs = problem
@@ -43,7 +44,7 @@ def solve(problem):
             v1, i1, e1 = heapq.heappop(trades)
             if i1 + 1 < earliest_slack:
                 continue  # no slack between i1 and i: i1 is sealed off
-            slack = min(slacks[i1 + 1:])
+            slack = min(slacks[i1 + 1 :])
             if not slack:
                 continue  # remove trade since it's unusable
             e_transferred = min(E - e, e1, slack)
@@ -60,18 +61,22 @@ def solve(problem):
         e = R
     return gain
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
+
 
 def read_problem(lines):
     E, R, N = read_ints(lines)
     vs = read_ints(lines)
     return E, R, N, vs
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

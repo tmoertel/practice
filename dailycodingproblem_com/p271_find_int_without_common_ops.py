@@ -98,8 +98,10 @@ import random
 # A generic binary search that lets us replace the normal midpoint
 # selection method, dividing by two, with one of our choosing.
 
+
 def divide_by_two(n):
     return n // 2
+
 
 def find_value(xs, x, find_midpoint=divide_by_two):
     """Finds the index of a value x in a sorted list xs."""
@@ -120,14 +122,17 @@ def find_value(xs, x, find_midpoint=divide_by_two):
 # range 0 to n, inclusive. We can use them to replace division
 # by two in our binary search.
 
+
 def divide_by_two_via_log_transform(n):
     # For n > 0, n / 2 == exp(log(n) - log(2)).
     if n == 0:
         return 0
     return int(math.exp(math.log(n) - math.log(2)) + 0.5)
 
+
 def guess_half(n):
     return random.randint(0, n)
+
 
 def probabilistic_half(n, guesses=3):
     best_guess = best_inbalance = None
@@ -139,18 +144,21 @@ def probabilistic_half(n, guesses=3):
             best_guess = guess
     return best_guess
 
+
 MIDPOINT_IMPLEMENTATIONS = (
     divide_by_two,
     divide_by_two_via_log_transform,
     guess_half,
-    probabilistic_half)
+    probabilistic_half,
+)
 
 
 # Tests: Show that all of the midpoint methods work in the search.
 
+
 def test():
     for find_midpoint in MIDPOINT_IMPLEMENTATIONS:
-        print('testing half={}'.format(find_midpoint.__name__))
+        print("testing half={}".format(find_midpoint.__name__))
 
         # Create a binary search using our midpoint method.
         def find(xs, x):

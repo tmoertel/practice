@@ -25,6 +25,7 @@ This problem comes from https://www.dailycodingproblem.com/ on
 import functools
 import random
 
+
 def is_bisectable(xs):
     """Returns True iff xs can be partitioned into 2 multisets of equal sums."""
     # Compute facts about the input.
@@ -44,8 +45,9 @@ def is_bisectable(xs):
         x = xs[start]
         if x >= 0 and subset_sum < 0:
             return False
-        return (has_subset_sum(subset_sum, start + 1) or
-                has_subset_sum(subset_sum - x, start + 1))
+        return has_subset_sum(subset_sum, start + 1) or has_subset_sum(
+            subset_sum - x, start + 1
+        )
 
     # If xs can be partitioned into two multisets of equal sums, the
     # total of its elements must be 2*n for some integer n, and some
@@ -55,16 +57,20 @@ def is_bisectable(xs):
     # then xs can be partitioned as desired.
     return total % 2 == 0 and has_subset_sum(total // 2)
 
+
 def memoize(f):
     """Makes a memoized version of f that returns cached results."""
     cache = {}
+
     @functools.wraps(f)
     def g(*args):
         ret = cache.get(args, cache)
         if ret is cache:
             ret = cache[args] = f(*args)
         return ret
+
     return g
+
 
 def test():
     assert is_bisectable([])

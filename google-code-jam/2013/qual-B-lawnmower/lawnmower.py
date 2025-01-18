@@ -11,14 +11,17 @@ https://code.google.com/codejam/contest/2270488/dashboard#s=p1
 
 import fileinput
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %s' % (i, s))
+        print("Case #%r: %s" % (i, s))
+
 
 def solve(problem):
     N, M, heights = problem
-    return 'YES' if is_mowable_pattern(N, M, heights) else 'NO'
+    return "YES" if is_mowable_pattern(N, M, heights) else "NO"
+
 
 def is_mowable_pattern(N, M, heights):
     while True:
@@ -33,18 +36,22 @@ def is_mowable_pattern(N, M, heights):
             return False
         N, M = N1, M1
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
+
 
 def read_problem(lines):
     N, M = read_ints(lines)
     heights = [read_ints(lines) for _ in range(N)]
     return N, M, heights
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

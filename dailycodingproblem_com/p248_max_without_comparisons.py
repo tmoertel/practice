@@ -46,12 +46,14 @@ the least possible j.
 
 """
 
+
 def msb_of(x, int_bits):
     """Returns the msb of a twos-complement integer of `int_bits` bits."""
     x >>= int_bits  # Shift the bit beyond the msb into the 1s position.
     return x & 1
 
-def mymax(x, y, int_bits = 64):
+
+def mymax(x, y, int_bits=64):
     """Returns the max of two twos-complement integers of `int_bits` bits."""
     diff = y - x
     return [y, x][msb_of(diff, int_bits)]

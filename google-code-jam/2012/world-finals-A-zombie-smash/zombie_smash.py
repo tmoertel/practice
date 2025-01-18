@@ -9,15 +9,13 @@ http://code.google.com/codejam/contest/2075486/dashboard
 
 """
 
-
 import fileinput
-
 
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
 
 
 def solve(problem):
@@ -37,5 +35,6 @@ def read_problem(lines):
     Z = int(next(lines))
     return [list(map(int, lines.next().split())) for _ in range(Z)]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

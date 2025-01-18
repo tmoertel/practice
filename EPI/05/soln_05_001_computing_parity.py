@@ -93,9 +93,11 @@ Well, I solved a different problem, but it was fun, too  :-)
 from operator import xor
 from functools import reduce
 
+
 def array_parity(xs):
     xsum = reduce(xor, xs, 0)
     return int_parity(xsum)
+
 
 def int_parity(x):
     parity = 0
@@ -103,6 +105,7 @@ def int_parity(x):
         parity ^= 1
         x &= x - 1  # erase least-significant 1 bit
     return parity
+
 
 def test():
     assert array_parity([]) == 0

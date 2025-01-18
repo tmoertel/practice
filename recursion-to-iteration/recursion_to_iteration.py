@@ -1,17 +1,21 @@
 #!/usr/bin/env python
 
+
 def factorial(n):
     if n < 2:
         return 1
     return n * factorial(n - 1)
+
 
 def factorial1a(n):
     def body(n):
         if n < 2:
             return 1
         return n * factorial(n - 1)
+
     result = body(n)
     return result
+
 
 def factorial1b(n):
     def body(n):
@@ -20,8 +24,10 @@ def factorial1b(n):
                 return 1
             return n * body(n - 1)
             break
+
     result = body(n)
     return result
+
 
 def factorial1c(n):
     def body(n, acc):
@@ -30,8 +36,10 @@ def factorial1c(n):
                 return 1 * acc
             return body(n - 1, acc * n)
             break
+
     result = body(n, 1)
     return result
+
 
 def factorial1d(n):
     def body(n, acc):
@@ -41,8 +49,10 @@ def factorial1d(n):
             (n, acc) = (n - 1, n * acc)
             continue
             break
+
     result = body(n, 1)
     return result
+
 
 def factorial1e(n):
     acc = 1
@@ -51,7 +61,9 @@ def factorial1e(n):
             return 1 * acc
         (n, acc) = (n - 1, n * acc)
 
+
 #####
+
 
 def fib(n):
     if n == 0:
@@ -60,6 +72,7 @@ def fib(n):
         return 1
     return fib(n - 1) + fib(n - 2)
 
+
 def fib1a(n):
     def body(n):
         if n == 0:
@@ -67,8 +80,10 @@ def fib1a(n):
         if n == 1:
             return 1
         return body(n - 1) + body(n - 2)
+
     result = body(n)
     return result
+
 
 def fib1b(n):
     def body(n):
@@ -77,8 +92,10 @@ def fib1b(n):
         if n == 1:
             return 1
         return body(n - 1) + body(n - 2)
+
     result = body(n)
     return result
+
 
 def fib1c(n):
     def body(n):
@@ -90,6 +107,7 @@ def fib1c(n):
         y = body(n - 2)
         result = x + y
         return result
+
     result = body(n)
     return result
 
@@ -101,10 +119,12 @@ def fib1d(n):
         if n == 1:
             return 1
         return bot1(body(n - 1), n)
+
     def bot1(x, n):
         y = body(n - 2)
         result = x + y
         return result
+
     result = body(n)
     return result
 
@@ -116,13 +136,17 @@ def fib1e(n):
         if n == 1:
             return 1
         return bot1(body(n - 1), n)
+
     def bot1(x, n):
         return bot2(body(n - 2), x, n)
+
     def bot2(y, x, n):
         result = x + y
         return result
+
     result = body(n)
     return result
+
 
 import functools
 from functools import reduce
@@ -135,13 +159,17 @@ def fib1f(n):
         if n == 1:
             return 1
         return bot1(body(n - 1), n)
+
     def bot1(x, n):
         return bot2(body(n - 2), x, n)
+
     def bot2(y, x, n):
         result = x + y
         return result
+
     result = body(n)
     return result
+
 
 def fib1g(n):
     def body(n):
@@ -150,20 +178,27 @@ def fib1g(n):
         if n == 1:
             return 1
         return bot1cont(n)(body(n - 1))
+
     def bot1cont(n):
         def bot1(x):
             return bot2cont(x, n)(body(n - 2))
+
         return bot1
+
     def bot2cont(x, n):
         def bot2(y):
             result = x + y
             return result
+
         return bot2
+
     result = body(n)
     return result
 
+
 def identity(x):
     return x
+
 
 def fib1h(n):
     def body(n, cont):
@@ -172,30 +207,41 @@ def fib1h(n):
         if n == 1:
             return cont(1)
         return body(n - 1, bot1cont(n, cont))
+
     def bot1cont(n, cont):
         def bot1(x):
             return body(n - 2, bot2cont(x, n, cont))
+
         return bot1
+
     def bot2cont(x, n, cont):
         def bot2(y):
             result = x + y
             return cont(result)
+
         return bot2
+
     result = body(n, identity)
     return result
 
+
 def call(f):
     """Instruct trampoline to call f with the args that follow."""
+
     def g(*args, **kwds):
         return f, args, kwds
+
     return g
+
 
 def result(value):
     """Instruct trampoline to stop iterating and return a value."""
     return None, value, None
 
+
 def with_trampoline(f):
     """Wrap a trampoline around a function that expects a trampoline."""
+
     @functools.wraps(f)
     def g(*args, **kwds):
         h = f
@@ -203,17 +249,22 @@ def with_trampoline(f):
         while h is not None:
             h, args, kwds = h(*args, **kwds)
         return args
+
     return g
+
 
 def trampoline_factorial(n, acc=1):
     if n < 2:
         return result(acc)
     return call(trampoline_factorial)(n - 1, n * acc)
 
+
 factorialt = with_trampoline(trampoline_factorial)
 
 
 import functools
+
+
 def cps(f):
     """Wrap a function with an interpreter that allows for CPS idioms.
 
@@ -255,6 +306,7 @@ def cps(f):
         cached, and then returned.
 
     """
+
     @functools.wraps(f)
     def g(*args):
         stack = []
@@ -270,22 +322,29 @@ def cps(f):
                 if cont:
                     stack.append((cont, cargs))
                 fun, args, cont, cargs = fun(*args)
+
     return g
+
 
 def Val(x):
     return None, x, None, None
 
+
 def Exp(f, *args):
     return f, args, None, None
+
 
 def ValTo(x):
     def g(cont, *cargs):
         return None, x, cont, cargs
+
     return g
+
 
 def ExpTo(f, *args):
     def g(cont, *cargs):
         return f, args, cont, cargs
+
     return g
 
 
@@ -296,6 +355,7 @@ def fib(n):
         return 1
     return fib(n - 1) + fib(n - 2)
 
+
 def fibcps1(n_):
     def top(n):
         if n == 0:
@@ -303,7 +363,9 @@ def fibcps1(n_):
         if n == 1:
             return 1
         return top(n - 1) + top(n - 2)
+
     return top(n_)
+
 
 def fibcps2(n_):
     def top(n):
@@ -315,7 +377,9 @@ def fibcps2(n_):
         y = top(n - 2)
         result = x + y
         return result
+
     return top(n_)
+
 
 def fibcps3(n_):
     def top(n):
@@ -325,13 +389,17 @@ def fibcps3(n_):
             return 1
         x = top(n - 1)
         return bot1(x, n)
+
     def bot1(x, n):
         y = top(n - 2)
         return bot2(y, x, n)
+
     def bot2(y, x, n):
         result = x + y
         return result
+
     return top(n_)
+
 
 @cps
 def fibcps4(n_):
@@ -341,15 +409,15 @@ def fibcps4(n_):
         if n == 1:
             return Val(1)
         return ExpTo(top, n - 1)(bot1, n)
+
     def bot1(x, n):
         return ExpTo(top, n - 2)(bot2, x, n)
+
     def bot2(y, x, n):
         result = x + y
         return Val(result)
+
     return Exp(top, n_)
-
-
-
 
 
 # def fib1d(n):
@@ -439,8 +507,6 @@ def fibcps4(n_):
 #
 
 
-
-
 ### def fib1c(n, acc=0):
 ###     while True:
 ###         if n == 0:
@@ -500,10 +566,6 @@ def fibcps4(n_):
 ###         result = f(result)
 ###     return result
 ###
-
-
-
-
 
 
 ## def fib1c(n, acc=0):
@@ -743,24 +805,30 @@ def fibcps4(n_):
 ##     return acc
 
 
-
 class Frame(dict):
     def __getattr__(self, name):
         return self[name]
+
     def __setattr__(self, name, value):
         self[name] = value
 
+
 class EOW(object):
     """End-of-word marker."""
+
     def __repr__(self):
-        return '$'
+        return "$"
+
+
 EOW = EOW()
 import sys
-LETTERS = 'abc'
+
+LETTERS = "abc"
 N = 1
-S = 'foo'
+S = "foo"
 max_penalty = sys.maxsize >> 1
 words = dict()
+
 
 def mcost(i, delay, tree):
     if i == N:
@@ -769,9 +837,9 @@ def mcost(i, delay, tree):
     if EOW in tree:
         least = min(least, mcost(i, delay, words))
     if S[i] in tree:
-        least = min(least, mcost(i+1, max(0, delay-1), tree[S[i]]))
+        least = min(least, mcost(i + 1, max(0, delay - 1), tree[S[i]]))
     if delay == 0:
         for l in LETTERS:
             if l != S[i] and l in tree:
-                least = min(least, 1 + mcost(i+1, 4, tree[l]))
+                least = min(least, 1 + mcost(i + 1, 4, tree[l]))
     return least

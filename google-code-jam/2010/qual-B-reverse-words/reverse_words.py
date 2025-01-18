@@ -12,12 +12,12 @@ import fileinput
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %s' % (i, s))
+        print("Case #%r: %s" % (i, s))
 
 
 def solve(problem):
     words = problem
-    return ' '.join(reversed(words))
+    return " ".join(reversed(words))
 
 
 def read_problems(lines):
@@ -31,5 +31,5 @@ def read_problem(lines):
     return spec.split()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

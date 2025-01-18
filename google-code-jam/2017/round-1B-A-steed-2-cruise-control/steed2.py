@@ -54,10 +54,12 @@ that lets it reach D at the exact same time as horse N:
 import fileinput
 import functools
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print(('Case #%r: %r' % (i, s)))
+        print(("Case #%r: %r" % (i, s)))
+
 
 def solve(problem):
     D, horses = problem
@@ -65,28 +67,36 @@ def solve(problem):
     # reach point D at the exact same time as the preceding horse.
     return D / best_finish_time(D, horses)
 
+
 def best_finish_time(D, horses):
     """Computes the best time all horses ahead of Annie's to reach point D."""
+
     def best_unblocked_time(horse):
         starting_position, max_speed = horse
         return (float(D) - starting_position) / max_speed
+
     def best_time(best_time_of_preceding_horse, horse):
         return max(best_unblocked_time(horse), best_time_of_preceding_horse)
+
     horses.sort(reverse=True)
     return functools.reduce(best_time, horses, 0)
+
 
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     D, N = read_ints(lines)
     horses = [read_ints(lines) for _ in range(N)]
     return D, horses
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

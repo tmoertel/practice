@@ -54,6 +54,7 @@ C(n, k) = n * C(n - 1, k - 1) / k.
 
 """
 
+
 def choose(n, k):
     """Returns the number of ways to choose k items from n items."""
     if k > n:
@@ -70,9 +71,11 @@ def choose(n, k):
         ways = n * ways // k
     return ways
 
+
 def count_corner_to_corner_paths(n, m):
     """Counts the ways to cross an n-by-m matrix via down and right steps."""
     return choose(n + m - 2, n - 1)
+
 
 def test():
     assert count_corner_to_corner_paths(2, 2) == 2

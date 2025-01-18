@@ -313,11 +313,15 @@ def water_holding_capacity_iterative(A):
 
 import pytest
 
-@pytest.mark.parametrize("f", [
-    water_holding_capacity_recursive,
-    water_holding_capacity_tail_recusrive,
-    water_holding_capacity_iterative,
-])
+
+@pytest.mark.parametrize(
+    "f",
+    [
+        water_holding_capacity_recursive,
+        water_holding_capacity_tail_recusrive,
+        water_holding_capacity_iterative,
+    ],
+)
 def test_func(f):
     from random import randrange
     from math import factorial

@@ -8,7 +8,7 @@
   packages = [
     # pkgs.go
     pkgs.btop
-    pkgs.gcc
+    pkgs.ruff
     (pkgs.python3.withPackages (python-pkgs: [
       python-pkgs.pytest
       python-pkgs.scipy

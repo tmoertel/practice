@@ -11,10 +11,12 @@ http://code.google.com/codejam/contest/189252/dashboard#s=p0
 
 import fileinput
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(message):
     base = max(2, len(set(message)))  # select the least possible base
@@ -26,13 +28,16 @@ def solve(message):
         total += symbol_vals.setdefault(s, digit_sched[len(symbol_vals)])
     return total
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     return lines.next().strip()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

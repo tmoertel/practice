@@ -12,10 +12,12 @@ http://code.google.com/codejam/contest/635101/dashboard#s=p0
 import fileinput
 import itertools
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     existing, wanted = problem
@@ -24,13 +26,15 @@ def solve(problem):
         while path and path not in existing:
             count += 1
             existing.add(path)
-            path, _ = path.rsplit('/', 1)
+            path, _ = path.rsplit("/", 1)
     return count
+
 
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
+
 
 def read_problem(lines):
     N, M = list(map(int, lines.next().split()))
@@ -38,5 +42,6 @@ def read_problem(lines):
     wanted = set(s.strip() for s in itertools.islice(lines, M))
     return existing, wanted
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

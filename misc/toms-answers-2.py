@@ -4,18 +4,18 @@ import operator
 from functools import reduce
 
 
-
 def product_div_elems(xs):
     prod = product(xs)
     return list(prod / x for x in xs)
 
+
 def product(xs):
     return reduce(operator.mul, xs, 1)
 
-def test_product_div_elems():
-    a = [1,2,3,4,5,6,7,8,9,10]
-    print(product_div_elems(a))
 
+def test_product_div_elems():
+    a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    print(product_div_elems(a))
 
 
 def max_consecutive_sum(xs):
@@ -28,9 +28,6 @@ def max_consecutive_sum(xs):
     return current_max
 
 
-
-
-
 ### Find the n points closest to origin in a set of millions of
 ### points in 3 dimensional space.
 
@@ -41,21 +38,28 @@ def find_closest_to_origin__naive(points, n=5):
     Running time:  O(N lg N) for len(points) = N.
 
     """
+
     def sq_dist(point):
         return sum(x * x for x in point)
+
     return sorted(points, key=sq_dist)[:n]
 
 
 import heapq
+
+
 def find_closest_to_origin(points, n=5):
     """Find the points closest to the origin in an any-dimensional space.
 
     Running time:  O(N lg n) (= O(N) for len(points) = N and n < const k).
 
     """
+
     def sq_dist(point):
         return sum(x * x for x in point)
+
     return heapq.nsmallest(n, points, key=sq_dist)
+
 
 def find_closest_to_origin_old(points, n=5):
     """Find the points closest to the origin in an any-dimensional space.
@@ -63,10 +67,13 @@ def find_closest_to_origin_old(points, n=5):
     Running time:  O(N lg n) ~ O(N) for len(points) = N and small n.
 
     """
+
     def sq_dist(point):
         return sum(x * x for x in point)
+
     def score(point):
         return (-sq_dist(point), point)
+
     closest = list(map(score, points[:n]))
     heapq.heapify(closest)
     for pt in points[n:]:
@@ -90,6 +97,7 @@ def do_pairs_sum_to(xs, t):
             return True
         seen.add(x)
     return False
+
 
 # Claims:
 #
@@ -117,6 +125,7 @@ def do_pairs_sum_to(xs, t):
 ### Implement integer division (without, of course, using the built-in
 ### division operator).
 
+
 def div_naive(x, y):
     """Return floor(x/y)."""
     if y == 0:
@@ -132,6 +141,7 @@ def div_naive(x, y):
     if neg:
         q = -q
     return q
+
 
 def div_reasonable(x, y):
     """Return floor(x/y)."""
@@ -166,6 +176,7 @@ def div_reasonable(x, y):
 
     # we're done
     return q
+
 
 def div(x, y):
     """Return floor(x/y)."""
@@ -210,8 +221,8 @@ def test_div():
         for y in range(-100, 101):
             if y == 0:
                 continue
-            if div(x, y) != x/y:
-                print(('div(%r, %r) == %r != %r' % (x, y, div(x, y), x/y)))
+            if div(x, y) != x / y:
+                print(("div(%r, %r) == %r != %r" % (x, y, div(x, y), x / y)))
                 return
 
 
@@ -219,8 +230,10 @@ def test_div():
 
 # my BST rep = None | (val, left subtree, right subtree)
 
+
 def find_bst_pairs_twice_root(bst):
     elems = flatten_preorder(bst)
+
     def search():
         if elems:
             target = 2 * elems[0]
@@ -231,18 +244,21 @@ def find_bst_pairs_twice_root(bst):
                     yield (x, y)
                 seen.setdefault(x, 0)
                 seen[x] += 1
+
     return list(search())
+
 
 def flatten_preorder(bst):
     out = list()
+
     def pre(bst):
         if bst is not None:
             out.append(bst[0])
             pre(bst[1])
             pre(bst[2])
+
     pre(bst)
     return out
-
 
 
 ### You are given an array that represents bills in certain currency
@@ -257,23 +273,27 @@ import functools
 
 def memoize(fn):
     cache = dict()
+
     @functools.wraps(fn)
     def memoized_fn(*args):
         args = tuple(args)
         if args in cache:
             return cache[args]
         return cache.setdefault(args, fn(*args))
+
     return memoized_fn
 
 
 def make_change(denominations, desired_total):
     ds = sorted(denominations, reverse=True)
     solns = []
+
     def search(change, ds, total):  # memoize
         if total == 0:
             solns.append(change)
         elif ds and total > 0:
             search(change + [ds[0]], ds, total - ds[0])
             search(change, ds[1:], total)
+
     search([], ds, desired_total)
     return solns

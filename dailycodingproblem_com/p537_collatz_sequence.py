@@ -87,6 +87,3 @@ def test_collatz_sequence_length_for_2_to_the_n_should_be_n_plus_one():
 
 def test_max_collatz_sequence_with_seed_not_exceeding_one_million_is_X():
     assert max_collatz_sequence_length(1000000) == 837799
-
-
-

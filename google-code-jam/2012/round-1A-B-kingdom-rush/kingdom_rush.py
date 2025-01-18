@@ -32,10 +32,12 @@ least no worse).
 import fileinput
 from heapq import heappop, heappush
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %s' % (i, s))
+        print("Case #%r: %s" % (i, s))
+
 
 def solve(problem):
     N, level_stars = problem
@@ -47,10 +49,8 @@ def solve(problem):
     stars = visited_twice = next_one_star_level = 0
 
     for i in levels_by_b:
-
         # while we can't take a level at 2-star play; try at 1-star play
         while stars < b[i]:
-
             # (1) expand pool of levels eligible at one star
             while next_one_star_level < N:
                 j = levels_by_a[next_one_star_level]
@@ -67,7 +67,7 @@ def solve(problem):
 
             # (3) if we couldn't find a level to play, we have failed
             else:
-                return 'Too Bad'
+                return "Too Bad"
 
             # (4) otherwise, we visit the level and loop
             visited.add(j)
@@ -79,18 +79,22 @@ def solve(problem):
 
     return str(N + visited_twice)
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
-    N, = read_ints(lines)
+    (N,) = read_ints(lines)
     level_stars = [read_ints(lines) for _ in range(N)]
     return N, level_stars
+
 
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -14,7 +14,6 @@ trees do not correspond, and counting each leaf we reach as a match.
 
 """
 
-
 import fileinput
 import itertools
 
@@ -22,7 +21,7 @@ import itertools
 def main():
     lang, pats = read_problem(fileinput.input())
     for i, soln in enumerate(solve(lang, pats), 1):
-        print('Case #%r: %s' % (i, soln))
+        print("Case #%r: %s" % (i, soln))
 
 
 def solve(lang, pats):
@@ -45,10 +44,10 @@ def solve(lang, pats):
 def parse_pattern(pat):
     tokens = []
     while pat:
-        if pat[0] == '(':
-            i = pat.index(')')
+        if pat[0] == "(":
+            i = pat.index(")")
             tokens.append(pat[1:i])
-            pat = pat[i+1:]
+            pat = pat[i + 1 :]
         else:
             tokens.append(pat[0])
             pat = pat[1:]
@@ -66,11 +65,11 @@ def prefix_tree(words):
 
 def read_problem(lines):
     L, D, N = list(map(int, lines.next().split()))
-    lang = set(' '.join(itertools.islice(lines, D)).split())
+    lang = set(" ".join(itertools.islice(lines, D)).split())
     assert all(len(word) == L for word in lang)
-    pats = ' '.join(itertools.islice(lines, N)).split()
+    pats = " ".join(itertools.islice(lines, N)).split()
     return lang, pats
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -11,10 +11,12 @@ https://code.google.com/codejam/contest/2270488/dashboard#s=p2
 
 import fileinput
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     A, B = problem
@@ -34,14 +36,17 @@ def solve(problem):
             if list(sii) == list(reversed(sii)):
                 count += 1
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     A, B = read_ints(lines)
     return A, B
+
 
 def isqrt(x, want_upper_bound=False):
     lo, hi = 1, x
@@ -57,38 +62,46 @@ def isqrt(x, want_upper_bound=False):
         else:
             return mid
 
+
 def palindromes(ndigits, min_leading_digit=1):
     if ndigits == 0:
         return [0]
     digits = list(range(min_leading_digit, 10))
     if ndigits == 1:
         return digits
+
     def pals2(ndigits):
         if ndigits == 0:
             return 1, [0]
         if ndigits == 1:
             return 10, list(range(10))
         mul, ps = pals2(ndigits - 2)
+
         def gen():
             for p in ps:
-                yield 10*p
+                yield 10 * p
             for i in range(1, 10):
                 for p in pals2(ndigits - 2)[1]:
-                    yield 10*mul*i + 10*p + i
+                    yield 10 * mul * i + 10 * p + i
+
         return 100 * mul, gen()
+
     mul, ps = pals2(ndigits - 2)
+
     def gen():
         i = digits[0]
         for p in ps:
-            yield 10*mul*i + 10*p + i
+            yield 10 * mul * i + 10 * p + i
         for i in digits[1:]:
             for p in pals2(ndigits - 2)[1]:
-                yield 10*mul*i + 10*p + i
+                yield 10 * mul * i + 10 * p + i
+
     return gen()
+
 
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -63,15 +63,15 @@ Solution
 
 """
 
-
-
 import collections
 import fileinput
+
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print(('Case #%r: %s' % (i, s)))
+        print(("Case #%r: %s" % (i, s)))
+
 
 def solve(problem):
     # Parse the problem instance.
@@ -80,7 +80,7 @@ def solve(problem):
     # Set up the initial state.
     parties_of_size = collections.defaultdict(list)
     for i, size in enumerate(party_sizes):
-        parties_of_size[size].append(chr(ord('A') + i))
+        parties_of_size[size].append(chr(ord("A") + i))
     max_size = max(parties_of_size)
     num_senators = sum(party_sizes)
     groups = []
@@ -108,21 +108,25 @@ def solve(problem):
         assert max_size <= num_senators - max_size
 
     # Convert the sequence of groups into the required output format.
-    return ' '.join(''.join(group) for group in groups)
+    return " ".join("".join(group) for group in groups)
+
 
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
-    N, = read_ints(lines)
+    (N,) = read_ints(lines)
     party_sizes = read_ints(lines)
     assert len(party_sizes) == N
     return party_sizes
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

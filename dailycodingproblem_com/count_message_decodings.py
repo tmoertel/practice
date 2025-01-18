@@ -167,51 +167,57 @@ backward from i = n to i = 0. I have implemented this strategy in
 
 """
 
+
 # Complexity: Ω(φ^n) time, O(n^2) space.
 def count_decodings(S):
     """Counts the messages that encode to S."""
     # Base case: empty encoding.
-    if S == '':
+    if S == "":
         return 1
     # Non-empty cases follow.
-    assert '0' <= S[0] <= '9'
+    assert "0" <= S[0] <= "9"
     # Case: encoding starts with a digit greater than 2.
-    if S[:1] > '2':
+    if S[:1] > "2":
         return count_decodings(S[1:])
     # Case: encoding starts with 0.
-    if S[:1] == '0':
+    if S[:1] == "0":
         return 0
     # Case: encoding starts with a 1.
-    if S[:1] == '1':
-        if S[:2] == '1':
+    if S[:1] == "1":
+        if S[:2] == "1":
             # No following digit: only one option.
             return count_decodings(S[1:])
         # Following digit: two options.
-        assert '0' <= S[1] <= '9'
+        assert "0" <= S[1] <= "9"
         return count_decodings(S[1:]) + count_decodings(S[2:])
     # Case: encoding starts with a 2.
-    if S[:1] == '2':
-        if S[:2] == '2':
+    if S[:1] == "2":
+        if S[:2] == "2":
             # No following digit: only one option.
             return count_decodings(S[1:])
-        assert '0' <= S[1] <= '9'
-        if '0' <= S[1] <= '6':
+        assert "0" <= S[1] <= "9"
+        if "0" <= S[1] <= "6":
             # Following digit is 0-6: two options.
             return count_decodings(S[1:]) + count_decodings(S[2:])
         # Following digit is 7-9: one option.
         return count_decodings(S[1:])
 
+
 # Complexity: O(n) time and space.
 def count_decodings_dp1(encoded_message):
     """Counts the messages that encode to `encoded_message`."""
     n = len(encoded_message)
+
     # Helper: Returns char at index i (or '' if i is out of bounds).
     def char(i):
         return encoded_message[i : i + 1]
+
     # Helper: Returns true iff there is a legal 2-digit value at index i.
     def two_digits(i):
-        return ((char(i) == '1' and '0' <= char(i + 1) <= '9') or
-                (char(i) == '2' and '0' <= char(i + 1) <= '6'))
+        return (char(i) == "1" and "0" <= char(i + 1) <= "9") or (
+            char(i) == "2" and "0" <= char(i + 1) <= "6"
+        )
+
     # Compute subcount[i] by working backward from i = n to 0, saving
     # our results along the way. Note that we set subcounts[n] = 1 as
     # it corresponds to the base case for an empty string, which can
@@ -220,55 +226,61 @@ def count_decodings_dp1(encoded_message):
     # checking by recording the fact that no source messages can
     # generate an encoded message of negative length.
     subcounts = [0] * (n + 2)  # Initialize the memo table to zeroes.
-    subcounts[n] = 1           # Base case for empty substring.
+    subcounts[n] = 1  # Base case for empty substring.
     for i in range(n - 1, -1, -1):
-        assert '0' <= char(i) <= '9'
-        if char(i) > '0':
+        assert "0" <= char(i) <= "9"
+        if char(i) > "0":
             subcounts[i] = subcounts[i + 1]
         if two_digits(i):
             subcounts[i] += subcounts[i + 2]
     return subcounts[0]
 
+
 # Complexity: O(n) time and O(1) space.
 def count_decodings_dp2(encoded_message):
     """Counts the messages that encode to `encoded_message`."""
     n = len(encoded_message)
+
     # Helper: Returns char at index i (or '' if i is out of bounds).
     def char(i):
         return encoded_message[i : i + 1]
+
     # Helper: Returns true iff there is a legal 2-digit value at index i.
     def two_digits(i):
-        return ((char(i) == '1' and '0' <= char(i + 1) <= '9') or
-                (char(i) == '2' and '0' <= char(i + 1) <= '6'))
+        return (char(i) == "1" and "0" <= char(i + 1) <= "9") or (
+            char(i) == "2" and "0" <= char(i + 1) <= "6"
+        )
+
     # Compute subcount[i] working backward from i = n to 0, retaining
     # only two prior values since no more are needed.
     subcount = subcount_lag_1 = 1
     subcount_lag_2 = 0
     for i in range(n - 1, -1, -1):
-        assert '0' <= char(i) <= '9'
-        if char(i) == '0':
+        assert "0" <= char(i) <= "9"
+        if char(i) == "0":
             subcount = 0
         elif two_digits(i):
             subcount += subcount_lag_2
         subcount_lag_1, subcount_lag_2 = subcount, subcount_lag_1
     return subcount
 
+
 def test():
     for soln in count_decodings, count_decodings_dp1, count_decodings_dp2:
         print(soln.__name__)
         # Empty message has only one decoding: the empty message.
-        assert soln('') == 1
+        assert soln("") == 1
         # Cases inolving zero.
-        assert soln('0') == 0
-        assert soln('10') == 1
-        assert soln('20') == 1
-        assert soln('30') == 0
+        assert soln("0") == 0
+        assert soln("10") == 1
+        assert soln("20") == 1
+        assert soln("30") == 0
         # Cases involving one and two.
-        assert soln('1') == 1
-        assert soln('2') == 1
-        assert soln('11') == 2
-        assert soln('21') == 2
-        assert soln('18') == 2
-        assert soln('28') == 1
+        assert soln("1") == 1
+        assert soln("2") == 1
+        assert soln("11") == 2
+        assert soln("21") == 2
+        assert soln("18") == 2
+        assert soln("28") == 1
         # Examples from the problem statement.
-        assert soln('111') == 3
+        assert soln("111") == 3

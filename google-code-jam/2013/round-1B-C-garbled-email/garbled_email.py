@@ -36,13 +36,15 @@ def solve(words, S):
 import fileinput
 import sys
 
-LETTERS = ''.join(chr(i) for i in range(ord('a'), ord('z') + 1))
+LETTERS = "".join(chr(i) for i in range(ord("a"), ord("z") + 1))
+
 
 def main():
-    words = prefix_tree(file('garbled_email_dictionary.txt').read().split())
+    words = prefix_tree(file("garbled_email_dictionary.txt").read().split())
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(words, p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(words, S):
     N = len(S)
@@ -53,13 +55,15 @@ def solve(words, S):
     cache = {None: 0}
     root = (0, 0, words)
     stack = [(root, 0, root)]
+
     def push(*args):
         stack.append(args)
+
     while stack:
         dest, incr, cell = job = stack.pop()
         # if the answer to this job is known, use it
         if cell in cache:
-            cache[dest] = min(cache.get(dest,dead_penalty), cache[cell] + incr)
+            cache[dest] = min(cache.get(dest, dead_penalty), cache[cell] + incr)
             continue
         # otherwise, expand this job into its subjobs and let them run
         push(*job)
@@ -82,15 +86,21 @@ def solve(words, S):
                     push(cell, 1, (i + 1, 4, tree[l]))
     return cache[root]
 
+
 class EOW(object):
     """End-of-word marker."""
+
     def __repr__(self):
-        return '$'
+        return "$"
+
+
 EOW = EOW()
+
 
 class iddict(dict):
     def __hash__(self):
         return id(self)
+
 
 def prefix_tree(words):
     """Build a prefix tree representing a set of words."""
@@ -102,17 +112,21 @@ def prefix_tree(words):
         t[EOW] = iddict()  # mark end of word
     return d
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     S = lines.next().strip()
     return S
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

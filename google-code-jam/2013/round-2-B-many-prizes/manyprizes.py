@@ -299,26 +299,30 @@ LowRankCanWin:
 
 import fileinput
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %s' % (i, s))
+        print("Case #%r: %s" % (i, s))
 
 
 # O(N) time solution
+
 
 def solve(problem):
     N, P = problem
     n_teams = 1 << N
     Y = n_teams - 2 - max_team_best_case(N, n_teams - P)
     Z = max_team_best_case(N, P)
-    return '{} {}'.format(Y, Z)
+    return "{} {}".format(Y, Z)
+
 
 def max_team_best_case(N, P):
     if P == 0:  # need to handle this case because it's dual to P == 2^N
         return -1
     j = longest_initial_winning_streak(N, P)
     return (1 << N) - (1 << j)
+
 
 def longest_initial_winning_streak(N, P):
     k = 0
@@ -331,16 +335,21 @@ def longest_initial_winning_streak(N, P):
 
 # O(N^2) time solution
 
+
 def solve_ON2(problem):
     N, P = problem
     n_teams = 1 << N
+
     def worst(i):
         return worst_rank(N, i)
+
     def best(i):
         return n_teams - 1 - worst(n_teams - 1 - i)
+
     Y = find_int_by_bisection(worst, 0, n_teams - 1, P - 1)
     Z = find_int_by_bisection(best, 0, n_teams - 1, P - 1)
-    return '{} {}'.format(Y, Z)
+    return "{} {}".format(Y, Z)
+
 
 def worst_rank(N, l, pos=0):
     """Find worst possible N-round ranking when l teams have lower numbers."""
@@ -351,6 +360,7 @@ def worst_rank(N, l, pos=0):
         # otherwise, we can play a lower-numbered team to force a loss
         return worst_rank(N - 1, (l - 1) // 2, (pos << 1) | 1)
 
+
 def find_int_by_bisection(f, lo, hi, y):
     while lo < hi:
         mid = lo + ((hi - lo) >> 1)
@@ -360,19 +370,24 @@ def find_int_by_bisection(f, lo, hi, y):
             hi = mid - 1
     return lo if f(lo) <= y else lo - 1
 
+
 # helpers
+
 
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     N, P = read_ints(lines)
     return N, P
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

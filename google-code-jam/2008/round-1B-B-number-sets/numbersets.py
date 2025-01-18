@@ -28,11 +28,13 @@ greater.
 from bisect import bisect_left, bisect_right
 import fileinput
 
+
 def main():
     primes = prime_sieve(10**6)
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p, primes)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem, primes):
     A, B, P = problem
@@ -46,19 +48,24 @@ def solve(problem, primes):
             union(i, start)
     return len(set(find(i) for i in range(A, B + 1)))
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     A, B, P = read_ints(lines)
     return A, B, P
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
+
 # number theory
+
 
 def prime_sieve(n):
     """Get an increasing list of all primes <= n."""
@@ -71,12 +78,15 @@ def prime_sieve(n):
                 candidates[j] = False
     return primes
 
+
 # disjoint sets
+
 
 def mk_union_find_domain(elems):
     """Make union and find methods over disjoint singleton sets from elems."""
     d = dict((e, e) for e in elems)
     r = dict((e, 1) for e in elems)
+
     def union(u, v):
         urep = find(u)
         vrep = find(v)
@@ -88,12 +98,15 @@ def mk_union_find_domain(elems):
                 d[vrep] = urep
                 if rank_diff == 0:
                     r[urep] += 1
+
     def find(u):
         urep = d[u]
         if urep != u:
             urep = d[u] = find(urep)
         return urep
+
     return union, find
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

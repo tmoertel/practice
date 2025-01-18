@@ -28,16 +28,20 @@ string's length.
 
 import collections
 
+
 def soln(k, s):
     # Helpers to let us track the chars in use.
     used_chars = collections.Counter()
+
     def add_char_at(i):
         used_chars.update(s[i])
+
     def remove_char_at(i):
         c = s[i]
         used_chars.subtract(c)
         if not used_chars[c]:
             del used_chars[c]
+
     # Start with an empty substring.
     max_len = start = 0
     # Advance the end of the substring and then advance the start
@@ -55,17 +59,17 @@ def soln(k, s):
 def test():
     # Base case: for all strings s, soln(0, s) = 0.
     for l in range(1, 5):
-        assert soln(0, 'x' * l) == 0
+        assert soln(0, "x" * l) == 0
     # Base case: for all k >= 0, soln(k, '') = 0.
     for k in range(5):
-        assert soln(k, '') == 0
+        assert soln(k, "") == 0
     # Example cases.
-    assert soln(2, 'abcba') == 3
+    assert soln(2, "abcba") == 3
     # Property: for all k > 0, l >= 0, and chars c, soln(k, c * l) = l.
     for k in range(1, 5):
         for l in range(8):
-            for c in 'abcdef':
+            for c in "abcdef":
                 assert soln(k, c * l) == l
     # Property: if s has distinct chars only and len(s) >= k, soln(k, s) == k.
     for k in range(5):
-        assert soln(k, 'abcdefghi') == k
+        assert soln(k, "abcdefghi") == k

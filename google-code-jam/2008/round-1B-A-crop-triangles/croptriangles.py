@@ -33,10 +33,12 @@ by 6 to get the final count.
 import fileinput
 import itertools
 
+
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #%r: %r' % (i, s))
+        print("Case #%r: %r" % (i, s))
+
 
 def solve(problem):
     n, A, B, C, D, x0, y0, M = problem
@@ -61,17 +63,21 @@ def solve(problem):
             count += c1 * c2 * c3
     return count / 6
 
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     n, A, B, C, D, x0, y0, M = read_ints(lines)
     return n, A, B, C, D, x0, y0, M
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

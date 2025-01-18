@@ -4,7 +4,7 @@
 # Tom Moertel <tom@moertel.com>
 # 2018-05-07
 
-"""Solution to "Slides!" Code Jam problem
+'''Solution to "Slides!" Code Jam problem
 
 Problem
 
@@ -163,42 +163,44 @@ values in a streaming fashion, and the remaining row's values are all given by
 the i < j rule. But this approach would make it hard to see the solution's
 inner logic, so I opted for clarity instead.)
 
-"""
-
-
+'''
 
 import fileinput
+
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         s = solve(p)
-        print('Case #{}: '.format(i), end='')
+        print("Case #{}: ".format(i), end="")
         for line in s:
             print(line)
+
 
 def solve(problem):
     buildings, needed_paths = problem
     # Start at the most-significant bit and work toward the least,
     # setting each bit needed to represent M = `needed_paths`.
-    bits = ['0'] * buildings
+    bits = ["0"] * buildings
     bit_value = 1 if buildings < 3 else 1 << (buildings - 3)
     for building in range(1, buildings):
         if bit_value <= needed_paths:
-            bits[building] = '1'
+            bits[building] = "1"
             needed_paths -= bit_value
         bit_value = (bit_value + 1) >> 1
     if needed_paths > 0:
-        yield 'IMPOSSIBLE'
+        yield "IMPOSSIBLE"
         return
+
     # Emit the solution as a streamed series of lines to avoid having
     # to hold the full adjacency matrix in memory.
     def has_edge(i, j):
         if i == 0:
             return bits[j]
-        return '1' if i < j else '0'
-    yield 'POSSIBLE'
+        return "1" if i < j else "0"
+
+    yield "POSSIBLE"
     for i in range(buildings):
-        yield ''.join(has_edge(i, j) for j in range(buildings))
+        yield "".join(has_edge(i, j) for j in range(buildings))
 
 
 def read_problems(lines):
@@ -206,12 +208,15 @@ def read_problems(lines):
     for _ in range(T):
         yield read_problem(lines)
 
+
 def read_problem(lines):
     B, M = read_ints(lines)
     return B, M
 
+
 def read_ints(lines):
     return [int(s) for s in lines.next().split()]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

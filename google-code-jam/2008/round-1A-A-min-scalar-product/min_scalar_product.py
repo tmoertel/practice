@@ -36,15 +36,13 @@ have paired all of U's elements with V's.
 
 """
 
-
-
 import fileinput
 
 
 def main():
     for i, p in enumerate(read_problems(fileinput.input()), 1):
         y = solve(p)
-        print('Case #%r: %r' % (i, y))
+        print("Case #%r: %r" % (i, y))
 
 
 def solve(problem):
@@ -60,11 +58,13 @@ def read_problems(lines):
 
 def read_problem(lines):
     next(lines)  # skip vector length; it's implicit in following lines
+
     def read_two_vectors():
         for _ in range(2):
             yield [int(s) for s in lines.next().split()]
+
     return list(read_two_vectors())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

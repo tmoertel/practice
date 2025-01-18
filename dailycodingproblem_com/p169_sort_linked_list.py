@@ -65,13 +65,17 @@ This solution runs in O(1) space and O(n lg n) time.
 # tail. The tail points to another linked list representing the
 # remaining values.
 
+
 class Cons(object):
     """A cell in a singly linked list."""
+
     def __init__(self, value, tail=None):
         self.value = value
         self.tail = tail
 
+
 # The sorting logic.
+
 
 def merge(xs, ys):
     """Merges two sorted linked lists into a sorted linked list.
@@ -98,6 +102,7 @@ def merge(xs, ys):
         cell.tail = None
     return first_cell, last_cell
 
+
 def take(llist, n):
     """Take n cells from a linked list. Returns (taken, remaining) lists."""
     taken_cells = llist
@@ -109,6 +114,7 @@ def take(llist, n):
         llist = next_llist
     return taken_cells, llist
 
+
 def llist_len(llist):
     """Returns the length of a linked list."""
     n = 0
@@ -116,6 +122,7 @@ def llist_len(llist):
         n += 1
         llist = llist.tail
     return n
+
 
 def sort_linked_list(llist):
     """Sorts a linked list, rewriting links as needed."""
@@ -152,6 +159,7 @@ def sort_linked_list(llist):
 import math
 import random
 
+
 def to_linked_list(sequence):
     """Converts a Python list into a linked list."""
     cells = list(map(Cons, sequence))
@@ -160,6 +168,7 @@ def to_linked_list(sequence):
         cells[i].tail = cells[i + 1]
     return cells[0]
 
+
 def from_linked_list(llist):
     """Converts a linked list into a Python list."""
     sequence = []
@@ -167,6 +176,7 @@ def from_linked_list(llist):
         sequence.append(llist.value)
         llist = llist.tail
     return sequence
+
 
 # Test our solution using Python's `sorted` as an oracle. We are
 # testing this property: For all sequences of ints `xs`, the solution
@@ -178,6 +188,6 @@ def test():
         for _ in range(min(120, math.factorial(size))):
             xs = [random.randint(-size, size) for _ in range(size)]
             expected = sorted(xs)
-            print('### trying {}'.format(xs))
+            print("### trying {}".format(xs))
             actual = from_linked_list(sort_linked_list(to_linked_list(xs)))
             assert actual == expected

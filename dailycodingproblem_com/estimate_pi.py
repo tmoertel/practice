@@ -53,6 +53,7 @@ import random
 RADIUS = 1 << 32
 RADIUS_SQUARED = RADIUS * RADIUS
 
+
 def estimate_pi(iterations):
     hits = 0
     for _ in range(iterations):
@@ -61,6 +62,7 @@ def estimate_pi(iterations):
         if x * x + y * y <= RADIUS_SQUARED:
             hits += 1
     return 4.0 * hits / iterations
+
 
 def test():
     random.seed(123)  # Ensure stability of tests.
