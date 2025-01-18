@@ -128,7 +128,7 @@ def parse_tree(start, serialized_tree):
     raise ValueError('Expected "*" or "(" to start tree')
 
 
-def test():
+def test_serialize_deserialize_binary_tree():
     # Test helper functions.
     assert parse_string(0, "4,text") == (6, "text")
     assert parse_tree(0, "*") == (1, None)

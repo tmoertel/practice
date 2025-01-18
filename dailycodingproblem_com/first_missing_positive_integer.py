@@ -115,7 +115,7 @@ def first_missing_postive_integer_2(ints):
     return n + 1
 
 
-def test():
+def test_first_missing_postive_integer():
     for soln in first_missing_postive_integer_1, first_missing_postive_integer_2:
         assert soln([]) == 1
         assert soln([0]) == 1

@@ -151,7 +151,7 @@ def number_of_distinct_step_sequences(steps_to_climb, allowed_step_multiples):
     return ways(steps_to_climb)
 
 
-def test():
+def test_staircase_climbing():
     assert number_of_distinct_step_sequences(4, (1, 2)) == 5
 
     assert number_of_distinct_step_sequences(0, (1,)) == 1

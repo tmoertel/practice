@@ -71,7 +71,7 @@ def anagram_indices(string, word):
     return matches
 
 
-def test():
+def test_anagram_indices():
     soln = anagram_indices
     assert soln("", "") == [0]
     assert soln("foo", "") == [0, 1, 2]

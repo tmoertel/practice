@@ -72,7 +72,7 @@ def memoize(f):
     return g
 
 
-def test():
+def test_bisect_integer_multisets():
     assert is_bisectable([])
     assert is_bisectable([0])
     assert is_bisectable([0, 0])

@@ -181,7 +181,7 @@ def from_linked_list(llist):
 # Test our solution using Python's `sorted` as an oracle. We are
 # testing this property: For all sequences of ints `xs`, the solution
 # must agree with `sorted`.
-def test():
+def test_sort_linked_list():
     # Start with small cases and work toward larger.
     for size in range(20):
         # For each size, generate a good number of random sequences `xs`.

@@ -131,11 +131,16 @@ def largest_nonadjacent_sum_dp(X):
     return max_sum
 
 
-def test():
-    for soln in largest_nonadjacent_sum_recursive, largest_nonadjacent_sum_dp:
-        assert soln([]) == 0
-        assert soln([-3]) == 0
-        assert soln([3]) == 3
-        assert soln([2, 4, 6, 2, 5]) == 13
-        assert soln([5, 1, 1, 5]) == 10
-        assert soln([5, 1, -10, 1, 5]) == 10
+import pytest
+
+
+@pytest.mark.parametrize(
+    "soln", [largest_nonadjacent_sum_recursive, largest_nonadjacent_sum_dp]
+)
+def test_largest_nonadjacent_sum(soln):
+    assert soln([]) == 0
+    assert soln([-3]) == 0
+    assert soln([3]) == 3
+    assert soln([2, 4, 6, 2, 5]) == 13
+    assert soln([5, 1, 1, 5]) == 10
+    assert soln([5, 1, -10, 1, 5]) == 10

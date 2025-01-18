@@ -157,7 +157,7 @@ def mmul(A, B):
     return [[sum(map(int.__mul__, r, c)) for c in Bt] for r in A]
 
 
-def test():
+def test_rot_matrix_90_degrees():
     def eq(x, y):
         assert x == y
 

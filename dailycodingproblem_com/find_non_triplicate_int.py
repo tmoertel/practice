@@ -275,7 +275,7 @@ def find_non_triplicate_element_2_optimized(xs):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-def test():
+def test_find_non_triplicate_int():
     for soln in (
         find_non_triplicate_element_1,
         find_non_triplicate_element_2,

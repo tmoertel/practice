@@ -60,7 +60,7 @@ def mymax(x, y, int_bits=64):
 
 
 # Test our solution using Python's `max` as a reference.
-def test():
+def test_max_without_comparisons():
     for x in range(-128, 127):
         for y in range(-128, 127):
             xymax = mymax(x, y, int_bits=8)

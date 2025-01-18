@@ -107,7 +107,7 @@ def int_parity(x):
     return parity
 
 
-def test():
+def test_computing_parity():
     assert array_parity([]) == 0
     assert array_parity([0]) == 0
     assert array_parity([1]) == 1

@@ -135,7 +135,7 @@ def max_subarray_values(xs, k):
             yield window_max()
 
 
-def test():
+def test_max_subarray_values():
     def oracle(xs, k):
         return [max(xs[i : i + k]) for i in range(len(xs) - k + 1)]
 

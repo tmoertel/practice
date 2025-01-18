@@ -156,7 +156,7 @@ MIDPOINT_IMPLEMENTATIONS = (
 # Tests: Show that all of the midpoint methods work in the search.
 
 
-def test():
+def test_find_int_without_common_ops():
     for find_midpoint in MIDPOINT_IMPLEMENTATIONS:
         print("testing half={}".format(find_midpoint.__name__))
 

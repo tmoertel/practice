@@ -59,7 +59,7 @@ def make_fast_range_summer(xs):
     return range_sum
 
 
-def test():
+def test_fast_range_sum():
     L = [1, 2, 3, 4, 5]
     f = make_fast_range_summer(L)
     for i in range(5):

@@ -56,7 +56,7 @@ def soln(k, s):
     return max_len
 
 
-def test():
+def test_longest_substring_of_k_distinct_chars():
     # Base case: for all strings s, soln(0, s) = 0.
     for l in range(1, 5):
         assert soln(0, "x" * l) == 0

@@ -93,7 +93,7 @@ def topo_sort(G):
 # tests
 
 
-def test():
+def test_recover_order_from_tickets():
     from itertools import permutations
     from random import sample
 

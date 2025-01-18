@@ -77,6 +77,6 @@ def count_corner_to_corner_paths(n, m):
     return choose(n + m - 2, n - 1)
 
 
-def test():
+def test_count_paths_across_matrix():
     assert count_corner_to_corner_paths(2, 2) == 2
     assert count_corner_to_corner_paths(5, 5) == 70

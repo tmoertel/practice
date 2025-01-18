@@ -28,6 +28,6 @@ def random_element(xs):
     return selection
 
 
-def test():
+def test_random_stream_selection():
     for x in range(10):
         assert random_element([x]) == x

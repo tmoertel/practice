@@ -88,46 +88,49 @@ def fast_find_fixed_point(A):
 # Tests.
 
 
-def test():
-    for soln in find_fixed_point, fast_find_fixed_point:
-        print("testing {}".format(soln.__name__))
+import pytest
 
-        # Cases from the problem statement.
-        assert soln([-6, 0, 2, 40]) == 2
-        assert soln([1, 5, 7, 8]) is None
 
-        # Empty case.
-        assert soln([]) is None
+@pytest.mark.parametrize("soln", [find_fixed_point, fast_find_fixed_point])
+def test_find_fixed_point_in_sorted_array(soln):
+    print("testing {}".format(soln.__name__))
 
-        # Singleton cases.
-        for i in range(1, 10):
-            assert soln([-i]) is None
-            assert soln([0]) == 0
-            assert soln([i]) is None
+    # Cases from the problem statement.
+    assert soln([-6, 0, 2, 40]) == 2
+    assert soln([1, 5, 7, 8]) is None
 
-        # On-the-fixed-point-line cases.
-        for n in range(1, 10):
-            assert soln(list(range(n))) in range(n)
+    # Empty case.
+    assert soln([]) is None
 
-        # Single intersection cases.
-        for i in range(10):
-            # Try 100 random sequences that intersect at i.
-            for _ in range(100):
-                # Make i into a point of intersection.
-                A = [0] * 10
-                A[i] = i
-                # Build steep monotonic sequences around i to fill out A.
-                for offset in range(1, 10):
-                    j = i + offset
-                    if j < len(A):
-                        A[j] = A[j - 1] + random.randint(2, 5)
-                    j = i - offset
-                    if j >= 0:
-                        A[j] = A[j + 1] - random.randint(2, 5)
-                assert soln(A) == i  # The solver must find the intersection.
+    # Singleton cases.
+    for i in range(1, 10):
+        assert soln([-i]) is None
+        assert soln([0]) == 0
+        assert soln([i]) is None
 
-        # Monotonic sequences above and below the fixed-point line
-        # have no fixed points.
-        for i in range(10):
-            assert soln(list(range(i - 10, i))) is None
-            assert soln(list(range(i + 10, i + 20))) is None
+    # On-the-fixed-point-line cases.
+    for n in range(1, 10):
+        assert soln(list(range(n))) in range(n)
+
+    # Single intersection cases.
+    for i in range(10):
+        # Try 100 random sequences that intersect at i.
+        for _ in range(100):
+            # Make i into a point of intersection.
+            A = [0] * 10
+            A[i] = i
+            # Build steep monotonic sequences around i to fill out A.
+            for offset in range(1, 10):
+                j = i + offset
+                if j < len(A):
+                    A[j] = A[j - 1] + random.randint(2, 5)
+                j = i - offset
+                if j >= 0:
+                    A[j] = A[j + 1] - random.randint(2, 5)
+            assert soln(A) == i  # The solver must find the intersection.
+
+    # Monotonic sequences above and below the fixed-point line
+    # have no fixed points.
+    for i in range(10):
+        assert soln(list(range(i - 10, i))) is None
+        assert soln(list(range(i + 10, i + 20))) is None

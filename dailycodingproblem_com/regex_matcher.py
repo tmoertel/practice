@@ -161,26 +161,31 @@ def memoize(f):
     return g
 
 
-def test():
-    for M in match_regex_1, match_regex_2, match_regex_3, match_regex_4:
-        # Case: empty string and empty regex.
-        assert M("", "")
-        # Case: non-empty string and empty regex.
-        assert M("c", "") == False
-        assert M("co", "") == False
-        # Case: empty string and non-empty regex.
-        assert M("", "*")
-        assert M("", "**")
-        assert M("", "***")
-        assert M("", ".") == False
-        assert M("", "*.") == False
-        assert M("", ".*") == False
-        assert M("", "*.*") == False
-        assert M("", "c") == False
-        # Case: non-empty string and non-empty regex.
-        assert M("ray", "ra.")
-        assert M("raymond", "ra.") == False
-        assert M("chat", ".*at")
-        assert M("chats", ".*at") == False
-        assert M("chat", "char") == False
-        assert M("chat", "hat") == False
+import pytest
+
+
+@pytest.mark.parametrize(
+    "M", [match_regex_1, match_regex_2, match_regex_3, match_regex_4]
+)
+def test_regex_matcher(M):
+    # Case: empty string and empty regex.
+    assert M("", "")
+    # Case: non-empty string and empty regex.
+    assert M("c", "") == False
+    assert M("co", "") == False
+    # Case: empty string and non-empty regex.
+    assert M("", "*")
+    assert M("", "**")
+    assert M("", "***")
+    assert M("", ".") == False
+    assert M("", "*.") == False
+    assert M("", ".*") == False
+    assert M("", "*.*") == False
+    assert M("", "c") == False
+    # Case: non-empty string and non-empty regex.
+    assert M("ray", "ra.")
+    assert M("raymond", "ra.") == False
+    assert M("chat", ".*at")
+    assert M("chats", ".*at") == False
+    assert M("chat", "char") == False
+    assert M("chat", "hat") == False

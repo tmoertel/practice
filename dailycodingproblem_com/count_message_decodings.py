@@ -265,22 +265,27 @@ def count_decodings_dp2(encoded_message):
     return subcount
 
 
-def test():
-    for soln in count_decodings, count_decodings_dp1, count_decodings_dp2:
-        print(soln.__name__)
-        # Empty message has only one decoding: the empty message.
-        assert soln("") == 1
-        # Cases inolving zero.
-        assert soln("0") == 0
-        assert soln("10") == 1
-        assert soln("20") == 1
-        assert soln("30") == 0
-        # Cases involving one and two.
-        assert soln("1") == 1
-        assert soln("2") == 1
-        assert soln("11") == 2
-        assert soln("21") == 2
-        assert soln("18") == 2
-        assert soln("28") == 1
-        # Examples from the problem statement.
-        assert soln("111") == 3
+import pytest
+
+
+@pytest.mark.parametrize(
+    "soln", [count_decodings, count_decodings_dp1, count_decodings_dp2]
+)
+def test_count_decodings(soln):
+    print(soln.__name__)
+    # Empty message has only one decoding: the empty message.
+    assert soln("") == 1
+    # Cases inolving zero.
+    assert soln("0") == 0
+    assert soln("10") == 1
+    assert soln("20") == 1
+    assert soln("30") == 0
+    # Cases involving one and two.
+    assert soln("1") == 1
+    assert soln("2") == 1
+    assert soln("11") == 2
+    assert soln("21") == 2
+    assert soln("18") == 2
+    assert soln("28") == 1
+    # Examples from the problem statement.
+    assert soln("111") == 3

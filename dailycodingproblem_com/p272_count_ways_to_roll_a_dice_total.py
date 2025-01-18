@@ -67,7 +67,7 @@ def throw_dice_dp(N, faces, total):
 # Tests.
 
 
-def test():
+def test_count_ways_to_roll_a_dice_total():
     for soln in throw_dice, throw_dice_dp:
         assert soln(3, 6, 7) == 15
         for faces in range(1, 10):

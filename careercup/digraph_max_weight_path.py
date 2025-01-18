@@ -119,7 +119,7 @@ def zmax(xs):
     return max(itertools.chain([0], xs))
 
 
-def test():
+def test_digraph_max_weight_path():
     import pytest
 
     assert max_path_weight({}) == 0

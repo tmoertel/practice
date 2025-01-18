@@ -69,7 +69,7 @@ def lsb_mask(x):
     return x ^ (x & (x - 1))
 
 
-def test():
+def test_find_two_singletons():
     soln = find_two_singletons
     for n in range(2, 7):
         for seq in itertools.permutations(list(range(n))):

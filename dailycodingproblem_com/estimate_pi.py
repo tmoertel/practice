@@ -64,6 +64,6 @@ def estimate_pi(iterations):
     return 4.0 * hits / iterations
 
 
-def test():
+def test_estimate_pi():
     random.seed(123)  # Ensure stability of tests.
     assert abs(estimate_pi(1000000) - 3.1415927) < 0.001

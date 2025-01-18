@@ -136,7 +136,7 @@ def count_unival_subtrees_functional_style(tree):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-def test():
+def test_unival_subtrees():
     assert count_nodes(None) == 0
     assert count_nodes(Node(1)) == 1
     for soln in count_unival_subtrees, count_unival_subtrees_functional_style:

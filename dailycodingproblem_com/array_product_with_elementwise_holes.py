@@ -248,29 +248,33 @@ def lagged_running_products(X):
 # Tests.
 
 import math
+import pytest
 import random
 
 
-def test():
+@pytest.mark.parametrize(
+    "soln",
     # We don't include array_of_products_1 because we know it is broken
     # when the input array contains zero.
-    for soln in array_of_products_2, array_of_products_3, array_of_products_4:
-        # Corner case: empty input array.
-        assert soln([]) == []
-        # Corner case: singleton input array.
-        for x in range(1, 10):
-            assert soln([x]) == [1]
-        # Zero-handling cases.
-        assert soln([0]) == [1]
-        assert soln([1, 0, 2, 0]) == [0, 0, 0, 0]
-        # Example cases from the problem statement.
-        assert soln([3, 2, 1]) == [2, 3, 6]
-        assert soln([10, 4, 3, 2, 1]) == [24, 60, 80, 120, 240]
-        # Property: For all integer sequences X, if Y = soln(X), then
-        # Y[i] * X[i] should equal the product of all elements in X.
-        for size in range(7):
-            for _trial in range(math.factorial(size)):
-                X = [random.randint(-size, size)]
-                all_X_product = product_of_all_elems(X)
-                Y = soln(X)
-                assert all(x * y == all_X_product for x, y in zip(X, Y))
+    [array_of_products_2, array_of_products_3, array_of_products_4],
+)
+def test_array_product_with_elementwise_holes(soln):
+    # Corner case: empty input array.
+    assert soln([]) == []
+    # Corner case: singleton input array.
+    for x in range(1, 10):
+        assert soln([x]) == [1]
+    # Zero-handling cases.
+    assert soln([0]) == [1]
+    assert soln([1, 0, 2, 0]) == [0, 0, 0, 0]
+    # Example cases from the problem statement.
+    assert soln([3, 2, 1]) == [2, 3, 6]
+    assert soln([10, 4, 3, 2, 1]) == [24, 60, 80, 120, 240]
+    # Property: For all integer sequences X, if Y = soln(X), then
+    # Y[i] * X[i] should equal the product of all elements in X.
+    for size in range(7):
+        for _trial in range(math.factorial(size)):
+            X = [random.randint(-size, size)]
+            all_X_product = product_of_all_elems(X)
+            Y = soln(X)
+            assert all(x * y == all_X_product for x, y in zip(X, Y))
