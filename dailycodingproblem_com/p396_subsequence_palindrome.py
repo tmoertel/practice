@@ -59,9 +59,7 @@ build the solution from the bottom up.
 
 """
 
-import collections
 import functools
-import itertools
 
 
 # This solution solves the problem recursively. It uses memoization to

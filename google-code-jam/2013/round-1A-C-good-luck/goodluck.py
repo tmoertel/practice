@@ -11,8 +11,6 @@ http://code.google.com/codejam/contest/2418487/dashboard#s=p2
 
 import fileinput
 import functools
-import itertools
-import operator
 from functools import reduce
 
 

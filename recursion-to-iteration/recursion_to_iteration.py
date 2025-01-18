@@ -149,7 +149,6 @@ def fib1e(n):
 
 
 import functools
-from functools import reduce
 
 
 def fib1f(n):
@@ -262,7 +261,6 @@ def trampoline_factorial(n, acc=1):
 factorialt = with_trampoline(trampoline_factorial)
 
 
-import functools
 
 
 def cps(f):

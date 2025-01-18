@@ -1,4 +1,3 @@
-import pytest
 from parser_combinators import Char, Zero, Many, Many1
 
 

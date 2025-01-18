@@ -55,9 +55,7 @@ grid itself is surrounded by water. Then report the sum of the counts
 
 """
 
-import collections
 import itertools
-import random
 
 
 def perimeter(grid):

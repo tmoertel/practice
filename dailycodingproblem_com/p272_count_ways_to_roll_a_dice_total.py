@@ -19,7 +19,6 @@ This problem comes from https://www.dailycodingproblem.com/ on
 """
 
 import functools
-import sys
 
 
 def memoize(f):

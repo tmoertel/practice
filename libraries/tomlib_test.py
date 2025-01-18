@@ -1,3 +1,4 @@
+import functools
 import pytest
 import tomlib
 from tomlib import *
@@ -187,7 +188,7 @@ def test_prime_factors():
     from operator import mul
 
     for n in range(2, 1000):
-        assert reduce(mul, prime_factors(n)) == n
+        assert functools.reduce(mul, prime_factors(n)) == n
 
     with pytest.raises(ValueError):
         prime_factors(-1)
@@ -244,7 +245,7 @@ def test_mk_union_find_domain():
         for res in rep_elem_sets:
             assert len(res) == 1
         # None of the disjoint subsets should share a representative element.
-        assert len(reduce(set.union, rep_elem_sets)) == len(subsets)
+        assert len(functools.reduce(set.union, rep_elem_sets)) == len(subsets)
 
 
 def test_binomial():

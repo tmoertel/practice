@@ -60,7 +60,6 @@ BFS as "good enough."
 
 import collections
 import itertools
-import random
 
 
 STARTING_COMBINATION = 000

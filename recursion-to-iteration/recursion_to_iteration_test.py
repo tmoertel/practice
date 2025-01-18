@@ -1,25 +1,3 @@
-from recursion_to_iteration import (
-    factorial,
-    factorial1a,
-    factorial1b,
-    factorial1c,
-    factorial1d,
-    factorial1e,
-    factorialt,
-    fib,
-    fib1a,
-    fib1b,
-    fib1c,
-    fib1d,
-    fib1e,
-    fib1f,
-    fib1g,
-    fib1h,
-    fibcps1,
-    fibcps2,
-    fibcps3,
-    fibcps4,
-)
 
 import functools
 

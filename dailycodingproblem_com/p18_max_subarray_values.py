@@ -95,7 +95,6 @@ time of O(n).
 
 import collections
 import itertools
-import random
 
 WindowEntry = collections.namedtuple("WindowEntry", "index value")
 

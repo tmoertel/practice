@@ -9,7 +9,6 @@ Tom Moertel <tom@moertel.com>
 
 import functools
 import sys
-from functools import reduce
 from bisect import bisect_right
 
 # Decorators.
