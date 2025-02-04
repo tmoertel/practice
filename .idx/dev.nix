@@ -10,6 +10,7 @@
     pkgs.btop
     pkgs.ruff
     (pkgs.python3.withPackages (python-pkgs: [
+      python-pkgs.duckdb
       python-pkgs.pytest
       python-pkgs.scipy
     ]))
