@@ -1,5 +1,3 @@
-# Suggested code may be subject to a license. Learn more: ~LicenseLog:3601272973.
-# Suggested code may be subject to a license. Learn more: ~LicenseLog:3442675363.
 """Write a function to generate a weighted random sample from a stream."""
 
 import random

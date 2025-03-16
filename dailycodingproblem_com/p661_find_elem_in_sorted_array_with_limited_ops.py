@@ -1,5 +1,3 @@
-# Suggested code may be subject to a license. Learn more: ~LicenseLog:2126216455.
-# Suggested code may be subject to a license. Learn more: ~LicenseLog:964989922.
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 

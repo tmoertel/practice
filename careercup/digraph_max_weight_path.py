@@ -1,5 +1,3 @@
-# Suggested code may be subject to a license. Learn more: ~LicenseLog:2576281436.
-# Suggested code may be subject to a license. Learn more: ~LicenseLog:1189424178.
 #!/usr/bin/python
 #
 # Tom Moertel <tom@moertel.com>
