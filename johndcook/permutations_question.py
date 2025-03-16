@@ -9,10 +9,10 @@ def Q3(n):
     return q[n]
 
 
-# Here's my version, which requires only O(1) space.
-# Note that in the original formula, we only only two previous
-# values: `q[k-1]` and `q[k-2]`. These are the only values we
-# need to keep; we store them in variables `qkm1` and `qkm2`.
+# Here's my version, which requires only O(1) space. Note that
+# in the original formula, only two previous values are used
+# for all `k`: `q[k-1]` and `q[k-2]`. Here, we store them directly
+# in variables `qkm1` and `qkm2` rather than across an O(n) array.
 def Q3_constant_space(n):
     qkm2 = qkm1 = 1
     for k in range(2, n + 1):
