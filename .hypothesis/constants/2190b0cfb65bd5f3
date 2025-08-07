@@ -1,0 +1,4 @@
+# file: /app/libraries/tomlib.py
+# hypothesis_version: 6.137.1
+
+[0.001, 0.25, 0.5, 1.0, 2.0, '%s%s%r => %r']
