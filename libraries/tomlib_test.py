@@ -262,44 +262,44 @@ def test_union_find_properties(initial_elements, pairs):
 
     union, find = mk_union_find_domain(elements)
 
-    # Filter pairs to those with elements in the domain.
-    pairs = [(a, b) for a, b in pairs if a in elements and b in elements]
-
+    # After a union of two elements, they must be in the same set.
     for a, b in pairs:
         union(a, b)
         assert find(a) == find(b)
 
-    # Verify idempotence of find
+    # Verify idempotence of find.
     for x in elements:
         assert find(x) == find(find(x))
 
-    # Verify that representatives are their own representatives
+    # Verify that representatives are their own representatives.
     for x in elements:
         rep = find(x)
         assert find(rep) == rep
 
-    # Verify that the number of disjoint sets is correct
+    # Verify that the number of disjoint sets is correct.
     num_disjoint_sets = len(set(find(e) for e in elements))
 
-    # Build a reference model
-    parent = {e: e for e in elements}
-    def find_ref(e):
-        if parent[e] == e:
-            return e
-        parent[e] = find_ref(parent[e])
-        return parent[e]
-
-    def union_ref(a, b):
-        a_root = find_ref(a)
-        b_root = find_ref(b)
-        if a_root != b_root:
-            parent[a_root] = b_root
-
+    # Count connected components in the graph representation.
+    adj = {e: [] for e in elements}
     for a, b in pairs:
-        union_ref(a,b)
+        adj[a].append(b)
+        adj[b].append(a)
 
-    num_disjoint_sets_ref = len(set(find_ref(e) for e in elements))
-    assert num_disjoint_sets == num_disjoint_sets_ref
+    num_components = 0
+    visited = set()
+    for elem in elements:
+        if elem not in visited:
+            num_components += 1
+            q = [elem]
+            visited.add(elem)
+            while q:
+                u = q.pop(0)
+                for v in adj[u]:
+                    if v not in visited:
+                        visited.add(v)
+                        q.append(v)
+
+    assert num_disjoint_sets == num_components
 
 
 def test_binomial():
