@@ -1,4 +1,17 @@
-"""Discrete random variables that you can draw random values from in O(1) time."""
+"""Discrete random variables that you can draw random values from in O(1) time.
+
+This implementation uses an integer version of the "alias method", as
+described in the following references:
+
+Vose, M. A linear algorithm for generating random numbers with a given
+distribution. IEEE Transactions on Software Engineering, 17(9):972–975, 1991.
+DOI: 10.1109/32.92917.
+
+Walker, A. J. An efficient method for generating discrete random variables
+with general distributions. ACM Transactions on Mathematical Software,
+3(3):253–256, 1977. DOI: 10.1145/355744.355749.
+
+"""
 
 from collections.abc import Iterable
 import collections
