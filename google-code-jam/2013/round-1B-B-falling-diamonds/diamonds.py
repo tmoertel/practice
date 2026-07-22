@@ -17,13 +17,13 @@ in the triangle's base.  These then form the related series,
     b[i]      0      1      3          5            7  ...
     s[i]      0      1      6         15           28  ...
 
-                                                    ◆
-                                                   ◆ ◆
-                                       ◆          ◆ ◆ ◆
-                                      ◆ ◆        ◆ ◆ ◆ ◆
-                            ◆        ◆ ◆ ◆      ◆ ◆ ◆ ◆ ◆
-                           ◆ ◆      ◆ ◆ ◆ ◆    ◆ ◆ ◆ ◆ ◆ ◆
-                     ◆    ◆ ◆ ◆    ◆ ◆ ◆ ◆ ◆  ◆ ◆ ◆ ◆ ◆ ◆ ◆
+                                                    ♦
+                                                   ♦ ♦
+                                       ♦          ♦ ♦ ♦
+                                      ♦ ♦        ♦ ♦ ♦ ♦
+                            ♦        ♦ ♦ ♦      ♦ ♦ ♦ ♦ ♦
+                           ♦ ♦      ♦ ♦ ♦ ♦    ♦ ♦ ♦ ♦ ♦ ♦
+                     ♦    ♦ ♦ ♦    ♦ ♦ ♦ ♦ ♦  ♦ ♦ ♦ ♦ ♦ ♦ ♦
 
 In closed form,
 
@@ -33,8 +33,8 @@ In closed form,
 
 Now, consider the structure that results when N diamonds are dropped.
 For the lucky case that N = s[i] for some i, the structure is a complete
-triangle, and the occupancy of (X, Y) is completely determined.  If
-(X, Y) is one of the triangle's diamonds, the probability we seek
+triangle, and the occupancy of coordinate (X, Y) is completely determined.
+If (X, Y) is one of the triangle's diamonds, the probability we seek
 is 1; otherwise, it's 0.
 
 Looking at the problem more generally, when we find the largest i for
@@ -64,11 +64,11 @@ of triangle i+1's sides.
 For example, when N = 8, (X, Y) must locate one of the white diamonds
 in the diagram below if it falls into Case B:
 
-       ◇
-      ◇ ◇         N      =  8
-     ◇ ◆ ◇        i      =  2
-    ◇ ◆ ◆ ◇       s[i]   =  6
-   ◇ ◆ ◆ ◆ ◇      s[i+1] = 15
+       ♢
+      ♢ ♢         N      =  8
+     ♢ ♦ ♢        i      =  2
+    ♢ ♦ ♦ ♢       s[i]   =  6
+   ♢ ♦ ♦ ♦ ♢      s[i+1] = 15
 
 But since N < s[i+1], we know that some of the white diamonds are
 missing from the structure.  At minimum the peak diamond is missing.
