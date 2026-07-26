@@ -78,10 +78,10 @@ class DiscreteRandomVariable:
         # original values.
         self.packed_blocks = []
         while below_pairs:
-            # While there are values having a weight w_low below the mean, there
-            # must exist values having a weight w_high not below the mean. We
-            # combine one of each to form a two-value block having a weight
-            # w_low + w_high, which must be greater than the mean.
+            # While there are values having a weight w_low less than the mean,
+            # there must exist values having a weight w_high greater than the
+            # mean. We combine one of each to form a two-value block having a
+            # weight w_low + w_high, which must also be greater than the mean.
             v_low, w_low = below_pairs.pop()
             v_high, w_high = not_below_pairs.pop()
             self.packed_blocks.append(TwoValues(w_low, v_low, v_high))
