@@ -63,11 +63,11 @@ is 1. Here's a sketch implementation in Python:
 
   def is_true_for_singleton(P, xs):
       '''Returns whether P is true for the singleton in array xs.'''
-      true_count_mod_3 = 0
+      true_count = 0
       for x in xs:
-        if P(x):
-          true_count_mod_3 = (true_count_mod_3 + 1) % 3
-      return true_count_mod_3 == 1
+          if P(x):
+              true_count += 1
+      return (true_count % 3) == 1
 
 Knowing whether a predicate is true for the singleton reveals one bit
 of information about the singleton. For example, consider a predicate
@@ -236,11 +236,11 @@ def find_non_triplicate_element_2(xs):
 
 def is_true_for_singleton(P, xs):
     """Returns whether P is true for the singleton in array xs."""
-    true_count_mod_3 = 0
+    true_count = 0
     for x in xs:
         if P(x):
-            true_count_mod_3 = (true_count_mod_3 + 1) % 3
-    return true_count_mod_3 == 1
+            true_count += 1
+    return (true_count % 3) == 1
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
