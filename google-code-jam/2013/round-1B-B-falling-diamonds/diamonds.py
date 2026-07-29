@@ -91,7 +91,7 @@ possible to completely empty a side, and thus k has a vanilla binomial
 distribution.  Therefore,
 
     Pr(k < |X|)) = Pr(k <= |X| - 1)
-                 = binom.cdf(abs(X) - 1, m, 0.5).
+                 = binom_cdf(abs(X) - 1, m, 0.5).
 
 But when m >= b[i+1], we can empty a side, and it's easier to think
 about the dual problem of having to *add* N - s[i] diamonds to the
@@ -105,7 +105,7 @@ b[i+1] - |X| diamonds.  Thus our answer must be
     Pr(k < |X|) = Pr(j >= b[i+1] - |X|)
                 = 1.0 - Pr(j < b[i+1] - |X|)
                 = 1.0 - Pr(j <= b[i+1] - |X| - 1])
-                = 1.0 - binom.cdf(b[i+1] - abs(X) - 1, N - s[i], 0.5).
+                = 1.0 - binom_cdf(b[i+1] - abs(X) - 1, N - s[i], 0.5).
 
 And that's it.  For cases A and C, we know the answer immediately.
 For case B, we know the answer after spliting it into one of 3
@@ -118,7 +118,7 @@ subcases:
 """
 
 import fileinput
-from scipy.stats import binom
+import math
 
 
 def main():
@@ -141,8 +141,8 @@ def solve(problem):
         return 0.0  # B(1)
     m = s(i + 1) - N - 1
     if m < b(i + 1):
-        return binom.cdf(abs(X) - 1, m, 0.5)  # B(2)
-    return 1.0 - binom.cdf(b(i + 1) - abs(X) - 1, N - s(i), 0.5)  # B(3)
+        return binom_cdf(abs(X) - 1, m)  # B(2)
+    return 1.0 - binom_cdf(b(i + 1) - abs(X) - 1, N - s(i))  # B(3)
 
 
 def is_triangle_diamond(x, y, i):
@@ -164,6 +164,11 @@ def b(i):
     return 2 * i - 1
 
 
+def binom_cdf(k, n):
+    """Return P(X <= k) where X has a binomial(n, p=1/2) distribution."""
+    return sum(math.comb(n, r) for r in range(k + 1)) / 2**n
+
+
 def read_problems(lines):
     T = int(next(lines))
     for _ in range(T):
@@ -176,7 +181,7 @@ def read_problem(lines):
 
 
 def read_ints(lines):
-    return [int(s) for s in lines.next().split()]
+    return [int(s) for s in next(lines).split()]
 
 
 def find_int_by_bisection(f, lo, hi, y):
