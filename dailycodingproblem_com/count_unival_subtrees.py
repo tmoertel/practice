@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''Solve interview problem: count "univalued" subtrees in a binary tree.
+r'''Solve interview problem: count "univalued" subtrees in a binary tree.
 
 This problem comes from Daily Coding Problem on 2019-04-01 and was
 classified as Easy difficulty:

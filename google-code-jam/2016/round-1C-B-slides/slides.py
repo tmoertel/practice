@@ -4,7 +4,7 @@
 # Tom Moertel <tom@moertel.com>
 # 2018-05-07
 
-'''Solution to "Slides!" Code Jam problem
+r'''Solution to "Slides!" Code Jam problem
 
 Problem
 
